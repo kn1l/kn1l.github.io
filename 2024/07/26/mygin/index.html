@@ -229,13 +229,13 @@
 <p>仿照 Gin 开发一个基本功能完善的 Web 应用框架，包括请求处理、上下文、路由系统（包含分组控制及动态路由，基于正则还是基于前缀树实现自己决定）、中间件加载、模板文件等模块</p>
 </blockquote>
 <p>因为突然被朋友叫出去玩，导致开发的时间不是很连贯，写的途中也没有好好记录，所以干脆在开发完成后来写一篇回顾或者说是总结。</p>
-<p>我一开始的想法是尽量少看Gin的代码<del>（看太多就变成抄写了）</del>，通过自己的思路来实现一个web框架，也就是基本功能通过对于<code>net/http</code>的封装来实现，因此也能看到我的代码中有些地方写得可能比较任性（刚开始写go，对一些标准库不太熟悉，有些可以用标准库的地方可能就按自己的想法来实现了），这也导致了我拓展的困难，经常写一个新功能要把之前的部分重构一遍。但终归要仿照Gin来写，所以代码中大部分函数签名都和Gin中的相同，这也方便了编写测试代码。</p>
+<p>我一开始的想法是尽量少看Gin的代码<del>（看太多就变成抄写了）</del>，通过自己的思路来实现一个web框架，也就是基本功能都通过对于<code>net/http</code>的封装来实现，因此也能看到我的代码中有些地方写得可能比较任性（刚开始写go，对一些标准库不太熟悉，有些可以用标准库的地方可能就按自己的想法来实现了），这也导致了我拓展的困难，经常写一个新功能要把之前的部分重构一遍。但终归要仿照Gin来写，所以代码中大部分函数签名都和Gin中的相同，也方便编写测试代码。</p>
 <p>代码实现了请求处理、上下文、路由系统（基于前缀树）、中间件加载、模版文件、静态文件等模块，项目地址：<a target="_blank" rel="noopener" href="https://github.com/l1nk4i/mygin">l1nk4i&#x2F;mygin (github.com)</a></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mygin/</span><br><span class="line">├── context.go</span><br><span class="line">├── mygin.go</span><br><span class="line">├── routergroup.go</span><br><span class="line">├── tree.go</span><br><span class="line">└── utils.go</span><br></pre></td></tr></table></figure>
 
 <h2 id="代码编写思路"><a href="#代码编写思路" class="headerlink" title="代码编写思路"></a>代码编写思路</h2><h3 id="请求处理"><a href="#请求处理" class="headerlink" title="请求处理"></a>请求处理</h3><p>在<code>net/http</code>中可以通过实现<code>http.ServeHTTP</code>接口来实现对于每个请求的处理，这就需要定义一个结构体<code>Engine</code>来实现这个接口。</p>
 <p><code>Engine</code>也就是作为处理每个http请求，启动web服务器的对象。</p>
-<h3 id="上下文"><a href="#上下文" class="headerlink" title="上下文"></a>上下文</h3><p>要实现<code>ServeHTTP(ResponseWriter, *Request)</code>这个接口，可以通过函数签名看到有两个参数，那么在编写中间件或者处理函数时到处都要带着这两个参数，方便起见最基本的就是将这两个参数进行封装，我们将这些东西都封装进上下文<code>Context</code>中。</p>
+<h3 id="上下文"><a href="#上下文" class="headerlink" title="上下文"></a>上下文</h3><p>在编写中间件或者处理函数时，通常都需要很多参数，比如<code>ResponseWriter, Request</code>，方便起见就是将这些参数进行封装，我们将这些东西都封装进上下文<code>Context</code>中，这样在编写中间件时只需要输入上下文<code>Context</code>即可拿到需要的所有参数。</p>
 <p><code>Context</code>的生命周期就和一个请求相同，每一个<code>Context</code>都是和一个请求绑定的，封装了请求的信息和对应响应的信息。这样对于每一个请求我们只需要操作其对应的<code>Context</code>就行了，同时也方便了函数间的数据传输。</p>
 <h3 id="路由系统"><a href="#路由系统" class="headerlink" title="路由系统"></a>路由系统</h3><p>通过前缀树来实现，把每个路由的<code>handlers</code>都直接挂到相对应的路由<code>node</code>上，通过注册顺序来决定执行的顺序。因为每个方法注册的处理函数不同，所以每个方法都会有一棵独立的树。</p>
 <h4 id="静态路由"><a href="#静态路由" class="headerlink" title="静态路由"></a>静态路由</h4><p>只需要通过<code>Engine</code>来注册路由以及对应的<code>handler</code>，在处理路由时直接搜索对应路由。</p>
