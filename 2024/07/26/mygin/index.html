@@ -230,7 +230,7 @@
 </blockquote>
 <p>因为突然被朋友叫出去玩，导致开发的时间不是很连贯，写的途中也没有好好记录，所以干脆在开发完成后来写一篇回顾或者说是总结。</p>
 <p>我一开始的想法是尽量少看Gin的代码<del>（看太多就变成抄写了）</del>，通过自己的思路来实现一个web框架，也就是基本功能都通过对于<code>net/http</code>的封装来实现，因此也能看到我的代码中有些地方写得可能比较任性（刚开始写go，对一些标准库不太熟悉，有些可以用标准库的地方可能就按自己的想法来实现了），这也导致了我拓展的困难，经常写一个新功能要把之前的部分重构一遍。但终归要仿照Gin来写，所以代码中大部分函数签名都和Gin中的相同，也方便编写测试代码。</p>
-<p>代码实现了请求处理、上下文、路由系统（基于前缀树）、中间件加载、模版文件、静态文件等模块，项目地址：<a target="_blank" rel="noopener" href="https://github.com/l1nk4i/mygin">l1nk4i&#x2F;mygin (github.com)</a></p>
+<p>代码实现了请求处理、上下文、路由系统（基于前缀树）、中间件加载、模版文件、静态文件等模块，项目地址：<a target="_blank" rel="noopener" href="https://github.com/kn1l/mygin">kn1l&#x2F;mygin (github.com)</a></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mygin/</span><br><span class="line">├── context.go</span><br><span class="line">├── mygin.go</span><br><span class="line">├── routergroup.go</span><br><span class="line">├── tree.go</span><br><span class="line">└── utils.go</span><br></pre></td></tr></table></figure>
 
 <h2 id="代码编写思路"><a href="#代码编写思路" class="headerlink" title="代码编写思路"></a>代码编写思路</h2><h3 id="请求处理"><a href="#请求处理" class="headerlink" title="请求处理"></a>请求处理</h3><p>在<code>net/http</code>中可以通过实现<code>http.ServeHTTP</code>接口来实现对于每个请求的处理，这就需要定义一个结构体<code>Engine</code>来实现这个接口。</p>
