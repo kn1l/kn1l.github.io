@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar-1080x1080.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar-1080x1080.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar-1080x1080.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"l1nk.icu","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="frp v0.1.0 源码学习👀 A fast reverse proxy to help you expose a local server behind a NAT or firewall to the internet.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="frp v0.1.0 源码学习">
+<meta property="og:url" content="http://l1nk.icu/2025/04/06/frp/index.html">
+<meta property="og:site_name" content="L1nk&#39;s Blog">
+<meta property="og:description" content="frp v0.1.0 源码学习👀 A fast reverse proxy to help you expose a local server behind a NAT or firewall to the internet.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-04-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-04-05T16:00:00.000Z">
+<meta property="article:author" content="l1nk">
+<meta property="article:tag" content="blog">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://l1nk.icu/2025/04/06/frp/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://l1nk.icu/2025/04/06/frp/","path":"2025/04/06/frp/","title":"frp v0.1.0 源码学习"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>frp v0.1.0 源码学习 | L1nk's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">L1nk's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%A7%88"><span class="nav-number">1.</span> <span class="nav-text">概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v0-1-0"><span class="nav-number">2.</span> <span class="nav-text">v0.1.0</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#frps"><span class="nav-number">2.1.</span> <span class="nav-text">frps</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#frpc"><span class="nav-number">2.2.</span> <span class="nav-text">frpc</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">3.</span> <span class="nav-text">结语</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="l1nk"
+      src="/images/avatar-1080x1080.png">
+  <p class="site-author-name" itemprop="name">l1nk</p>
+  <div class="site-description" itemprop="description">Vidar-Team Web | Student</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/kn1l" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;kn1l" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:l1nk@foxmail.com" title="E-Mail → mailto:l1nk@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/l1nkowo" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;l1nkowo" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://l1nk.icu/2025/04/06/frp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar-1080x1080.png">
+      <meta itemprop="name" content="l1nk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="L1nk's Blog">
+      <meta itemprop="description" content="Vidar-Team Web | Student">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="frp v0.1.0 源码学习 | L1nk's Blog">
+      <meta itemprop="description" content="frp v0.1.0 源码学习👀 A fast reverse proxy to help you expose a local server behind a NAT or firewall to the internet.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          frp v0.1.0 源码学习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-04-06 00:00:00" itemprop="dateCreated datePublished" datetime="2025-04-06T00:00:00+08:00">2025-04-06</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>2.3k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>9 mins.</span>
+    </span>
+</div>
+
+            <div class="post-description">frp v0.1.0 源码学习👀 A fast reverse proxy to help you expose a local server behind a NAT or firewall to the internet.</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>frp 是一个专注于内网穿透的高性能的反向代理应用，支持 TCP、UDP、HTTP、HTTPS 等多种协议，且支持 P2P 通信。可以将内网服务以安全、便捷的方式通过具有公网 IP 节点的中转暴露到公网。</p>
+</blockquote>
+<p>frp 在 v0.10.0 进行过代码重构，所以 v0.1.0 看起来和现在的结构不太一样，但是直接读新版本的代码还是有点难，这里就通过 v0.1.0 的源代码学习一下 frp 的实现原理。</p>
+<blockquote>
+<p>[!NOTE]</p>
+<p>因为包管理方式不同，需要设置 <code>GO111MODULE</code> 为 <code>off</code> 以及对应的 <code>GOPATH</code></p>
+</blockquote>
+<h2 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h2><p>我们使用 frp 需要配置两个端，两个端各负责一些功能</p>
+<p>frps</p>
+<ul>
+<li>监听 bind_port 和 frpc 连接</li>
+<li>监听 remote_port 和 user 连接</li>
+<li>转发 user 和 frpc 之间数据</li>
+</ul>
+<p>frpc</p>
+<ul>
+<li>和 frps 建立连接</li>
+<li>转发 frp 和本地服务之间数据</li>
+</ul>
+<p>接下来我们看 v0.1.0 是怎么实现这些功能的</p>
+<h2 id="v0-1-0"><a href="#v0-1-0" class="headerlink" title="v0.1.0"></a>v0.1.0</h2><h3 id="frps"><a href="#frps" class="headerlink" title="frps"></a>frps</h3><p>先从入口源码开始，配置文件是用一个第三方库读，然后循环读取每一个 <code>ProxyServer</code> 的配置，每个 <code>ProxyServer</code> 可以给对应的 <code>passwd、bind_addr、listen_port</code> ，日志没什么好说的</p>
+<p><code>src/frp/cmd/frps/main.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">	<span class="comment">// 加载配置文件</span></span><br><span class="line">    err := server.LoadConf(<span class="string">&quot;./frps.ini&quot;</span>)  </span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 初始化日志</span></span><br><span class="line">    log.InitLog(server.LogWay, server.LogFile, server.LogLevel)  </span><br><span class="line"></span><br><span class="line">	<span class="comment">// 创建 Listener</span></span><br><span class="line">    l, err := conn.Listen(server.BindAddr, server.BindPort)  </span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">  </span><br><span class="line">    log.Info(<span class="string">&quot;Start frps success&quot;</span>)  </span><br><span class="line">    ProcessControlConn(l)  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>先看 <code>conn.Listen</code>，返回一个 <code>Listener</code> ，包含一个 channel <code>conns</code> 用于接收和存储 frpc 的连接，监听 <code>BindPort</code>，还开启了一个协程来接收 TCP 连接写入 <code>conns</code></p>
+<p><code>src/frp/utils/conn/conn.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Listen</span><span class="params">(bindAddr <span class="type">string</span>, bindPort <span class="type">int64</span>)</span></span> (l *Listener, err <span class="type">error</span>) &#123;  </span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  </span><br><span class="line">    l = &amp;Listener&#123;  </span><br><span class="line">       addr:      listener.Addr(),  </span><br><span class="line">       l:         listener,  </span><br><span class="line">       conns:     <span class="built_in">make</span>(<span class="keyword">chan</span> *Conn),  </span><br><span class="line">       closeFlag: <span class="literal">false</span>,  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;  </span><br><span class="line">       <span class="keyword">for</span> &#123;  </span><br><span class="line">          conn, err := l.l.AcceptTCP()  </span><br><span class="line">          <span class="comment">// ...</span></span><br><span class="line">  </span><br><span class="line">          c := &amp;Conn&#123;  </span><br><span class="line">             TcpConn:   conn,  </span><br><span class="line">             closeFlag: <span class="literal">false</span>,  </span><br><span class="line">          &#125;  </span><br><span class="line">          c.Reader = bufio.NewReader(c.TcpConn)  </span><br><span class="line">          l.conns &lt;- c  </span><br><span class="line">       &#125;  </span><br><span class="line">    &#125;()  </span><br><span class="line">    <span class="keyword">return</span> l, err  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对应的可以用 <code>Listener.GetConn</code> 取出通道中的连接</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(l *Listener)</span></span> GetConn() (conn *Conn, err <span class="type">error</span>) &#123;  </span><br><span class="line">    <span class="keyword">var</span> ok <span class="type">bool</span>  </span><br><span class="line">    conn, ok = &lt;-l.conns  </span><br><span class="line">    <span class="keyword">if</span> !ok &#123;  </span><br><span class="line">       <span class="keyword">return</span> conn, fmt.Errorf(<span class="string">&quot;channel close&quot;</span>)  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> conn, <span class="literal">nil</span>  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来回到主函数的 <code>ProcessControlConn(l)</code> ，传入的就是刚刚创建的 <code>Listener</code>，在拿到 frpc 的连接后，启动 <code>controlWorker</code> 来处理这个连接</p>
+<p><code>src/frp/cmd/frps/control.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ProcessControlConn</span><span class="params">(l *conn.Listener)</span></span> &#123;  </span><br><span class="line">    <span class="keyword">for</span> &#123;  </span><br><span class="line">       c, err := l.GetConn()  </span><br><span class="line">       <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;  </span><br><span class="line">          <span class="keyword">return</span>  </span><br><span class="line">       &#125;  </span><br><span class="line">       log.Debug(<span class="string">&quot;Get one new conn, %v&quot;</span>, c.GetRemoteAddr())  </span><br><span class="line">       <span class="keyword">go</span> controlWorker(c)  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>contorlWorker</code> 用于控制 frp 客户端和服务端之间的连接，首先第一条信息肯定是由 frpc 发起的连接，通过 <code>checkProxy</code> 来进行身份验证并判断请求类型做出相应处理，如果不是 workconn 就继续执行，开启一个协程向 frpc 收发心跳包确保连接存活，循环等待 user 发起连接然后向 frpc 请求</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// connection from every client and server </span></span><br><span class="line"><span class="comment">// 控制 frpc 和 frps 间的连接，frps 响应 frpc 的请求</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">controlWorker</span><span class="params">(c *conn.Conn)</span></span> &#123;  </span><br><span class="line">	<span class="comment">// the first message is from client to server</span></span><br><span class="line">	<span class="comment">// 第一条信息肯定是由 client 发起的</span></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">  </span><br><span class="line">    clientCtlReq := &amp;msg.ClientCtlReq&#123;&#125;  </span><br><span class="line">    clientCtlRes := &amp;msg.ClientCtlRes&#123;&#125;  </span><br><span class="line">    <span class="keyword">if</span> err := json.Unmarshal([]<span class="type">byte</span>(res), &amp;clientCtlReq); err != <span class="literal">nil</span> &#123;  </span><br><span class="line">       log.Warn(<span class="string">&quot;Parse err: %v : %s&quot;</span>, err, res)  </span><br><span class="line">       <span class="keyword">return</span>  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// check </span></span><br><span class="line">    <span class="comment">// 检查对应的 ProxyServer, 先让 ProxyServer 处理请求</span></span><br><span class="line">    succ, info, needRes := checkProxy(clientCtlReq, c)  </span><br><span class="line">    <span class="keyword">if</span> !succ &#123;  </span><br><span class="line">       clientCtlRes.Code = <span class="number">1</span>  </span><br><span class="line">       clientCtlRes.Msg = info  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">	<span class="comment">// workconn 就直接返回，ctlConn 则继续执行</span></span><br><span class="line">	<span class="keyword">if</span> needRes &#123;...&#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">	    <span class="comment">// work conn, just return  </span></span><br><span class="line">	    <span class="keyword">return</span>  </span><br><span class="line">	&#125; </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// other messages is from server to client</span></span><br><span class="line">    <span class="comment">// 其余信息是 server to client</span></span><br><span class="line">    s, ok := server.ProxyServers[clientCtlReq.ProxyName]  </span><br><span class="line">    <span class="keyword">if</span> !ok &#123;  </span><br><span class="line">       log.Warn(<span class="string">&quot;ProxyName [%s] is not exist&quot;</span>, clientCtlReq.ProxyName)  </span><br><span class="line">       <span class="keyword">return</span>  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// read control msg from client</span></span><br><span class="line">    <span class="comment">// 接收和发送心跳包  </span></span><br><span class="line">    <span class="keyword">go</span> readControlMsgFromClient(s, c)  </span><br><span class="line"></span><br><span class="line">	<span class="comment">// 接收 user 连接并向 client 请求</span></span><br><span class="line">    serverCtlReq := &amp;msg.ClientCtlReq&#123;&#125;  </span><br><span class="line">    serverCtlReq.Type = consts.WorkConn  </span><br><span class="line">    <span class="keyword">for</span> &#123;  </span><br><span class="line">       closeFlag := s.WaitUserConn()  </span><br><span class="line">	   <span class="comment">// ...</span></span><br><span class="line">	   </span><br><span class="line">       buf, _ := json.Marshal(serverCtlReq)  </span><br><span class="line">       err = c.Write(<span class="type">string</span>(buf) + <span class="string">&quot;\n&quot;</span>)  </span><br><span class="line">	   <span class="comment">// ...</span></span><br><span class="line">  </span><br><span class="line">       log.Debug(<span class="string">&quot;ProxyName [%s], write to client to add work conn success&quot;</span>, s.Name)  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    log.Info(<span class="string">&quot;ProxyName [%s], I&#x27;m dead!&quot;</span>, s.Name)  </span><br><span class="line">    <span class="keyword">return</span>  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> <code>checkProxy</code> 首先需要通过代理服务器名和密码进行身份验证，然后处理两种请求类型，也就是说有两种类型的连接。<code>CtlConn</code> 用于启动代理，之后循环等待 user 连接；<code>WorkConn</code> 用于和 user 交互，会向 <code>ProxyServer.cliConnChan</code> 写入这个连接。（个人感觉判断请求类型并处理的逻辑应该放在 <code>controlWorker</code> 中比较好，也就不需要 <code>needRes</code> 来判断连接类型）</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">checkProxy</span><span class="params">(req *msg.ClientCtlReq, c *conn.Conn)</span></span> (succ <span class="type">bool</span>, info <span class="type">string</span>, needRes <span class="type">bool</span>) &#123;  </span><br><span class="line">	<span class="comment">// check name and password</span></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">  </span><br><span class="line">    <span class="comment">// control conn  </span></span><br><span class="line">    <span class="keyword">if</span> req.Type == consts.CtlConn &#123;  </span><br><span class="line">	   <span class="comment">// ...</span></span><br><span class="line">  </span><br><span class="line">       <span class="comment">// start proxy and listen for user conn, no block  </span></span><br><span class="line">       err := s.Start()  </span><br><span class="line">	   <span class="comment">// ...</span></span><br><span class="line">	   </span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> req.Type == consts.WorkConn &#123;  </span><br><span class="line">       <span class="comment">// work conn  </span></span><br><span class="line">       needRes = <span class="literal">false</span>  </span><br><span class="line">	   <span class="comment">// ...  </span></span><br><span class="line">  </span><br><span class="line">       s.GetNewCliConn(c)  </span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">	   <span class="comment">// ...</span></span><br><span class="line">       <span class="keyword">return</span>  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    succ = <span class="literal">true</span>  </span><br><span class="line">    <span class="keyword">return</span>  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>ProxyServer.Start</code> 启动代理服务器监听和 user 连接的端口并启动了两个协程:</p>
+<ul>
+<li>处理 user 的连接<ul>
+<li>把收到的连接放入 <code>userConnList</code>，向 <code>ctlMsgChan</code> 写入 <code>1</code> 代表接收到 user 连接</li>
+</ul>
+</li>
+<li>转发 user 的数据到 client 然后转发 client 的响应回 user<ul>
+<li>转发的过程使用 <code>io.Copy</code>，先把 user 的字节流复制到 client，再把对应 client 响应的字节流复制到 user</li>
+</ul>
+</li>
+</ul>
+<p><code>src/frp/models/server/server.go</code>:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// start listening for user conns  </span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *ProxyServer)</span></span> Start() (err <span class="type">error</span>) &#123;</span><br><span class="line">	<span class="comment">// 监听与 user 连接的端口</span></span><br><span class="line">    p.Init()  </span><br><span class="line">    p.listener, err = conn.Listen(p.BindAddr, p.ListenPort)  </span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">    p.Status = consts.Working  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// 启动一个协程接收 user 的连接 </span></span><br><span class="line">    <span class="comment">// start a goroutine for listener to accept user connection</span></span><br><span class="line">    <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;  </span><br><span class="line">       <span class="keyword">for</span> &#123;  </span><br><span class="line">          <span class="comment">// block  </span></span><br><span class="line">          <span class="comment">// if listener is closed, err returned          </span></span><br><span class="line">          c, err := p.listener.GetConn()  </span><br><span class="line">		  <span class="comment">// ...</span></span><br><span class="line">  </span><br><span class="line">          <span class="comment">// insert into list  </span></span><br><span class="line">          p.Lock()  </span><br><span class="line">		  <span class="comment">// ...</span></span><br><span class="line">          p.userConnList.PushBack(c)  </span><br><span class="line">          p.Unlock()  </span><br><span class="line">  </span><br><span class="line">          <span class="comment">// put msg to control conn  </span></span><br><span class="line">          p.ctlMsgChan &lt;- <span class="number">1</span>  </span><br><span class="line">  </span><br><span class="line">          <span class="comment">// set timeout  判断连接超时</span></span><br><span class="line">          time.AfterFunc(time.Duration(UserConnTimeout)*time.Second, <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;  </span><br><span class="line">             p.Lock()  </span><br><span class="line">             <span class="keyword">defer</span> p.Unlock()  </span><br><span class="line">             element := p.userConnList.Front()  </span><br><span class="line">             <span class="keyword">if</span> element == <span class="literal">nil</span> &#123;  </span><br><span class="line">                <span class="keyword">return</span>  </span><br><span class="line">             &#125;  </span><br><span class="line">  </span><br><span class="line">             userConn := element.Value.(*conn.Conn)  </span><br><span class="line">             <span class="keyword">if</span> userConn == c &#123;  </span><br><span class="line">                log.Warn(<span class="string">&quot;ProxyName [%s], user conn [%s] timeout&quot;</span>, p.Name, c.GetRemoteAddr())  </span><br><span class="line">             &#125;  </span><br><span class="line">          &#125;)  </span><br><span class="line">       &#125;  </span><br><span class="line">    &#125;()  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// start another goroutine for join two conns from client and user  </span></span><br><span class="line">    <span class="comment">// 启动另一个协程连接 client 和 user 的两个连接</span></span><br><span class="line">    <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;  </span><br><span class="line">       <span class="keyword">for</span> &#123;  </span><br><span class="line">          cliConn, ok := &lt;-p.cliConnChan  </span><br><span class="line">          <span class="keyword">if</span> !ok &#123;  </span><br><span class="line">             <span class="keyword">return</span>  </span><br><span class="line">          &#125;  </span><br><span class="line">  </span><br><span class="line">          p.Lock()  </span><br><span class="line">          element := p.userConnList.Front()  </span><br><span class="line">  </span><br><span class="line">          <span class="keyword">var</span> userConn *conn.Conn  </span><br><span class="line">          <span class="keyword">if</span> element != <span class="literal">nil</span> &#123;  </span><br><span class="line">             userConn = element.Value.(*conn.Conn)  </span><br><span class="line">             p.userConnList.Remove(element)  </span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">             cliConn.Close()  </span><br><span class="line">             p.Unlock()  </span><br><span class="line">             <span class="keyword">continue</span>  </span><br><span class="line">          &#125;  </span><br><span class="line">          p.Unlock()  </span><br><span class="line">  </span><br><span class="line">          <span class="comment">// msg will transfer to another without modifying  </span></span><br><span class="line">          <span class="comment">// l means local, r means remote          log.Debug(&quot;Join two conns, (l[%s] r[%s]) (l[%s] r[%s])&quot;, cliConn.GetLocalAddr(), cliConn.GetRemoteAddr(),  </span></span><br><span class="line">             userConn.GetLocalAddr(), userConn.GetRemoteAddr())  </span><br><span class="line">          <span class="keyword">go</span> conn.Join(cliConn, userConn)  </span><br><span class="line">       &#125;  </span><br><span class="line">    &#125;()  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>总结一下，frps 监听 frp 服务端口使用 <code>ProcessControlConn</code> 监听然后交给 <code>controlWorker</code> 处理，在收到对应控制请求后启动 <code>ProxyServer</code> 负责监听服务端口处理用户连接和转发数据。</p>
+<p>具体实现中，<code>controlWorker</code> 接收到 frpc 的连接时，先判断连接类型，<code>CtlConn</code> 用于启动 <code>ProxyServer</code> 并等待 user 连接，收到 user 连接会给 frpc 发送控制请求让 frpc 发一个 WorkConn 过来，<code>WorkConn</code> 用于给出和 user 交互的连接会写入 <code>ProxyServer.cliConnChan</code>；<code>ProxyServer</code> 接收到用户连接时，<code>ProxyServer</code> 会向 <code>ProxyServer.ctlMsgChan</code> 写入 <code>1</code>；<code>ProxyServer</code> 从 <code>ProxyServer.cliConnChan</code> 中读出连接时会把与用户的连接相连转发数据。</p>
+<h3 id="frpc"><a href="#frpc" class="headerlink" title="frpc"></a>frpc</h3><p>从入口源码开始，读取配置文件到 <code>ProxyClient</code>，然后对于每一个 <code>ProxyClient</code> 启动一个 <code>ControlProcess</code> 来控制，等待所有 <code>ProxyClient</code> 退出后结束主进程</p>
+<p><code>src/frp/cmd/frpc/main.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    err := client.LoadConf(<span class="string">&quot;./frpc.ini&quot;</span>)  </span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">  </span><br><span class="line">    log.InitLog(client.LogWay, client.LogFile, client.LogLevel)  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// wait until all control goroutine exit  </span></span><br><span class="line">    <span class="keyword">var</span> wait sync.WaitGroup  </span><br><span class="line">    wait.Add(<span class="built_in">len</span>(client.ProxyClients))  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">for</span> _, client := <span class="keyword">range</span> client.ProxyClients &#123;  </span><br><span class="line">       <span class="keyword">go</span> ControlProcess(client, &amp;wait)  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    log.Info(<span class="string">&quot;Start frpc success&quot;</span>)  </span><br><span class="line">  </span><br><span class="line">    wait.Wait()  </span><br><span class="line">    log.Warn(<span class="string">&quot;All proxy exit!&quot;</span>)  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>ControlProcess</code></p>
+<p><code>src/frp/cmd/frpc/control.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ControlProcess</span><span class="params">(cli *client.ProxyClient, wait *sync.WaitGroup)</span></span> &#123;  </span><br><span class="line">    <span class="keyword">defer</span> wait.Done()  </span><br><span class="line"></span><br><span class="line">	<span class="comment">// 和 frps 建立连接</span></span><br><span class="line">    c, err := loginToServer(cli)  </span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">    connection = c  </span><br><span class="line">    <span class="keyword">defer</span> connection.Close()  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">for</span> &#123;  </span><br><span class="line">       <span class="comment">// ignore response content now</span></span><br><span class="line">       content, err := connection.ReadLine()  </span><br><span class="line">       </span><br><span class="line">       <span class="comment">// 循环重连</span></span><br><span class="line">       <span class="comment">// ...</span></span><br><span class="line">  </span><br><span class="line">       clientCtlRes := &amp;msg.ClientCtlRes&#123;&#125;  </span><br><span class="line">       <span class="keyword">if</span> err := json.Unmarshal([]<span class="type">byte</span>(content), clientCtlRes); err != <span class="literal">nil</span> &#123;  </span><br><span class="line">          log.Warn(<span class="string">&quot;Parse err: %v : %s&quot;</span>, err, content)  </span><br><span class="line">          <span class="keyword">continue</span>  </span><br><span class="line">       &#125;  </span><br><span class="line"></span><br><span class="line">	   <span class="comment">// 如果是心跳包就重置计时器</span></span><br><span class="line">       <span class="keyword">if</span> consts.SCHeartBeatRes == clientCtlRes.GeneralRes.Code &#123;  </span><br><span class="line">          <span class="keyword">if</span> heartBeatTimer != <span class="literal">nil</span> &#123;  </span><br><span class="line">             log.Debug(<span class="string">&quot;Client rcv heartbeat response&quot;</span>)  </span><br><span class="line">             heartBeatTimer.Reset(time.Duration(client.HeartBeatTimeout) * time.Second)  </span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">             log.Error(<span class="string">&quot;heartBeatTimer is nil&quot;</span>)  </span><br><span class="line">          &#125;  </span><br><span class="line">          <span class="keyword">continue</span>  </span><br><span class="line">       &#125;  </span><br><span class="line"></span><br><span class="line">	   <span class="comment">// 如果不是心跳包就是 frps 收到用户连接了，启动和 frps 之间的隧道</span></span><br><span class="line">       cli.StartTunnel(client.ServerAddr, client.ServerPort)  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>loginToServer</code> 和 frps 建立连接让 frps 启动对应的 ProxyServer，然后开启一个协程不断发送心跳包</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">loginToServer</span><span class="params">(cli *client.ProxyClient)</span></span> (c *conn.Conn, err <span class="type">error</span>) &#123;</span><br><span class="line">	<span class="comment">// 和 frps 建立 tcp 连接</span></span><br><span class="line">    c, err = conn.ConnectServer(client.ServerAddr, client.ServerPort)  </span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 发送 CtlConn，让 frps 启动对应的 ProxyServer</span></span><br><span class="line">    req := &amp;msg.ClientCtlReq&#123;  </span><br><span class="line">       Type:      consts.CtlConn,  </span><br><span class="line">       ProxyName: cli.Name,  </span><br><span class="line">       Passwd:    cli.Passwd,  </span><br><span class="line">    &#125;  </span><br><span class="line">    buf, _ := json.Marshal(req)  </span><br><span class="line">    err = c.Write(<span class="type">string</span>(buf) + <span class="string">&quot;\n&quot;</span>)  </span><br><span class="line">	<span class="comment">// ..</span></span><br><span class="line">  </span><br><span class="line">    res, err := c.ReadLine()  </span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">    log.Debug(<span class="string">&quot;ProxyName [%s], read [%s]&quot;</span>, cli.Name, res)  </span><br><span class="line">  </span><br><span class="line">    clientCtlRes := &amp;msg.ClientCtlRes&#123;&#125;  </span><br><span class="line">    <span class="keyword">if</span> err = json.Unmarshal([]<span class="type">byte</span>(res), &amp;clientCtlRes); err != <span class="literal">nil</span> &#123;  </span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">	<span class="comment">// ...  </span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 发心跳包</span></span><br><span class="line">    <span class="keyword">go</span> startHeartBeat(c)  </span><br><span class="line">    log.Debug(<span class="string">&quot;ProxyName [%s], connect to server[%s:%d] success!&quot;</span>, cli.Name, client.ServerAddr, client.ServerPort)  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span>  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>ProxyClient.StartTunnel</code> 转发数据到本地服务，使用 <code>io.Copy</code> 想把 <code>remoteConn</code> 复制到 <code>localConn</code>，再是把 <code>localConn</code> 复制到 <code>remoteConn</code> 来响应</p>
+<p><code>src/frp/models/client/client.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *ProxyClient)</span></span> StartTunnel(serverAddr <span class="type">string</span>, serverPort <span class="type">int64</span>) (err <span class="type">error</span>) &#123;  </span><br><span class="line">	<span class="comment">// 获取本地服务连接</span></span><br><span class="line">    localConn, err := p.GetLocalConn()  </span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;  </span><br><span class="line">       <span class="keyword">return</span>  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="comment">// 获取远端 frps 连接</span></span><br><span class="line">    remoteConn, err := p.GetRemoteConn(serverAddr, serverPort)  </span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;  </span><br><span class="line">       <span class="keyword">return</span>  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// l means local, r means remote  </span></span><br><span class="line">    <span class="comment">// 连接两个连接</span></span><br><span class="line">    log.Debug(<span class="string">&quot;Join two conns, (l[%s] r[%s]) (l[%s] r[%s])&quot;</span>, localConn.GetLocalAddr(), localConn.GetRemoteAddr(),  </span><br><span class="line">       remoteConn.GetLocalAddr(), remoteConn.GetRemoteAddr())  </span><br><span class="line">    <span class="keyword">go</span> conn.Join(localConn, remoteConn)  </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>ProxyClient.GetRemoteConn</code> 给 frps 提供 <code>WorkConn</code> 在 frps 处用于 user 信息的转发，然后在本地用于转发到本地服务</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *ProxyClient)</span></span> GetRemoteConn(addr <span class="type">string</span>, port <span class="type">int64</span>) (c *conn.Conn, err <span class="type">error</span>) &#123;  </span><br><span class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;  </span><br><span class="line">       <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;  </span><br><span class="line">          c.Close()  </span><br><span class="line">       &#125;  </span><br><span class="line">    &#125;()  </span><br><span class="line"></span><br><span class="line">	<span class="comment">// 连接到 frps，发送请求指明这是 WorkConn</span></span><br><span class="line">    c, err = conn.ConnectServer(addr, port)  </span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">  </span><br><span class="line">    req := &amp;msg.ClientCtlReq&#123;  </span><br><span class="line">       Type:      consts.WorkConn,  </span><br><span class="line">       ProxyName: p.Name,  </span><br><span class="line">       Passwd:    p.Passwd,  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    buf, _ := json.Marshal(req)  </span><br><span class="line">    err = c.Write(<span class="type">string</span>(buf) + <span class="string">&quot;\n&quot;</span>)  </span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">  </span><br><span class="line">    err = <span class="literal">nil</span>  </span><br><span class="line">    <span class="keyword">return</span>  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>总结一下，frpc 会为每个代理创建 <code>ProxyClient</code> 发送 <code>CtlConn</code> 到 frps 启动对应的 <code>ProxyServer</code>，</p>
+<p>frpc 会建立两种连接</p>
+<ul>
+<li><code>CtlConn</code>：在没有连接时建立，用于控制 <code>ProxyServer</code> 的启动，代表和 frps 建立了连接</li>
+<li><code>WorkConn</code>：在 frps 通过 <code>CtlConn</code> 发送非心跳包信息时建立（因为 frps 除了发送心跳包只会在接收到 user 连接时发送信息），用于转发 user 数据</li>
+</ul>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>v0.1.0 只实现了 TCP 连接，代码量不大很容易读，对于内网穿透的实现理解帮助很大，不过作为第一个版本来说感觉有些地方写的有点乱，看版本高一点的代码可能会好一点。</p>
+<p>转发实现并不难，主要的代码在于实现 frps 和 frpc 之间的通信，源码中使用两种连接，<code>CtlConn</code> 使用私有协议通信，用于收发心跳包和控制信息（frps 请求 frpc 建立 <code>WorkConn</code> 连接）；<code>WorkConn</code> 用于数据转发，让 frps 转发 user 的数据以及让 frpc 转发到本地服务。</p>
+<p>最大的感受就是 go routine 并发很方便，用无缓冲 channel 管理 tcp 连接以及协程间通信很好用，让代码写起来看起来都好简单，这下知道为什么要用 go 写了。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/05/Flask%E5%86%85%E5%AD%98%E9%A9%AC/" rel="prev" title="Flask内存马">
+                  <i class="fa fa-angle-left"></i> Flask内存马
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">l1nk</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
