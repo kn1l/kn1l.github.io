@@ -129,7 +129,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -229,10 +229,7 @@
 <p>frp 是一个专注于内网穿透的高性能的反向代理应用，支持 TCP、UDP、HTTP、HTTPS 等多种协议，且支持 P2P 通信。可以将内网服务以安全、便捷的方式通过具有公网 IP 节点的中转暴露到公网。</p>
 </blockquote>
 <p>frp 在 v0.10.0 进行过代码重构，所以 v0.1.0 看起来和现在的结构不太一样，但是直接读新版本的代码还是有点难，这里就通过 v0.1.0 的源代码学习一下 frp 的实现原理。</p>
-<blockquote>
-<p>[!NOTE]</p>
-<p>因为包管理方式不同，需要设置 <code>GO111MODULE</code> 为 <code>off</code> 以及对应的 <code>GOPATH</code></p>
-</blockquote>
+<p><strong>因为包管理方式不同，需要设置 <code>GO111MODULE</code> 为 <code>off</code> 以及对应的 <code>GOPATH</code></strong></p>
 <h2 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h2><p>我们使用 frp 需要配置两个端，两个端各负责一些功能</p>
 <p>frps</p>
 <ul>
@@ -328,6 +325,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2025/04/16/Ingress-Nginx%20Nightmare%20%E5%A4%8D%E7%8E%B0/" rel="next" title="Ingress-Nginx Nightmare 复现~">
+                  Ingress-Nginx Nightmare 复现~ <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>
